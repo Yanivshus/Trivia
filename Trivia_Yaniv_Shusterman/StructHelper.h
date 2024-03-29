@@ -2,7 +2,7 @@
 #include <iostream>
 
 typedef struct {
-	int status;
+	std::string massage;
 } ErrorResponse;
 
 typedef struct {
