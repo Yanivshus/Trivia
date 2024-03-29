@@ -9,14 +9,14 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const
 
 std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const LoginResponse& err)
 {
-    json j = { { "message", err.status} };
+    json j = { { "status", err.status} };
     Codes curr = LOGIN_RESPONSE;
     return createPacket(curr, j.dump());
 }
 
 std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const SignupResponse& err)
 {
-    json j = { { "message", err.status} };
+    json j = { { "status", err.status} };
     Codes curr = SIGNUP_RESPONSE;
     return createPacket(curr, j.dump());
 }
