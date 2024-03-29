@@ -1,6 +1,6 @@
 //each value represnts a possiable code in the requests.
 enum Codes {
-	ERROR_RESPONSE = 0,
-	LOGIN_RESPONSE = 1,
-	SIGNUP_RESPONSE = 2,
+	ERROR_RESPONSE = 12,
+	LOGIN_RESPONSE = 13,
+	SIGNUP_RESPONSE = 14,
 };

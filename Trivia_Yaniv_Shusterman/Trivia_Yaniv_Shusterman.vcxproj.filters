@@ -30,6 +30,15 @@
     <ClInclude Include="LoginRequestHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="JsonResponsePacketSerializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StructHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="json.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Server.cpp">
@@ -49,6 +58,12 @@
     </ClCompile>
     <ClCompile Include="LoginRequestHandler.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonResponsePacketSerializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Constants.h">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
