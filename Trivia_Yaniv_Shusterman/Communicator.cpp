@@ -25,11 +25,12 @@ Communicator::~Communicator()
 void Communicator::startHandleRequests()
 {
 	
-	try {
+	try 
+	{
 		bindAndListen();
 	}
 	catch (...) {
-		std::cout << "there is a error" << std::endl;
+		std::cout << "there is a error in the bind or listen." << std::endl;
 	}
 
 	
@@ -44,11 +45,11 @@ void Communicator::bindAndListen()
 	sa.sin_addr.s_addr = INADDR_ANY;    // when there are few ip's for the machine. We will use always "INADDR_ANY"
 	// Connects between the socket and the configuration (port and etc..)
 	if (bind(this->m_serverSocket, (struct sockaddr*)&sa, sizeof(sa)) == SOCKET_ERROR)
-		throw std::exception(__FUNCTION__ " - bind");
+		throw std::exception(__FUNCTION__ " - bind.");
 
 	// Start listening for incoming requests of clients
 	if (listen(this->m_serverSocket, SOMAXCONN) == SOCKET_ERROR)
-		throw std::exception(__FUNCTION__ " - listen");
+		throw std::exception(__FUNCTION__ " - listen.");
 
 	while (true)
 	{
@@ -57,9 +58,12 @@ void Communicator::bindAndListen()
 		// the process will not continue until a client connects to the server
 		SOCKET client_socket = accept(this->m_serverSocket, NULL, NULL);
 		if (client_socket == INVALID_SOCKET)
-			throw std::exception(__FUNCTION__);
+			throw std::exception("accept problem.");
 
-		std::cout << "Client accepted. Server and client can speak" << std::endl;
+		std::cout << "Client accepted. Server and client can speak." << std::endl;
+		this->clientListMtx.lock();
+		this->m_clients[client_socket] = new LoginRequestHandler;
+		this->clientListMtx.unlock();
 
 		// the function that handle the conversation with the client
 		std::thread clientThread(&Communicator::handleNewClient, this, client_socket);
@@ -76,12 +80,6 @@ void Communicator::handleNewClient(SOCKET client_sock)
 	}
 	catch (...) {
 		std::cout << "error handeling client" << std::endl;
-	}
-
-	int i = 0;
-	while (i < 1000000)
-	{
-		i++;
 	}
 }
 
