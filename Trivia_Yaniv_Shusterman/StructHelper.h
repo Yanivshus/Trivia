@@ -1,5 +1,10 @@
 #pragma once
 #include <iostream>
+#include "Constants.h"
+#include <vector>
+#include <string>
+
+class IRequestHandler; // fix circular includes.
 
 //responses
 typedef struct {
@@ -26,5 +31,19 @@ typedef struct {
 	std::string password;
 	std::string email;
 } SignupRequest;
+
+typedef struct {
+	Codes id;
+	std::string password;
+	time_t time;
+	std::vector<unsigned char> buffer;
+} RequestInfo;
+
+typedef struct {
+	std::vector<unsigned char> buffer;
+	IRequestHandler* newHandler;
+} RequestResult;
+
+
 
 
