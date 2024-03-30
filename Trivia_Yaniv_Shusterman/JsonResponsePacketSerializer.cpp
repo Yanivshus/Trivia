@@ -31,10 +31,10 @@ std::vector<unsigned char> JsonResponsePacketSerializer::createPacket(const int 
     std::copy(data.begin(), data.end(), std::back_inserter(bytesVec));//copy the data to the vector.
 
     // for debugging
-   /* for (int i = 0; i < bytesVec.size(); i++)
-    {
-        std::cout << bytesVec[i] << std::endl;
-    }*/
+    //for (int i = 0; i < bytesVec.size(); i++)
+    //{
+    //    std::cout << bytesVec[i] << std::endl;
+    //}
 
     return bytesVec;
 }
