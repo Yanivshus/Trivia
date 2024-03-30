@@ -1,6 +1,9 @@
 #pragma once
 #include "StructHelper.h"
 #include <vector>
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 class JsonRequestPacketDeserializer {
 public:
