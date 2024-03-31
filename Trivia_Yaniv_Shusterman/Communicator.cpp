@@ -73,14 +73,18 @@ void Communicator::bindAndListen()
 
 void Communicator::handleNewClient(SOCKET client_sock)
 {
-	try {
-		//sending and receiving hello.
-		sendData(client_sock, "Hello");
-		std::cout << getData(client_sock, 5) << std::endl;
+	try 
+	{
+		std::vector<unsigned char> buffer = getData(client_sock);
+		const int code = static_cast<int>(buffer[0]); // the code of the msg
+		const int dataLength = getSizeOfData(std::vector<unsigned char>(buffer.begin() + 1, buffer.begin() + 5));// get the length of the data by slicing the buffer.
+		std::vector<unsigned char> data(buffer.begin() + 5, buffer.begin() + dataLength);// get the data itself.
+
 	}
 	catch (...) {
 		std::cout << "error handeling client" << std::endl;
 	}
+	//if(this->m_clients[client_sock]->isRequestRelevant())
 }
 
 void Communicator::sendData(SOCKET soc, const std::string& Msg)
@@ -93,15 +97,10 @@ void Communicator::sendData(SOCKET soc, const std::string& Msg)
 	}
 }
 
-std::string Communicator::getData(SOCKET soc, const int byteNum)
+std::vector<unsigned char> Communicator::getData(SOCKET soc)
 {
-	if (byteNum == 0)
-	{
-		return (char*)"";
-	}
-
-	char* data = new char[byteNum + 1];
-	int res = recv(soc, data, byteNum, 0);
+	std::vector<unsigned char> buffer(BUFFER_SIZE);
+	int res = recv(soc, reinterpret_cast<char*>(buffer.data()), BUFFER_SIZE, 0);
 
 	if (res == INVALID_SOCKET)
 	{
@@ -109,9 +108,22 @@ std::string Communicator::getData(SOCKET soc, const int byteNum)
 		s += std::to_string(soc);
 		throw std::exception(s.c_str());
 	}
+	else {
+		buffer.resize(res);
+	}
 
-	data[byteNum] = 0;
-	std::string stringRes(data);
-	return stringRes;
+	return buffer;
+}
+
+int Communicator::getSizeOfData(std::vector<unsigned char> buffer)
+{
+	int value = 0;
+
+	// Combine each byte into the integer
+	for (size_t i = 0; i < buffer.size(); ++i) {
+		value |= static_cast<int>(buffer[i]) << (8 * (LENGTH_DATA - 1 - i)); // Combine the byte into the integer
+	}
+
+	return value;
 }
 

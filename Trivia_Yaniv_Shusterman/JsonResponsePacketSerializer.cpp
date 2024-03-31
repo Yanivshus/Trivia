@@ -45,7 +45,7 @@ std::vector<unsigned char> JsonResponsePacketSerializer::createDataLengthAsBytes
 
     // Extract each byte from the integer
     for (int i = 0; i < CODE_SIZE; i++) {
-        bytes[CODE_SIZE - 1 - i] = (num >> (i * 8)); // Extract each byte
+        bytes[CODE_SIZE - 1 - i] = static_cast<unsigned char>((num >> (i * 8)) & 0xFF); // Extract each byte
     }
     // Return the vector of bytes
     return bytes;

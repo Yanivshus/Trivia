@@ -11,10 +11,12 @@
 #include <exception>
 #include <string>
 #include <mutex>
+#include <vector>
 
 
 
 #define PORT 9999
+#define BUFFER_SIZE 1024
 
 class Communicator {
 private:
@@ -36,7 +38,7 @@ private:
 
 	//temporary send data to clients and get data from clients.
 	void sendData(SOCKET soc, const std::string& Msg);
-	std::string getData(SOCKET soc, const int byteNum);
+	std::vector<unsigned char> getData(SOCKET soc);
 public:
 	Communicator();
 	~Communicator();
