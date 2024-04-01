@@ -80,6 +80,8 @@ void Communicator::handleNewClient(SOCKET client_sock)
 		const int dataLength = getSizeOfData(std::vector<unsigned char>(buffer.begin() + 1, buffer.begin() + 5));// get the length of the data by slicing the buffer.
 		std::vector<unsigned char> data(buffer.begin() + 5, buffer.begin() + dataLength);// get the data itself.
 
+
+
 	}
 	catch (...) {
 		std::cout << "error handeling client" << std::endl;

@@ -24,7 +24,7 @@ private:
 	/// <param name="code:">reasponse code.</param>
 	/// <param name="data:">data to pack.</param>
 	/// <returns>return vector of unsigned char (bytes)</returns>
-	static std::vector<unsigned char> createPacket(const int code, const std::string& data);
+	static std::vector<unsigned char> createPacket(const int code, json data);
 
 	/// <summary>
 	/// turnes length of data to a unsigned char (byte)
