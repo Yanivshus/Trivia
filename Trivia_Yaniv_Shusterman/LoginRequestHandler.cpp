@@ -19,9 +19,9 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo info)
     {
         //for now.
         std::cout << "Logging in..." << std::endl;
-        LoginRequest log= JsonRequestPacketDeserializer::deserializeLoginRequest(info.buffer);
-        std::cout << "Password: " << log.password<< std::endl;
-        std::cout << "Username: " << log.username<< std::endl;
+        LoginRequest req = JsonRequestPacketDeserializer::deserializeLoginRequest(info.buffer);
+        std::cout << "Password: " << req.password<< std::endl;
+        std::cout << "Username: " << req.username<< std::endl;
 
         LoginResponse res = { 1 };
         return { JsonResponsePacketSerializer::serializeResponse(res) , nullptr };
@@ -31,10 +31,10 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo info)
     {
         //for now.
         std::cout << "Signing up..." << std::endl;
-        SignupRequest log = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buffer);
-        std::cout << "Password: " << log.password << std::endl;
-        std::cout << "Username: " << log.username << std::endl;
-        std::cout << "Email: " << log.email << std::endl;
+        SignupRequest req = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buffer);
+        std::cout << "Password: " << req.password << std::endl;
+        std::cout << "Username: " << req.username << std::endl;
+        std::cout << "Email: " << req.email << std::endl;
 
         SignupResponse res = { 2 };
         return { JsonResponsePacketSerializer::serializeResponse(res) , nullptr };

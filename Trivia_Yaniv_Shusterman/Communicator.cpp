@@ -83,7 +83,6 @@ void Communicator::handleNewClient(SOCKET client_sock)
 			//std::cout << dataLength << std::endl;
 			std::vector<unsigned char> data(buffer.begin() + SIZE_OF_START, buffer.begin() + dataLength + SIZE_OF_START);// get the data itself.
 			std::cout << data.size() << std::endl;
-			data.push_back('\0');//terminating the string with null byte.
 			std::cout << data.data() << std::endl;
 
 			//build the request.
@@ -95,7 +94,7 @@ void Communicator::handleNewClient(SOCKET client_sock)
 			//checking if the request is relevent to the current user stage.
 			if (this->m_clients[client_sock]->isRequestRelevant(reqInfo))
 			{
-				RequestResult res = this->m_clients[client_sock]->handleRequest(reqInfo);//handking the request.
+				RequestResult res = this->m_clients[client_sock]->handleRequest(reqInfo);//handling the request.
 				sendData(client_sock, res.buffer);
 			}
 			else {

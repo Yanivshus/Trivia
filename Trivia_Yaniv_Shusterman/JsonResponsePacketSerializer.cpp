@@ -24,7 +24,7 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const
 std::vector<unsigned char> JsonResponsePacketSerializer::createPacket(const int code, json data)
 {
     std::vector<unsigned char> bytesVec;
-    bytesVec.push_back(static_cast<unsigned char>(code));//PUSHING THE CODE OF THE RESPONSE FIRST / SIZE 1 BYTE.
+    bytesVec.push_back(static_cast<unsigned char>(code));//pushing the code of the response first / size 1 byte.
 
     std::vector<unsigned char> bytesOfLenData = createDataLengthAsBytes(data.size());// take the length of data as bytes.
     std::copy(bytesOfLenData.begin(), bytesOfLenData.end(), std::back_inserter(bytesVec));// copy the length to the vector.

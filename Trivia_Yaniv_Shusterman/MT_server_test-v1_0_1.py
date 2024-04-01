@@ -1,5 +1,6 @@
 import socket
 import json
+import bson
 
 def create_data_length_as_bytes(num):
     code_size = 4  # Assuming the size of integer is 4 bytes (32 bits)
@@ -30,7 +31,15 @@ def details(input_str):
             "password" : "goat12"
         }
 
+
+
 def main():
+    dataj = {
+        "key" : 1
+    }
+
+    print(bson.dumps(dataj))
+
     # Server's IP address and port
     server_ip = "127.0.0.1"  # Change this to the server's IP address
     server_port = 9999  # Change this to the server's port
@@ -48,12 +57,12 @@ def main():
             code = choose(choice)
             data = details(choice)
 
-            dataJs = json.dumps(data)
+            dataJs = bson.dumps(data)
             buffer = []
             buffer.append(chr(code).encode())
             buffer.append(create_data_length_as_bytes(len(dataJs)))
             print(len(dataJs), dataJs)
-            buffer.append(dataJs.encode())
+            buffer.append(dataJs)
             print(buffer)
             concatenated_bytes = b''.join(buffer)
             print(concatenated_bytes)

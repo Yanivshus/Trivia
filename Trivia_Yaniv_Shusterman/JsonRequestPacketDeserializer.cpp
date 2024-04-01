@@ -3,7 +3,7 @@
 LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(std::vector<unsigned char> buffer)
 {
 	//taking the buffer into a string.
-	json jsData = json::parse(buffer.data());// parsing into json object
+	json jsData = json::from_bson(buffer);// parsing into json object
 	LoginRequest req;
 	req.password = jsData["password"]; //taking the password and username and email.
 	req.username = jsData["username"];
@@ -13,7 +13,7 @@ LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(std::vector<
 SignupRequest JsonRequestPacketDeserializer::deserializeSignupRequest(std::vector<unsigned char> buffer)
 {
 	//taking the buffer into a string.
-	json jsData = json::parse(buffer.data());// parsing into json object
+	json jsData = json::from_bson(buffer);// parsing into json object
 	SignupRequest req;
 	req.password = jsData["password"];//taking the password and username and email.
 	req.username = jsData["username"];
