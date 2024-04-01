@@ -18,6 +18,16 @@ Communicator::~Communicator()
 		// the only use of the destructor should be for freeing 
 		// resources that was allocated in the constructor
 		closesocket(this->m_serverSocket);
+
+		// Iterate through the map
+		for (auto& pair : m_clients) {
+			// Check if the map entry has at least two elements
+			if (pair.second != nullptr) {
+				// Delete the second element
+				delete pair.second;
+				pair.second = nullptr;  // Optional: Set to nullptr to avoid dangling pointer
+			}
+		}
 	}
 	catch (...) {}
 }
@@ -102,7 +112,8 @@ void Communicator::handleNewClient(SOCKET client_sock)
 			}
 
 		}
-		catch (std::exception& e) {
+		catch (std::exception& e) 
+		{
 			//checking if the was relevent request error.
 			if (e.what() == "Request isn't relevent.")
 			{
@@ -114,6 +125,7 @@ void Communicator::handleNewClient(SOCKET client_sock)
 			else // if not we will just print the error.
 			{
 				std::cout << e.what() << std::endl;
+				closesocket(client_sock);
 				break;//tempppppp
 			}
 		}
