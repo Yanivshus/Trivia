@@ -114,6 +114,7 @@ void Communicator::handleNewClient(SOCKET client_sock)
 			else // if not we will just print the error.
 			{
 				std::cout << e.what() << std::endl;
+				break;//tempppppp
 			}
 		}
 	}
@@ -142,6 +143,9 @@ std::vector<unsigned char> Communicator::getData(SOCKET soc)
 	}
 	else {
 		buffer.resize(res);
+	}
+	if (buffer.size() == 0) {
+		throw std::exception("User sent empty");
 	}
 	return buffer;
 }
