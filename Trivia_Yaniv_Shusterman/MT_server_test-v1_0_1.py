@@ -34,11 +34,6 @@ def details(input_str):
 
 
 def main():
-    dataj = {
-        "key" : 1
-    }
-
-    print(bson.dumps(dataj))
 
     # Server's IP address and port
     server_ip = "127.0.0.1"  # Change this to the server's IP address

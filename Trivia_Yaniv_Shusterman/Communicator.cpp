@@ -90,7 +90,6 @@ void Communicator::handleNewClient(SOCKET client_sock)
 			std::vector<unsigned char> buffer = getData(client_sock);
 			const int code = static_cast<int>(buffer[0]); // the code of the msg
 			const int dataLength = getSizeOfData(std::vector<unsigned char>(buffer.begin() + 1, buffer.begin() + SIZE_OF_START));// get the length of the data by slicing the buffer.
-			//std::cout << dataLength << std::endl;
 			std::vector<unsigned char> data(buffer.begin() + SIZE_OF_START, buffer.begin() + dataLength + SIZE_OF_START);// get the data itself.
 			std::cout << data.size() << std::endl;
 			std::cout << data.data() << std::endl;
@@ -157,7 +156,7 @@ std::vector<unsigned char> Communicator::getData(SOCKET soc)
 		buffer.resize(res);
 	}
 	if (buffer.size() == 0) {
-		throw std::exception("User sent empty");
+		throw std::exception("User disconnected");
 	}
 	return buffer;
 }
