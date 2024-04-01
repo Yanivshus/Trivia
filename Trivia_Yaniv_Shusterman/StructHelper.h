@@ -34,7 +34,6 @@ typedef struct {
 
 typedef struct {
 	Codes id;
-	std::string password;
 	time_t time;
 	std::vector<unsigned char> buffer;
 } RequestInfo;
