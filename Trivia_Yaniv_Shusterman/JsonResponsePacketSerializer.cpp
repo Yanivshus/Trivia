@@ -4,7 +4,7 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const
 {
     json j = { { "message", err.massage} };
     Codes curr = ERROR_RESPONSE;
-    return createPacket(curr, j.dump());
+    return createPacket(curr, j);
 }
 
 std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const LoginResponse& err)
@@ -29,8 +29,7 @@ std::vector<unsigned char> JsonResponsePacketSerializer::createPacket(const int 
     std::vector<unsigned char> bytesOfLenData = createDataLengthAsBytes(data.size());// take the length of data as bytes.
     std::copy(bytesOfLenData.begin(), bytesOfLenData.end(), std::back_inserter(bytesVec));// copy the length to the vector.
 
-    //turning the json to char vector.
-    std::cout << data.is_string() << std::endl;
+    //turning the json to char vector
     std::vector<unsigned char> dataVector = json::to_bson(data);
     std::copy(dataVector.begin(), dataVector.end(), std::back_inserter(bytesVec));//copy the data to the vector.
 
