@@ -1,5 +1,7 @@
 #pragma once
 //each value represnts a possiable code in the requests.
+
+#define SIZE_OF_START 5
 enum Codes {
 	ERROR_RESPONSE = 12,
 	LOGIN_RESPONSE = 13,

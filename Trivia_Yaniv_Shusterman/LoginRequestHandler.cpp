@@ -15,28 +15,20 @@ bool LoginRequestHandler::isRequestRelevant(RequestInfo info)
 
 RequestResult LoginRequestHandler::handleRequest(RequestInfo info)
 {
-    if (info.id == LOGIN_REQUEST) {
-        for (auto& i : info.buffer)
-        {
-            std::cout << i << std::endl;
-        }
-        std::cout << info.buffer.size() << std::endl;
+    if (info.id == LOGIN_REQUEST) 
+    {
         //for now.
         std::cout << "Logging in..." << std::endl;
         LoginRequest log= JsonRequestPacketDeserializer::deserializeLoginRequest(info.buffer);
         std::cout << "Password: " << log.password<< std::endl;
         std::cout << "Username: " << log.username<< std::endl;
 
-        ErrorResponse res = { "login not working :)" };
+        LoginResponse res = { 1 };
         return { JsonResponsePacketSerializer::serializeResponse(res) , nullptr };
     }
 
-    else if (info.id == SIGNUP_REQUEST) {
-        for (auto& i : info.buffer)
-        {
-            std::cout << i << std::endl;
-        }
-        std::cout << info.buffer.size() << std::endl;
+    else if (info.id == SIGNUP_REQUEST) 
+    {
         //for now.
         std::cout << "Signing up..." << std::endl;
         SignupRequest log = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buffer);
@@ -44,7 +36,7 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo info)
         std::cout << "Username: " << log.username << std::endl;
         std::cout << "Email: " << log.email << std::endl;
 
-        ErrorResponse res = { "signup not working :)" };
+        SignupResponse res = { 2 };
         return { JsonResponsePacketSerializer::serializeResponse(res) , nullptr };
     }
 }

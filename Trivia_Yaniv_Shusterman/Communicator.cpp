@@ -73,30 +73,50 @@ void Communicator::bindAndListen()
 
 void Communicator::handleNewClient(SOCKET client_sock)
 {
-	try 
+	while (true)
 	{
-		std::vector<unsigned char> buffer = getData(client_sock);
-		const int code = static_cast<int>(buffer[0]); // the code of the msg
-		const int dataLength = getSizeOfData(std::vector<unsigned char>(buffer.begin() + 1, buffer.begin() + 5));// get the length of the data by slicing the buffer.
-		//std::cout << dataLength << std::endl;
-		std::vector<unsigned char> data(buffer.begin() + 5, buffer.begin() + dataLength + 5);// get the data itself.
-		std::cout << data.size() << std::endl;
-		data.push_back('\0');
-		std::cout << data.data() << std::endl;
+		try
+		{
+			std::vector<unsigned char> buffer = getData(client_sock);
+			const int code = static_cast<int>(buffer[0]); // the code of the msg
+			const int dataLength = getSizeOfData(std::vector<unsigned char>(buffer.begin() + 1, buffer.begin() + SIZE_OF_START));// get the length of the data by slicing the buffer.
+			//std::cout << dataLength << std::endl;
+			std::vector<unsigned char> data(buffer.begin() + SIZE_OF_START, buffer.begin() + dataLength + SIZE_OF_START);// get the data itself.
+			std::cout << data.size() << std::endl;
+			data.push_back('\0');//terminating the string with null byte.
+			std::cout << data.data() << std::endl;
 
-		//build the request.
-		RequestInfo reqInfo;
-		reqInfo.buffer = data;
-		reqInfo.id = (Codes)code;
-		reqInfo.time = std::time(0);
+			//build the request.
+			RequestInfo reqInfo;
+			reqInfo.buffer = data;
+			reqInfo.id = (Codes)code;
+			reqInfo.time = std::time(0);
 
-		RequestResult res = this->m_clients[client_sock]->handleRequest(reqInfo);
+			//checking if the request is relevent to the current user stage.
+			if (this->m_clients[client_sock]->isRequestRelevant(reqInfo))
+			{
+				RequestResult res = this->m_clients[client_sock]->handleRequest(reqInfo);//handking the request.
+				sendData(client_sock, res.buffer);
+			}
+			else {
+				throw std::exception("Request isn't relevent.");
+			}
 
-		sendData(client_sock, res.buffer);
-
-	}
-	catch (std::exception& e) {
-		std::cout << e.what() << std::endl;
+		}
+		catch (std::exception& e) {
+			//checking if the was relevent request error.
+			if (e.what() == "Request isn't relevent.")
+			{
+				ErrorResponse err;
+				err.massage = "error in your request.";
+				std::vector<unsigned char> errorBuff = JsonResponsePacketSerializer::serializeResponse({ err });// if yes we will send to the client back an error massage.
+				sendData(client_sock, errorBuff);
+			}
+			else // if not we will just print the error.
+			{
+				std::cout << e.what() << std::endl;
+			}
+		}
 	}
 }
 
