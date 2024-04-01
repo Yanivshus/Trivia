@@ -6,6 +6,7 @@
 
 
 using json = nlohmann::json;
+using namespace nlohmann::literals;
 
 #define CODE_SIZE 4
 

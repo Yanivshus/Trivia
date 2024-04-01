@@ -78,26 +78,31 @@ void Communicator::handleNewClient(SOCKET client_sock)
 		std::vector<unsigned char> buffer = getData(client_sock);
 		const int code = static_cast<int>(buffer[0]); // the code of the msg
 		const int dataLength = getSizeOfData(std::vector<unsigned char>(buffer.begin() + 1, buffer.begin() + 5));// get the length of the data by slicing the buffer.
-		std::vector<unsigned char> data(buffer.begin() + 5, buffer.begin() + dataLength);// get the data itself.
-		
+		//std::cout << dataLength << std::endl;
+		std::vector<unsigned char> data(buffer.begin() + 5, buffer.begin() + dataLength + 5);// get the data itself.
+		std::cout << data.size() << std::endl;
+		data.push_back('\0');
+		std::cout << data.data() << std::endl;
+
 		//build the request.
 		RequestInfo reqInfo;
 		reqInfo.buffer = data;
 		reqInfo.id = (Codes)code;
 		reqInfo.time = std::time(0);
 
+		RequestResult res = this->m_clients[client_sock]->handleRequest(reqInfo);
 
+		sendData(client_sock, res.buffer);
 
 	}
-	catch (...) {
-		std::cout << "error handeling client" << std::endl;
+	catch (std::exception& e) {
+		std::cout << e.what() << std::endl;
 	}
-	//if(this->m_clients[client_sock]->isRequestRelevant())
 }
 
-void Communicator::sendData(SOCKET soc, const std::string& Msg)
+void Communicator::sendData(SOCKET soc, std::vector<unsigned char> Msg)
 {
-	const char* data = Msg.c_str();
+	const char* data = reinterpret_cast<const char*>(Msg.data());
 
 	if (send(soc, data, Msg.size(), 0) == INVALID_SOCKET)
 	{
@@ -119,7 +124,6 @@ std::vector<unsigned char> Communicator::getData(SOCKET soc)
 	else {
 		buffer.resize(res);
 	}
-
 	return buffer;
 }
 

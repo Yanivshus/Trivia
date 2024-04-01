@@ -39,7 +39,7 @@ private:
 	std::mutex clientListMtx;//using with the clientsList.
 
 	//temporary send data to clients and get data from clients.
-	void sendData(SOCKET soc, const std::string& Msg);
+	void sendData(SOCKET soc, std::vector<unsigned char> Msg);
 	std::vector<unsigned char> getData(SOCKET soc);
 	int getSizeOfData(std::vector<unsigned char> buffer);
 public:

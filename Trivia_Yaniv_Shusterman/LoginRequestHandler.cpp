@@ -16,7 +16,11 @@ bool LoginRequestHandler::isRequestRelevant(RequestInfo info)
 RequestResult LoginRequestHandler::handleRequest(RequestInfo info)
 {
     if (info.id == LOGIN_REQUEST) {
-
+        for (auto& i : info.buffer)
+        {
+            std::cout << i << std::endl;
+        }
+        std::cout << info.buffer.size() << std::endl;
         //for now.
         std::cout << "Logging in..." << std::endl;
         LoginRequest log= JsonRequestPacketDeserializer::deserializeLoginRequest(info.buffer);
@@ -28,6 +32,11 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo info)
     }
 
     else if (info.id == SIGNUP_REQUEST) {
+        for (auto& i : info.buffer)
+        {
+            std::cout << i << std::endl;
+        }
+        std::cout << info.buffer.size() << std::endl;
         //for now.
         std::cout << "Signing up..." << std::endl;
         SignupRequest log = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buffer);
