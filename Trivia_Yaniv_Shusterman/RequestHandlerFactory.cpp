@@ -6,7 +6,7 @@ LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 	return new LoginRequestHandler(*this);
 }
 
-LoginManager RequestHandlerFactory::getLoginManager()
+LoginManager& RequestHandlerFactory::getLoginManager()
 {
 	return this->m_loginManager;
 }

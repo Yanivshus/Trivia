@@ -12,6 +12,6 @@ private:
 	LoginManager m_loginManager;
 public:
 	LoginRequestHandler* createLoginRequestHandler();
-	LoginManager getLoginManager();
+	LoginManager& getLoginManager();
 	void setDB(IDatabase* m_database);
 };

@@ -28,6 +28,17 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo info)
         std::cout << "Password: " << req.password<< std::endl;
         std::cout << "Username: " << req.username<< std::endl;
 
+        LoginManager& log_manager = this->m_handlerFactory.getLoginManager();
+
+        try
+        {
+
+        }
+        catch (const std::exception& e)
+        {
+
+        }
+
         LoginResponse res = { 1 };
         return { JsonResponsePacketSerializer::serializeResponse(res) , nullptr };
     }
