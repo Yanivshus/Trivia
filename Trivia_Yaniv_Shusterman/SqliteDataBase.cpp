@@ -1,4 +1,27 @@
 #include "SqliteDataBase.h"
+int callBackGetUsers(void* data, int argc, char** argv, char** azColName)
+{
+	//turing the data to static so if there will be a couple of runs of the callback the data will remain.
+	auto& usersMap = *static_cast<std::map<std::string,std::string>*>(data);
+	
+	std::string userName;
+	std::string password;
+	//creating an map entry.
+	for (int i = 0; i < argc; i++)
+	{
+
+		if (std::string(azColName[i]) == "username")
+		{
+			userName = argv[i];
+		}
+		else if (std::string(azColName[i]) == "password")
+		{
+			password = argv[i];
+		}
+	}
+	usersMap[userName] = password;
+	return 0;
+}
 
 bool SqliteDataBase::open()
 {
@@ -13,7 +36,7 @@ bool SqliteDataBase::open()
 	if (fileExists != 0)
 	{
 		// creating the tables.
-		std::string query = "CREATE TABLE IF NOT EXISTS users (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL)";
+		std::string query = "CREATE TABLE IF NOT EXISTS users (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL);";
 
 		if (!runQuery(query))
 		{
@@ -35,17 +58,46 @@ bool SqliteDataBase::close()
 
 int SqliteDataBase::doesUserExist(const std::string& username)
 {
-	return 0;
+	std::string query = "SELECT username,password FROM USERS WHERE username='"+username+"';";
+	this->userList.clear();
+
+	char* errMsg = nullptr;
+	//if qeury didnt worked we will print why.
+	if (sqlite3_exec(this->_db, query.c_str(), callBackGetUsers, &this->userList, &errMsg) != SQLITE_OK) {
+		std::cout << "sql err" << std::endl;
+		std::cout << "reason: " << errMsg << std::endl;
+	}
+
+	//if user wasnt found we will return 0 for false.
+	if (this->userList.empty() == true) {
+		return 0;
+	}
+	return 1;//we will return 1 for true, user exists.
+	
 }
 
 int SqliteDataBase::doesPasswordMatch(const std::string& username, const std::string& password)
 {
-	return 0;
+	std::string query = "SELECT username,password FROM USERS WHERE username='"+username+"' AND password='"+password+"';";// query to select username and password from the db.
+	this->userList.clear();
+
+	char* errMsg = nullptr;
+	//if qeury didnt worked we will print why.
+	if (sqlite3_exec(this->_db, query.c_str(), callBackGetUsers, &this->userList, &errMsg) != SQLITE_OK) {
+		std::cout << "sql err" << std::endl;	
+		std::cout << "reason: " << errMsg << std::endl;
+	}
+
+	// if no matched user found, we will return false
+	if (this->userList.empty() == true) {
+		return 0;
+	}
+	return 1;// else if found a match true will be returned.
 }
 
 int SqliteDataBase::addNewUser(const std::string& username, const std::string& password, const std::string& email)
 {
-	std::string query = "INSERT INTO USERS (username, password, email) values('"+username+"', '"+password+"', '"+email+"')";
+	std::string query = "INSERT INTO USERS (username, password, email) values('"+username+"', '"+password+"', '"+email+"');";
 	return runQuery(query);
 }
 
@@ -57,7 +109,7 @@ bool SqliteDataBase::runQuery(const std::string& query)
 	if (res != SQLITE_OK) {
 		std::cout << "sql err" << std::endl;
 		std::cout << "reason: " << errMsg << std::endl;
-		return false;
+		return 0;
 	}
-	return true;
+	return 1;
 }
