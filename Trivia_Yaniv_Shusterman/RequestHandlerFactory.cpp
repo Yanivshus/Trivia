@@ -3,7 +3,7 @@
 
 LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 {
-	return new LoginRequestHandler;
+	return new LoginRequestHandler(*this);
 }
 
 LoginManager RequestHandlerFactory::getLoginManager()
@@ -13,6 +13,5 @@ LoginManager RequestHandlerFactory::getLoginManager()
 
 void RequestHandlerFactory::setDB(IDatabase* m_database)
 {
-	this->m_database = m_database;
 	m_loginManager.setDB(m_database);
 }

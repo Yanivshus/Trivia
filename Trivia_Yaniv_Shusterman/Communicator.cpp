@@ -75,7 +75,7 @@ void Communicator::bindAndListen()
 
 		std::cout << "Client accepted. Server and client can speak." << std::endl;
 		this->clientListMtx.lock();
-		this->m_clients[client_socket] = new LoginRequestHandler;
+		this->m_clients[client_socket] = this->m_handlerFactory.createLoginRequestHandler();
 		this->clientListMtx.unlock();
 
 		// the function that handle the conversation with the client

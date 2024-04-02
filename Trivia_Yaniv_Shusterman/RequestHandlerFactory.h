@@ -4,6 +4,8 @@
 #include "LoginRequestHandler.h"
 #include <iostream>
 
+class LoginRequestHandler;
+
 class RequestHandlerFactory {
 private:
 	IDatabase* m_database;

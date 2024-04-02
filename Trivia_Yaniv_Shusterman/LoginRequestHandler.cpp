@@ -1,5 +1,9 @@
 #include "LoginRequestHandler.h"
 
+LoginRequestHandler::LoginRequestHandler(RequestHandlerFactory& m_handlerFactory) : m_handlerFactory(m_handlerFactory)
+{
+}
+
 bool LoginRequestHandler::isRequestRelevant(RequestInfo info)
 {
     //checks if the request is either login or signup.
@@ -20,6 +24,7 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo info)
         //for now.
         std::cout << "Logging in..." << std::endl;
         LoginRequest req = JsonRequestPacketDeserializer::deserializeLoginRequest(info.buffer);
+        
         std::cout << "Password: " << req.password<< std::endl;
         std::cout << "Username: " << req.username<< std::endl;
 

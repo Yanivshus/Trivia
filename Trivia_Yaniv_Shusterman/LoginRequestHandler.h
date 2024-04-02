@@ -1,8 +1,14 @@
 #pragma once
 #include "IRequestHandler.h"
+#include "RequestHandlerFactory.h"
+
+class RequestHandlerFactory;
 
 class LoginRequestHandler : public IRequestHandler {
+private:
+	RequestHandlerFactory& m_handlerFactory;
 public:
+	LoginRequestHandler(RequestHandlerFactory& m_handlerFactory);
 	/// <summary>
 	/// check if the request is login or signup
 	/// </summary>

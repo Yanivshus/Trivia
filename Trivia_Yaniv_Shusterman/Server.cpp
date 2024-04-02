@@ -11,12 +11,9 @@ Server::Server() : m_communicator(m_handlerFactory)
 }
 void Server::run()
 {
-
 	std::cout << "Server is up and running!!!" << std::endl;
 	std::thread connectorThread(&Communicator::startHandleRequests, &this->m_communicator);
 	connectorThread.detach();
-
-
 
 	//main loop when admin enters exit the server will close.
 	std::string exit = "";
@@ -26,6 +23,4 @@ void Server::run()
 	}
 	std::cout << "Server closed!" << std::endl;
 	this->m_database->close();
-	
 }
-;
