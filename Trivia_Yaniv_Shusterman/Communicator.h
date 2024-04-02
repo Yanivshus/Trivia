@@ -3,7 +3,7 @@
 #include "WSAInitializer.h"
 #include <Windows.h>
 #include "IRequestHandler.h"
-#include "LoginRequestHandler.h"
+#include "RequestHandlerFactory.h"
 
 #include <iostream>
 #include <map>
@@ -24,6 +24,7 @@ class Communicator {
 private:
 	SOCKET m_serverSocket;
 	std::map<SOCKET, IRequestHandler*> m_clients;
+	RequestHandlerFactory& m_handlerFactory;
 
 	/// <summary>
 	/// bind to a socket and listen to new clients.
@@ -59,7 +60,7 @@ private:
 	/// <returns>length of data.</returns>
 	int getSizeOfData(std::vector<unsigned char> buffer);
 public:
-	Communicator();
+	Communicator(RequestHandlerFactory& r);
 	~Communicator();
 	void startHandleRequests();
 	

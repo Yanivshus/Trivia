@@ -10,6 +10,7 @@ private:
 	IDatabase* m_database;
 	std::vector<LoggedUser> m_loggedUsers;
 public:
+	LoginManager();
 	/// <summary>
 	/// signup the user to the database.
 	/// </summary>
@@ -30,4 +31,6 @@ public:
 	/// </summary>
 	/// <param name="username:">user the logout from.</param>
 	void logout(const std::string& username);
+
+	void setDB(IDatabase* m_database);
 };

@@ -1,7 +1,8 @@
 #include "Communicator.h"
 
 
-Communicator::Communicator()
+
+Communicator::Communicator(RequestHandlerFactory& r) : m_handlerFactory(r)
 {
 	// this server use TCP. that why SOCK_STREAM & IPPROTO_TCP
 	// if the server use UDP we will use: SOCK_DGRAM & IPPROTO_UDP
@@ -9,7 +10,9 @@ Communicator::Communicator()
 
 	if (this->m_serverSocket == INVALID_SOCKET)
 		throw std::exception(__FUNCTION__ " - socket");
+
 }
+
 
 Communicator::~Communicator()
 {
