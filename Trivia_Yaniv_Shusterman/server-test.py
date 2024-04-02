@@ -20,15 +20,20 @@ def choose(input_str):
 
 def details(input_str):
     if input_str == "S":
+        username = input("Enter username: ")
+        password = input("Enter password: ")
+        email = input("Enter email: ")
         return {
-            "username" : "yaniv",
-            "password" : "goat12",
-            "email" : "kai@gmail.com"
+            "username" : username,
+            "password" : password,
+            "email" : email
         }
     else:
+        username = input("Enter username: ")
+        password = input("Enter password: ")
         return {
-            "username" : "yaniv",
-            "password" : "goat12"
+            "username" : username,
+            "password" : password
         }
 
 
@@ -56,11 +61,9 @@ def main():
             buffer = []
             buffer.append(chr(code).encode())
             buffer.append(create_data_length_as_bytes(len(dataJs)))
-            print(len(dataJs), dataJs)
             buffer.append(dataJs)
             print(buffer)
             concatenated_bytes = b''.join(buffer)
-            print(concatenated_bytes)
         
 
             # Send data to the server
@@ -68,7 +71,8 @@ def main():
             
             # Receive data from the server
             received_data = client_socket.recv(1024)
-            print("Received from server:", received_data.decode())
+            print("Received from server:");
+            print(received_data.decode())
 
  
 

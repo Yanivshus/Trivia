@@ -94,42 +94,46 @@ void Communicator::handleNewClient(SOCKET client_sock)
 			const int code = static_cast<int>(buffer[0]); // the code of the msg
 			const int dataLength = getSizeOfData(std::vector<unsigned char>(buffer.begin() + 1, buffer.begin() + SIZE_OF_START));// get the length of the data by slicing the buffer.
 			std::vector<unsigned char> data(buffer.begin() + SIZE_OF_START, buffer.begin() + dataLength + SIZE_OF_START);// get the data itself.
-			std::cout << data.size() << std::endl;
+			
 			std::cout << data.data() << std::endl;
 
 			//build the request.
 			RequestInfo reqInfo;
 			reqInfo.buffer = data;
 			reqInfo.id = (Codes)code;
+			std::cout << reqInfo.id << std::endl;
 			reqInfo.time = std::time(0);
 
+			if (this->m_clients.find(client_sock)->second == nullptr)
+			{
+				std::cout << "[ERROR] Couldn't find socket" << std::endl;
+			}
+
+
 			//checking if the request is relevent to the current user stage.
-			if (this->m_clients[client_sock]->isRequestRelevant(reqInfo))
+			if (this->m_clients.find(client_sock)->second != nullptr && this->m_clients[client_sock]->isRequestRelevant(reqInfo))
 			{
 				RequestResult res = this->m_clients[client_sock]->handleRequest(reqInfo);//handling the request.
+				//if the returned type of the handler is nullptr the user status will not change.
+				if (res.newHandler != nullptr) {
+					this->m_clients[client_sock] = res.newHandler;// if its not nullptr it will change to the new handler.
+				}
 				sendData(client_sock, res.buffer);
 			}
 			else {
-				throw std::exception("Request isn't relevent.");
+				//if the request isnt relevnt i will update the client about it.
+				ErrorResponse err;
+				err.massage = "Request isn't relevent.";
+				std::vector<unsigned char> errorBuff = JsonResponsePacketSerializer::serializeResponse(err);// if yes we will send to the client back an error massage.
+				sendData(client_sock, errorBuff);
 			}
 
 		}
 		catch (std::exception& e) 
 		{
-			//checking if the was relevent request error.
-			if (e.what() == "Request isn't relevent.")
-			{
-				ErrorResponse err;
-				err.massage = "error in your request.";
-				std::vector<unsigned char> errorBuff = JsonResponsePacketSerializer::serializeResponse({ err });// if yes we will send to the client back an error massage.
-				sendData(client_sock, errorBuff);
-			}
-			else // if not we will just print the error.
-			{
-				std::cout << e.what() << std::endl;
-				closesocket(client_sock);
-				break;//tempppppp
-			}
+			std::cout << e.what() << std::endl;
+			closesocket(client_sock);
+			break;
 		}
 	}
 }

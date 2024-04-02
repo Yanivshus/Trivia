@@ -19,40 +19,51 @@ bool LoginRequestHandler::isRequestRelevant(RequestInfo info)
 
 RequestResult LoginRequestHandler::handleRequest(RequestInfo info)
 {
-    if (info.id == LOGIN_REQUEST) 
+
+    try {
+        if (info.id == LOGIN_REQUEST)
+        {
+            //for now.
+            std::cout << "Logging in..." << std::endl;
+            LoginRequest req = JsonRequestPacketDeserializer::deserializeLoginRequest(info.buffer);// turning the buffer to a struct for easy use.
+
+            std::cout << "Password: " << req.password << std::endl;
+            std::cout << "Username: " << req.username << std::endl;
+
+            LoginManager& log_manager = this->m_handlerFactory.getLoginManager();//getting the login manager
+            log_manager.login(req.username, req.password);// trying to log the user.
+
+            //setting the next handler to be the menu.
+            LoginResponse res = { LOGIN_RESPONSE };
+            return { JsonResponsePacketSerializer::serializeResponse(res) , (IRequestHandler*)this->m_handlerFactory.createMenuRequestHandler()};
+        }
+
+        else if (info.id == SIGNUP_REQUEST)
+        {
+            //for now.
+            std::cout << "Signing up..." << std::endl;
+            SignupRequest req = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buffer);// turning the buffer to a struct for easy use.
+            std::cout << "Password: " << req.password << std::endl;
+            std::cout << "Username: " << req.username << std::endl;
+            std::cout << "Email: " << req.email << std::endl;
+
+            LoginManager& log_manager = this->m_handlerFactory.getLoginManager();//getting the login manager
+            log_manager.signup(req.username, req.password, req.email);// trying to sign up the user.
+
+            //creating new respone, the next handler will be still nullptr, because after signing up you still need to log in.
+            SignupResponse res = { SIGNUP_RESPONSE };
+            return { JsonResponsePacketSerializer::serializeResponse(res) , nullptr };
+        }
+    }
+    catch (std::exception& e) // if eny thrown exceptions caught , return a error response.
     {
-        //for now.
-        std::cout << "Logging in..." << std::endl;
-        LoginRequest req = JsonRequestPacketDeserializer::deserializeLoginRequest(info.buffer);
-        
-        std::cout << "Password: " << req.password<< std::endl;
-        std::cout << "Username: " << req.username<< std::endl;
-
-        LoginManager& log_manager = this->m_handlerFactory.getLoginManager();
-
-        try
-        {
-
-        }
-        catch (const std::exception& e)
-        {
-
-        }
-
-        LoginResponse res = { 1 };
+        std::cout << e.what() << std::endl;
+        ErrorResponse res = { "FAILED" };
         return { JsonResponsePacketSerializer::serializeResponse(res) , nullptr };
     }
-
-    else if (info.id == SIGNUP_REQUEST) 
+    catch(nlohmann::json::exception& e)
     {
-        //for now.
-        std::cout << "Signing up..." << std::endl;
-        SignupRequest req = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buffer);
-        std::cout << "Password: " << req.password << std::endl;
-        std::cout << "Username: " << req.username << std::endl;
-        std::cout << "Email: " << req.email << std::endl;
-
-        SignupResponse res = { 2 };
+        ErrorResponse res = { "ERROR : INVALID JSON "};
         return { JsonResponsePacketSerializer::serializeResponse(res) , nullptr };
     }
 }
