@@ -13,8 +13,7 @@ bool SqliteDataBase::open()
 	if (fileExists != 0)
 	{
 		// creating the tables.
-		std::string query = "CREATE TABLE users (ID INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT, email TEXT)";
-
+		std::string query = "CREATE TABLE IF NOT EXISTS users (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL)";
 
 		if (!runQuery(query))
 		{
