@@ -1,11 +1,6 @@
 #include "LoginManager.h"
 
 
-
-LoginManager::LoginManager()
-{
-}
-
 void LoginManager::signup(const std::string& username, const std::string& password, const std::string& email)
 {
 	if (this->m_database->doesUserExist(username) == 1) // if the user already exists we cant add him.

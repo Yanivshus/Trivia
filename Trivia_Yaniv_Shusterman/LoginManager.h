@@ -10,7 +10,6 @@ private:
 	IDatabase* m_database;
 	std::vector<LoggedUser> m_loggedUsers;
 public:
-	LoginManager();
 	/// <summary>
 	/// signup the user to the database.
 	/// </summary>
