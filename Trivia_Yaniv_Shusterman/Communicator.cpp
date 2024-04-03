@@ -115,9 +115,12 @@ void Communicator::handleNewClient(SOCKET client_sock)
 			{
 				RequestResult res = this->m_clients[client_sock]->handleRequest(reqInfo);//handling the request.
 				//if the returned type of the handler is nullptr the user status will not change.
+				this->clientListMtx.lock();
 				if (res.newHandler != nullptr) {
 					this->m_clients[client_sock] = res.newHandler;// if its not nullptr it will change to the new handler.
 				}
+				this->clientListMtx.unlock();
+
 				sendData(client_sock, res.buffer);
 			}
 			else {
