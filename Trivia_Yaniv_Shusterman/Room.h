@@ -8,9 +8,23 @@ private:
 	RoomData m_metadata;
 	std::vector<LoggedUser> m_users;
 public:
-	Room(const unsigned int id, const std::string& name, const unsigned int maxPlayers, const unsigned int numOfQuestionsInGame, const unsigned int timePerQuestion, const unsigned int isActive);
-	void addUser(LoggedUser user);
-	void deleteUser(LoggedUser user);
-	std::vector<std::string> getAllUsers();
+	Room(RoomData data);
 
+	/// <summary>
+	/// adds user to list of users in the room.
+	/// </summary>
+	/// <param name="user:">user to add.</param>
+	void addUser(LoggedUser user);
+
+	/// <summary>
+	/// delete user from users in the room.
+	/// </summary>
+	/// <param name="user:">user to delete.</param>
+	void deleteUser(LoggedUser user);
+
+	std::vector<std::string> getAllUsers();
+	
+	unsigned int isRoomActive() { return this->m_metadata.isActive; };
+
+	RoomData getRoomData() const { return this->m_metadata; };
 };
