@@ -1,0 +1,49 @@
+#include "JsonResponsePacketSerializer.h"
+
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const ErrorResponse& err)
+{
+    json j = { { "message", err.massage} };
+    Codes curr = ERROR_RESPONSE;
+    return createPacket(curr, j);
+}
+
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const LoginResponse& err)
+{
+    json j = { { "status", err.status} };
+    Codes curr = LOGIN_RESPONSE;
+    return createPacket(curr, j);
+}
+
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const SignupResponse& err)
+{
+    json j = { { "status", err.status} };
+    Codes curr = SIGNUP_RESPONSE;
+    return createPacket(curr, j);
+}
+
+std::vector<unsigned char> JsonResponsePacketSerializer::createPacket(const int code, json data)
+{
+    std::vector<unsigned char> bytesVec;
+    bytesVec.push_back(static_cast<unsigned char>(code));//pushing the code of the response first / size 1 byte.
+
+    std::vector<unsigned char> bytesOfLenData = createDataLengthAsBytes(data.size());// take the length of data as bytes.
+    std::copy(bytesOfLenData.begin(), bytesOfLenData.end(), std::back_inserter(bytesVec));// copy the length to the vector.
+
+    //turning the json to char vector
+    std::vector<unsigned char> dataVector = json::to_bson(data);
+    std::copy(dataVector.begin(), dataVector.end(), std::back_inserter(bytesVec));//copy the data to the vector.
+
+    return bytesVec;
+}
+
+std::vector<unsigned char> JsonResponsePacketSerializer::createDataLengthAsBytes(const int num)
+{
+    std::vector<unsigned char> bytes(CODE_SIZE);
+
+    // Extract each byte from the integer
+    for (int i = 0; i < CODE_SIZE; i++) {
+        bytes[CODE_SIZE - 1 - i] = static_cast<unsigned char>((num >> (i * 8)) & 0xFF); // Extract each byte
+    }
+    // Return the vector of bytes
+    return bytes;
+}
