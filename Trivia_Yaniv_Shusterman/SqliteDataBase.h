@@ -42,6 +42,13 @@ public:
 	/// <param name="amount:">amount of questions to get.</param>
 	/// <returns>list of questions.</returns>
 	virtual std::list<Question> getQuestions(const int amount) override;
+
+	virtual double getPlayerAverageAnswerTime(const std::string& username) override;
+	virtual int getNumOfCorrectAnswers(const std::string& username) override;
+	virtual int getNumOfTotalAnswers(const std::string& username) override;
+	virtual int getNumOfPlayerGames(const std::string& username);
+	virtual int getPlayerScore(const std::string& username, int gameId);
+	virtual std::vector<std::string> getHighScores();
 private:
 	bool runQuery(const std::string& query);
 	std::map<std::string, std::string> userList;

@@ -9,6 +9,7 @@ private:
 	std::vector<LoggedUser> m_users;
 public:
 	Room(RoomData data);
+	Room() {};
 
 	/// <summary>
 	/// adds user to list of users in the room.

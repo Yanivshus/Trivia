@@ -7,7 +7,6 @@
 class RoomManger {
 private:
 	std::map<int, Room> m_rooms;
-	std::mutex roomsMtx;
 public:
 	void createRoom(LoggedUser creator, RoomData data);
 	void deleteRoom(const int id);

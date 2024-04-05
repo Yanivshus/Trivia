@@ -33,7 +33,14 @@ int callBackGetQuestions(void* data, int argc, char** argv, char** azColName)
 	return 0;
 }
 
+int ScoreCallback(void* data, int argc, char** argv, char** azColName)
+{
+	std::string username = std::string(argv[0]);
+	std::string score = std::string(argv[1]);
+	(*(std::vector<std::string>*)data).push_back(username + ":" + score);// push the username and score to vector.
+	return 0;
 
+}
 
 
 int callBackGetUsers(void* data, int argc, char** argv, char** azColName)
@@ -58,6 +65,23 @@ int callBackGetUsers(void* data, int argc, char** argv, char** azColName)
 	}
 	usersMap[userName] = password;
 	return 0;
+}
+
+int getFloatCallback(void* data, int argc, char** argv, char** azColName)
+{
+	if (argc > 0) {
+		if (argv[0] != nullptr)
+			*(double*)data = std::stof(argv[0]);
+	}
+	return 0;
+}
+
+// Callback function implementation
+int intCallback(void* data, int argc, char** argv, char** azColName) {
+	if (argc > 0) {
+		*(int*)data = atoi(argv[0]);
+	}
+	return 0; 
 }
 
 bool SqliteDataBase::open()
@@ -159,6 +183,92 @@ std::list<Question> SqliteDataBase::getQuestions(const int amount)
 
 	return this->questions;
 }
+
+double SqliteDataBase::getPlayerAverageAnswerTime(const std::string& username)
+{
+	std::string query = "SELECT AVG(answer_time) FROM stats WHERE username="+username+";";
+	double res = 0.0;
+	char* errMsg = nullptr;
+	//if qeury didnt worked we will print why.
+	if (sqlite3_exec(this->_db, query.c_str(), getFloatCallback, &res, &errMsg) != SQLITE_OK) {
+		std::cout << "sql err" << std::endl;
+		std::cout << "reason: " << errMsg << std::endl;
+	}
+
+	return res;
+}
+
+int SqliteDataBase::getNumOfCorrectAnswers(const std::string& username)
+{
+	std::string query = "SELECT COUNT(iscorrect) FROM stats WHERE username='" + username + "' AND iscorrect=1;";
+	int res = 0;
+
+	char* errMsg = nullptr;
+	//if qeury didnt worked we will print why.
+	if (sqlite3_exec(this->_db, query.c_str(), intCallback, &res, &errMsg) != SQLITE_OK) {
+		std::cout << "sql err" << std::endl;
+		std::cout << "reason: " << errMsg << std::endl;
+	}
+	return res;
+}
+
+int SqliteDataBase::getNumOfTotalAnswers(const std::string& username)
+{
+	std::string query = "SELECT COUNT(username) FROM stats WHERE username='"+username+"'";
+	int res = 0;
+
+	char* errMsg = nullptr;
+	//if qeury didnt worked we will print why.
+	if (sqlite3_exec(this->_db, query.c_str(), intCallback, &res, &errMsg) != SQLITE_OK) {
+		std::cout << "sql err" << std::endl;
+		std::cout << "reason: " << errMsg << std::endl;
+	}
+	return res;
+}
+
+int SqliteDataBase::getNumOfPlayerGames(const std::string& username)
+{
+	std::string query = "SELECT COUNT(DISTINCT game_id) FROM stats WHERE username='" + username + "'";
+	int res = 0;
+
+	char* errMsg = nullptr;
+	//if qeury didnt worked we will print why.
+	if (sqlite3_exec(this->_db, query.c_str(), intCallback, &res, &errMsg) != SQLITE_OK) {
+		std::cout << "sql err" << std::endl;
+		std::cout << "reason: " << errMsg << std::endl;
+	}
+	return res;
+}
+
+int SqliteDataBase::getPlayerScore(const std::string& username, int gameId)
+{
+	std::string query = "SELECT SUM(score) FROM stats WHERE username='"+username+"' AND game_id="+std::to_string(gameId) + ";";
+	int res = 0;
+
+	char* errMsg = nullptr;
+	//if qeury didnt worked we will print why.
+	if (sqlite3_exec(this->_db, query.c_str(), intCallback, &res, &errMsg) != SQLITE_OK) {
+		std::cout << "sql err" << std::endl;
+		std::cout << "reason: " << errMsg << std::endl;
+	}
+	return res;
+}
+
+std::vector<std::string> SqliteDataBase::getHighScores()
+{
+	std::vector<std::string> scores;
+	std::string query = "SELECT username,SUM(score) SCORESUM FROM stats GROUP BY username ORDER BY SCORESUM DESC LIMIT 3;";
+
+	char* errMsg = nullptr;
+	//if qeury didnt worked we will print why.
+	if (sqlite3_exec(this->_db, query.c_str(), ScoreCallback, &scores, &errMsg) != SQLITE_OK) {
+		std::cout << "sql err" << std::endl;
+		std::cout << "reason: " << errMsg << std::endl;
+	}
+	return scores;
+}
+
+
 
 bool SqliteDataBase::runQuery(const std::string& query)
 {
