@@ -2,6 +2,7 @@
 #include "IDatabase.h"
 #include "sqlite3.h"
 #include <io.h>
+#include <string>
 #include <map>
 
 #define DB_NAME "triviaDB.db"
