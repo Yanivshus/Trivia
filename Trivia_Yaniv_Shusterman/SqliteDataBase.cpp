@@ -42,6 +42,13 @@ bool SqliteDataBase::open()
 		{
 			return false;
 		}
+
+		query = "CREATE TABLE IF NOT EXISTS questions (ID INTEGER, question TEXT, w_answer1 TEXT, w_answer2 TEXT, w_answer3	TEXT,c_answer4	TEXT, PRIMARY KEY(ID AUTOINCREMENT));";
+
+		if (!runQuery(query))
+		{
+			return false;
+		}
 	}
 	return true;
 }
