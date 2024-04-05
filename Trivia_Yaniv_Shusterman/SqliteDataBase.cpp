@@ -257,7 +257,7 @@ int SqliteDataBase::getPlayerScore(const std::string& username, int gameId)
 std::vector<std::string> SqliteDataBase::getHighScores()
 {
 	std::vector<std::string> scores;
-	std::string query = "SELECT username,SUM(score) SCORESUM FROM stats GROUP BY username ORDER BY SCORESUM DESC LIMIT 3;";
+	std::string query = "SELECT username,SUM(score) SCORESUM FROM stats GROUP BY username ORDER BY SCORESUM DESC LIMIT 5;";
 
 	char* errMsg = nullptr;
 	//if qeury didnt worked we will print why.
