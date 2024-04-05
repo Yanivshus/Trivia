@@ -1,4 +1,41 @@
 #include "SqliteDataBase.h"
+
+int callBackGetQuestions(void* data, int argc, char** argv, char** azColName) 
+{
+	//turing the data to static so if there will be a couple of runs of the callback the data will remain.
+	auto& questionsL = *static_cast<std::list<Question>*>(data);
+
+	
+	std::vector<std::string> Possiable;
+	std::string correct = "";
+	std::string quest = "";
+	for (int i = 0; i < argc; i++)
+	{
+		if (std::string(azColName[i]) == "question") {
+			quest = argv[i];
+		}
+		if (std::string(azColName[i]) == "w_answer1") {
+			Possiable.push_back(argv[i]);
+		}
+		if (std::string(azColName[i]) == "w_answer2") {
+			Possiable.push_back(argv[i]);
+		}
+		if (std::string(azColName[i]) == "w_answer3") {
+			Possiable.push_back(argv[i]);
+		}
+		if (std::string(azColName[i]) == "c_answer4") {
+			Possiable.push_back(argv[i]);
+		}
+	}
+
+	Question newQ(quest, Possiable);
+	questionsL.push_back(newQ);
+	return 0;
+}
+
+
+
+
 int callBackGetUsers(void* data, int argc, char** argv, char** azColName)
 {
 	//turing the data to static so if there will be a couple of runs of the callback the data will remain.
@@ -106,6 +143,21 @@ int SqliteDataBase::addNewUser(const std::string& username, const std::string& p
 {
 	std::string query = "INSERT INTO USERS (username, password, email) values('"+username+"', '"+password+"', '"+email+"');";
 	return runQuery(query);
+}
+
+std::list<Question> SqliteDataBase::getQuestions(const int amount)
+{
+	std::string query = "SELECT question, w_answer1, w_answer2, w_answer3, c_answer4 FROM questions ORDER BY RANDOM() LIMIT "+std::to_string(amount)+";";
+	this->questions.clear();
+
+	char* errMsg = nullptr;
+	//if qeury didnt worked we will print why.
+	if (sqlite3_exec(this->_db, query.c_str(), callBackGetQuestions, &this->questions, &errMsg) != SQLITE_OK) {
+		std::cout << "sql err" << std::endl;
+		std::cout << "reason: " << errMsg << std::endl;
+	}
+
+	return this->questions;
 }
 
 bool SqliteDataBase::runQuery(const std::string& query)

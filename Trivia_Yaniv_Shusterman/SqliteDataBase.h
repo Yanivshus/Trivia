@@ -34,8 +34,16 @@ public:
 	/// <param name="email:">user email</param>
 	/// <returns>true if worked.</returns>
 	virtual int addNewUser(const std::string& username, const std::string& password, const std::string& email) override;
+
+	/// <summary>
+	/// returns all questions randomized, by requested amount.
+	/// </summary>
+	/// <param name="amount:">amount of questions to get.</param>
+	/// <returns>list of questions.</returns>
+	virtual std::list<Question> getQuestions(const int amount) override;
 private:
 	bool runQuery(const std::string& query);
 	std::map<std::string, std::string> userList;
+	std::list<Question> questions;
 	sqlite3* _db;
 };
