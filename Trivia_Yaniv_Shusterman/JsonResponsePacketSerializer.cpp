@@ -35,6 +35,8 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const
     for (auto& room : err.rooms)
     {
         rooms += room.name;
+        rooms += ":";
+        rooms += room.id;
         rooms += ", ";
     }
 
