@@ -82,6 +82,21 @@ typedef struct {
 	IRequestHandler* newHandler;
 } RequestResult;
 
+typedef struct {
+	unsigned int roomId;
+} GetPlayersInRoomRequest;
+
+typedef struct {
+	unsigned int roomId;
+} JoinRoomRequest;
+
+typedef struct {
+	std::string roomName;
+	unsigned int maxUsers;
+	unsigned int questionCount;
+	unsigned int answerTimeout;
+} CreateRoomRequest;
+
 
 
 
