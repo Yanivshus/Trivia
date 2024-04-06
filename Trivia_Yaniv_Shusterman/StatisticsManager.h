@@ -9,6 +9,6 @@ private:
 	IDatabase* m_database;
 public:
 	std::vector<std::string> getHighScore();
-	std::vector<std::string> getUserStatistics();
+	std::vector<std::string> getUserStatistics(const std::string& username);
 	void setDB(IDatabase* m_database);
 };
