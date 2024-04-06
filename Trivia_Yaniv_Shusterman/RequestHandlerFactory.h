@@ -18,7 +18,7 @@ private:
 	StatisticsManager m_StatisticsManager;
 public:
 	LoginRequestHandler* createLoginRequestHandler();
-	MenuRequestHandler* createMenuRequestHandler();//need to fix this after finished the menuRequestHandler.
+	MenuRequestHandler* createMenuRequestHandler(const LoggedUser& adminUser);//need to fix this after finished the menuRequestHandler.
 	LoginManager& getLoginManager();
 	RoomManger& getRoomManager();
 	StatisticsManager& getStatisticsManager();

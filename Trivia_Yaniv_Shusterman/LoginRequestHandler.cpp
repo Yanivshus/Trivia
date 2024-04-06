@@ -35,7 +35,7 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo info)
 
             //setting the next handler to be the menu.
             LoginResponse res = { LOGIN_RESPONSE };
-            return { JsonResponsePacketSerializer::serializeResponse(res) , (IRequestHandler*)this->m_handlerFactory.createMenuRequestHandler()};
+            return { JsonResponsePacketSerializer::serializeResponse(res) , (IRequestHandler*)this->m_handlerFactory.createMenuRequestHandler(LoggedUser(req.username))};
         }
 
         else if (info.id == SIGNUP_REQUEST)

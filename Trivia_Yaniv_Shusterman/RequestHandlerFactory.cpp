@@ -6,9 +6,9 @@ LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 	return new LoginRequestHandler(*this);
 }
 
-MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler()
+MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(const LoggedUser& adminUser)
 {
-	return new MenuRequestHandler(*this);
+	return new MenuRequestHandler(*this, adminUser);
 }
 
 LoginManager& RequestHandlerFactory::getLoginManager()
