@@ -29,6 +29,7 @@ private:
 	RequestHandlerFactory& m_handlerFactory;
 	LoggedUser m_user;
 
+	//need to add to some of the next correct next handler.
 	RequestResult signout(RequestInfo info);
 	RequestResult getRooms(RequestInfo info);
 	RequestResult getPlayersInRoom(RequestInfo info);
