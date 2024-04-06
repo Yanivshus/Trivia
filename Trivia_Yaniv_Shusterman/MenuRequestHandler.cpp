@@ -182,7 +182,7 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo info)
         CreateRoomRequest createReq = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(info.buffer);
         RoomData data;
         //set room data parameters.
-        data.id = CreateRoomId();
+        data.id = CreateRoomId(); // create random id for the room.
         data.isActive = 1;
         data.maxPlayers = createReq.maxUsers;
         data.name = createReq.roomName;
