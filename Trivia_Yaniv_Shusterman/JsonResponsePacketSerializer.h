@@ -15,6 +15,14 @@ public:
 	static std::vector<unsigned char> serializeResponse(const ErrorResponse& err);
 	static std::vector<unsigned char> serializeResponse(const LoginResponse& err);
 	static std::vector<unsigned char> serializeResponse(const SignupResponse& err);
+
+	static std::vector<unsigned char> serializeResponse(const LogoutResponse& err);
+	static std::vector<unsigned char> serializeResponse(const GetRoomsResponse& err);
+	static std::vector<unsigned char> serializeResponse(const GetPlayersInRoomResponse& err);
+	static std::vector<unsigned char> serializeResponse(const GetHighScoreResponse& err);
+	static std::vector<unsigned char> serializeResponse(const GetPersonalStatsResponse& err);
+	static std::vector<unsigned char> serializeResponse(const JoinRoomResponse& err);
+	static std::vector<unsigned char> serializeResponse(const CreateRoomResponse& err);
 private:
 	/// <summary>
 	/// creates a packet in this protocol:

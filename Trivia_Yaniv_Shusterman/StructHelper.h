@@ -6,6 +6,15 @@
 
 class IRequestHandler; // fix circular includes.
 
+typedef struct {
+	unsigned int id;
+	std::string name;
+	unsigned int maxPlayers;
+	unsigned int numOfQuestionsInGame;
+	unsigned int timePerQuestion;
+	unsigned int isActive;
+} RoomData;
+
 //responses
 typedef struct {
 	std::string massage;
@@ -19,6 +28,36 @@ typedef struct {
 	int status;
 } SignupResponse;
 
+typedef struct {
+	unsigned int status;
+} LogoutResponse;
+
+typedef struct {
+	unsigned int status;
+	std::vector<RoomData> rooms;
+} GetRoomsResponse;
+
+typedef struct {
+	std::vector<std::string> players;
+} GetPlayersInRoomResponse;
+
+typedef struct {
+	unsigned int status;
+	std::vector<std::string> statistics;
+} GetHighScoreResponse;
+
+typedef struct {
+	unsigned int status;
+	std::vector<std::string> statistics;
+} GetPersonalStatsResponse;
+
+typedef struct {
+	unsigned int status;
+} JoinRoomResponse;
+
+typedef struct {
+	unsigned int status;
+} CreateRoomResponse;
 
 //requests
 typedef struct {
@@ -43,14 +82,7 @@ typedef struct {
 	IRequestHandler* newHandler;
 } RequestResult;
 
-typedef struct {
-	unsigned int id;
-	std::string name;
-	unsigned int maxPlayers;
-	unsigned int numOfQuestionsInGame;
-	unsigned int timePerQuestion;
-	unsigned int isActive;
-} RoomData;
+
 
 
 

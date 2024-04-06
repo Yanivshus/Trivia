@@ -2,7 +2,7 @@
 
 std::vector<std::string> StatisticsManager::getHighScore()
 {
-	this->m_database->getHighScores();
+	return this->m_database->getHighScores();
 }
 
 std::vector<std::string> StatisticsManager::getUserStatistics(const std::string& username)
