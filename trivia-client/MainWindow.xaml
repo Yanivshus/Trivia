@@ -9,11 +9,11 @@
     <StackPanel Margin="2,0,-2,0">
         <Image Height="82" Width="292" Source="/Trivia.png"/>
         <Grid Height="89" Width="700">
-            <Label Content="Username:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="68" Margin="53,13,0,0" FontFamily="Chiller"/>
-            <Label Content="Password:" HorizontalAlignment="Left" Margin="53,39,0,0" VerticalAlignment="Top" FontFamily="Chiller"/>
-            <TextBox HorizontalAlignment="Left" Margin="147,16,0,0" TextWrapping="Wrap" Text="user" x:Name="UsernameBox" VerticalAlignment="Top" Width="453" FontFamily="Chiller"/>
-            <TextBox HorizontalAlignment="Left" Margin="147,43,0,0" TextWrapping="Wrap" Text="user123" x:Name="PasswordBox" VerticalAlignment="Top" Width="453" FontFamily="Chiller"/>
-            <Button Content="sign-in" HorizontalAlignment="Left" Margin="631,28,0,0" VerticalAlignment="Top" Height="24" Width="47" Click="loginToServer" FontFamily="Chiller">
+            <Label Content="Username:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="83" Margin="38,13,0,0" FontFamily="Broadway"/>
+            <Label Content="Password:" HorizontalAlignment="Left" Margin="38,39,0,0" VerticalAlignment="Top" FontFamily="Broadway" Width="92"/>
+            <TextBox HorizontalAlignment="Left" Margin="147,16,0,0" TextWrapping="Wrap" Text="user" x:Name="UsernameBox" VerticalAlignment="Top" Width="453" FontFamily="Broadway"/>
+            <TextBox HorizontalAlignment="Left" Margin="147,43,0,0" TextWrapping="Wrap" Text="user123" x:Name="PasswordBox" VerticalAlignment="Top" Width="453" FontFamily="Broadway"/>
+            <Button Content="sign-in" HorizontalAlignment="Left" Margin="631,0,0,0" VerticalAlignment="Center" Height="41" Width="59" Click="loginToServer" FontFamily="Broadway">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="Black"/>
@@ -29,7 +29,7 @@
                     </TransformGroup>
                 </UIElement.RenderTransform>
             </Button>
-            <TextBlock HorizontalAlignment="Left" Margin="308,67,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="17" Width="89" x:Name="errorBox">
+            <TextBlock HorizontalAlignment="Left" Margin="171,67,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="17" Width="367" x:Name="errorBox">
              <UIElement.RenderTransform>
                  <TransformGroup>
                      <ScaleTransform/>
