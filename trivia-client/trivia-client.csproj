@@ -8,4 +8,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Trivia.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Trivia.png" />
+  </ItemGroup>
+
 </Project>
