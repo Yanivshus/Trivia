@@ -97,7 +97,7 @@ bool SqliteDataBase::open()
 	if (fileExists != 0)
 	{
 		// creating the tables.
-		std::string query = "CREATE TABLE IF NOT EXISTS users (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL);";
+		std::string query = "CREATE TABLE IF NOT EXISTS users (username TEXT,password TEXT,email TEXT,PRIMARY KEY(username))";
 
 		if (!runQuery(query))
 		{
@@ -105,6 +105,20 @@ bool SqliteDataBase::open()
 		}
 
 		query = "CREATE TABLE IF NOT EXISTS questions (ID INTEGER, question TEXT, w_answer1 TEXT, w_answer2 TEXT, w_answer3	TEXT,c_answer4	TEXT, PRIMARY KEY(ID AUTOINCREMENT));";
+
+		if (!runQuery(query))
+		{
+			return false;
+		}
+
+		query = "CREATE TABLE IF NOT EXISTS game (ID INTEGER,PRIMARY KEY(ID AUTOINCREMENT));";
+
+		if (!runQuery(query))
+		{
+			return false;
+		}
+
+		query = "CREATE TABLE IF NOT EXISTS stats (ID INTEGER,game_id	INTEGER,username TEXT NOT NULL,iscorrect INTEGER,answer_time INTEGER NOT NULL,score	INTEGER,PRIMARY KEY(ID AUTOINCREMENT),FOREIGN KEY(game_id) REFERENCES game(ID),FOREIGN KEY(username) REFERENCES users(username));";
 
 		if (!runQuery(query))
 		{
