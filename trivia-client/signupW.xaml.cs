@@ -57,6 +57,7 @@ namespace trivia_client
             //send the buffer to the server.
             PacketBuilder.sendDataToSocket(clientStream, buffer.ToArray());
 
+            // get the data from the socket stream.
             byte[] response = PacketBuilder.getDataFromSocket(clientStream);
 
             if ((int)response[0] == Codes.SIGNUP_RESPONSE)

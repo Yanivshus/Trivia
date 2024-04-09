@@ -58,14 +58,8 @@ namespace trivia_client
             //check the code.
             if ((int)response[0] == Codes.LOGIN_RESPONSE)
             {
-                byte[] data = PacketBuilder.deserializeToData(response);
-                // Convert BSON byte array to BsonDocument
-                BsonDocument bsonDocument = BsonSerializer.Deserialize<BsonDocument>(data);
-
-                // Convert BsonDocument to JSON string
-                string jsonString = bsonDocument.ToJson();
-                errorBox.Text = jsonString;
                 currentLoggedUser = new user(username, userPassword);
+
             }
             else
             {
