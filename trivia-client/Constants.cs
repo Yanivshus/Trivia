@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -40,11 +41,16 @@ namespace trivia_client
 
     public static class PacketBuilder
     {
+        /// <summary>
+        /// takes a whole packet and returns only the bson.
+        /// </summary>
+        /// <param name="packet:">the whole packet.</param>
+        /// <returns>only the data bson</returns>
         public static byte[] deserializeToData(byte[] packet)
         {
             //slice the length of the data.
             byte[] lengthBytes = new byte[4];
-            Array.Copy(packet, 1, lengthBytes, 0, 4);
+            Array.Copy(packet, 1, lengthBytes, 0, 4); // the size of length of data is 4
             int dataLength = GetDataLength(lengthBytes);//get the length of the data.
 
             byte[] data = new byte[dataLength];
@@ -53,13 +59,19 @@ namespace trivia_client
             return data;
         }
 
+
+        /// <summary>
+        /// creates a packet by code, dataLength, data.
+        /// </summary>
+        /// <param name="jsonString:">the data.</param>
+        /// <param name="code:">the code of the packet.</param>
+        /// <returns>list of bytes which represnts the packet.</returns>
         public static List<byte> BuildPacket(string jsonString, int code)
         {
             List<byte> buffer = new List<byte>();
 
             buffer.Add((byte)code);// the the code of the packet.
 
-            
 
             // Parse JSON string to BsonDocument
             BsonDocument bsonDocument = BsonDocument.Parse(jsonString);
@@ -73,6 +85,11 @@ namespace trivia_client
             return buffer;
         }
 
+        /// <summary>
+        /// turn the data length into bytes
+        /// </summary>
+        /// <param name="num:">size of data</param>
+        /// <returns>list of 4 bytes which is the length of data.</returns>
         private static List<byte> CreateDataLengthAsBytes(int num)
         {
             byte[] bytes = new byte[Codes.CODE_SIZE];
@@ -86,6 +103,11 @@ namespace trivia_client
             return bytes.ToList();
         }
 
+        /// <summary>
+        /// get the length as int from the byte array.
+        /// </summary>
+        /// <param name="bytes:">bytes array.</param>
+        /// <returns>length of data</returns>
         private static int GetDataLength(byte[] bytes)
         {
             int value = 0;
@@ -99,6 +121,18 @@ namespace trivia_client
             return value;
         }
 
+        public static byte[] getDataFromSocket(NetworkStream clientStream)
+        {
+            byte[] response = new byte[1024];
+            int bytesRead = clientStream.Read(response, 0, 1024);//get data from tcp stream.
+            return response;
+        }
+
+        public static void sendDataToSocket(NetworkStream clientStream, byte[] data)
+        {
+            clientStream.Write(data.ToArray(), 0, data.Count());// write to the tcp stream the massage.
+            clientStream.Flush();
+        }
 
     }
 }

@@ -57,31 +57,24 @@ namespace trivia_client
 
             List<byte> buffer = PacketBuilder.BuildPacket(jsonData, Codes.LOGIN_REQUEST);// build to packet i will send to server.
 
-            clientStream.Write(buffer.ToArray(), 0, buffer.Count());// write to the tcp stream the massage.
-            clientStream.Flush();
+            PacketBuilder.sendDataToSocket(clientStream, buffer.ToArray()); // send the buffer to socket.
 
-            byte[] response = new byte[1024];
-            int bytesRead = clientStream.Read(response, 0, 1024);//get data from tcp stream.
-            if (bytesRead > 0)
+            byte[] response = PacketBuilder.getDataFromSocket(clientStream);// get data from socket.
+            //check the code.
+            if ((int)response[0] == Codes.LOGIN_RESPONSE)
             {
-                //check the code.
-                if ((int)response[0] == Codes.LOGIN_RESPONSE)
-                {
-                    byte[] data = PacketBuilder.deserializeToData(response);
-                    // Convert BSON byte array to BsonDocument
-                    BsonDocument bsonDocument = BsonSerializer.Deserialize<BsonDocument>(data);
+                byte[] data = PacketBuilder.deserializeToData(response);
+                // Convert BSON byte array to BsonDocument
+                BsonDocument bsonDocument = BsonSerializer.Deserialize<BsonDocument>(data);
 
-                    // Convert BsonDocument to JSON string
-                    string jsonString = bsonDocument.ToJson();
-                    errorBox.Text = jsonString;
-                }
-                else
-                {
-                    errorBox.Text = "There was an error signing in!";
-                }
+                // Convert BsonDocument to JSON string
+                string jsonString = bsonDocument.ToJson();
+                errorBox.Text = jsonString;
+            }
+            else
+            {
+                errorBox.Text = "There was an error signing in!";
             }
         }
-
-
     }
 }
