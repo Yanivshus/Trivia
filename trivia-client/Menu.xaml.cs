@@ -61,6 +61,7 @@ namespace trivia_client
 
             if ((int)response[0] == Codes.LOGIN_RESPONSE)
             {
+                // if the logout was succeful we will return to the main menu which is login.
                 MainWindow main = new MainWindow();
                 main.Show();
                 this.Close();
