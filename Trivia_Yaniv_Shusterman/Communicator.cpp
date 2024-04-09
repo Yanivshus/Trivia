@@ -156,6 +156,11 @@ std::vector<unsigned char> Communicator::getData(SOCKET soc)
 	std::vector<unsigned char> buffer(BUFFER_SIZE);
 	int res = recv(soc, reinterpret_cast<char*>(buffer.data()), BUFFER_SIZE, 0);
 
+	for (int i = 0; i < buffer.size(); i++)
+	{
+		std::cout << buffer[i] << std::endl;
+	}
+
 	if (res == INVALID_SOCKET)
 	{
 		std::string s = "Error while recieving from socket: ";

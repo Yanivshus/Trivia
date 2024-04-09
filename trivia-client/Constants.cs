@@ -50,16 +50,15 @@ namespace trivia_client
         }
         private static List<byte> CreateDataLengthAsBytes(int num)
         {
-            List<byte> bytes = new List<byte>(Codes.CODE_SIZE);
+            byte[] bytes = new byte[Codes.CODE_SIZE];
 
             // Extract each byte from the integer
             for (int i = 0; i < Codes.CODE_SIZE; i++)
             {
-                bytes.Add((byte)((num >> (i * 8)) & 0xFF)); // Extract each byte
+                bytes[Codes.CODE_SIZE - 1 - i] = (byte)((num >> (i * 8)) & 0xFF); // Extract each byte
             }
-
-            // Return the list of bytes
-            return bytes;
+            // Return the vector of bytes
+            return bytes.ToList();
         }
     }
 }

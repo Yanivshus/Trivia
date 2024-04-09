@@ -29,14 +29,14 @@ namespace trivia_client
         NetworkStream clientStream;
         public MainWindow()
         {
-            //tcpClient = new TcpClient();
-            //IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9999);
-            //tcpClient.Connect(serverEndPoint);
-            //if (!tcpClient.Connected)
-            //{
+            tcpClient = new TcpClient();
+            IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9999);
+            tcpClient.Connect(serverEndPoint);
+            if (!tcpClient.Connected)
+            {
                 // handle new window of errror later.
-            //}
-            //clientStream = tcpClient.GetStream();
+            }
+            clientStream = tcpClient.GetStream();
             InitializeComponent();
         }
 
@@ -54,8 +54,15 @@ namespace trivia_client
 
             List<byte> buffer = PacketBuilder.BuildPacket(jsonData, Codes.LOGIN_REQUEST);
 
+            clientStream.Write(buffer.ToArray(), 0, buffer.Count());
+            clientStream.Flush();
 
-
+            byte[] response = new byte[4096];
+            int bytesRead = clientStream.Read(response, 0, 4096);
+            if (bytesRead > 0)
+            {
+                errorBox.Text = Encoding.ASCII.GetString(response);
+            }
         }
 
 
