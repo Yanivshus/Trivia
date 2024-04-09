@@ -90,7 +90,7 @@ namespace trivia_client
         /// </summary>
         /// <param name="num:">size of data</param>
         /// <returns>list of 4 bytes which is the length of data.</returns>
-        private static List<byte> CreateDataLengthAsBytes(int num)
+        public static List<byte> CreateDataLengthAsBytes(int num)
         {
             byte[] bytes = new byte[Codes.CODE_SIZE];
 

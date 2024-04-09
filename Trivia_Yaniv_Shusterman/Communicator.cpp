@@ -95,7 +95,6 @@ void Communicator::handleNewClient(SOCKET client_sock)
 			const int dataLength = getSizeOfData(std::vector<unsigned char>(buffer.begin() + 1, buffer.begin() + SIZE_OF_START));// get the length of the data by slicing the buffer.
 			std::vector<unsigned char> data(buffer.begin() + SIZE_OF_START, buffer.begin() + dataLength + SIZE_OF_START);// get the data itself.
 			
-			std::cout << data.data() << std::endl;
 
 			//build the request.
 			RequestInfo reqInfo;

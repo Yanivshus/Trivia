@@ -60,6 +60,10 @@ namespace trivia_client
             {
                 currentLoggedUser = new user(username, userPassword);
 
+                // move to the menu window.
+                Menu menuWindow = new Menu(tcpClient, clientStream,currentLoggedUser, this);
+                menuWindow.Show();
+                this.Hide();
             }
             else
             {
