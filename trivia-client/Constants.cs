@@ -2,7 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+
+using MongoDB.Bson;
+using MongoDB.Bson.IO;
+using MongoDB.Bson.Serialization;
 
 namespace trivia_client
 {
@@ -35,19 +40,39 @@ namespace trivia_client
 
     public static class PacketBuilder
     {
+        public static byte[] deserializeToData(byte[] packet)
+        {
+            //slice the length of the data.
+            byte[] lengthBytes = new byte[4];
+            Array.Copy(packet, 1, lengthBytes, 0, 4);
+            int dataLength = GetDataLength(lengthBytes);//get the length of the data.
+
+            byte[] data = new byte[dataLength];
+            Array.Copy(packet, 5, data, 0, dataLength);// get data itself from the pakcet.
+
+            return data;
+        }
+
         public static List<byte> BuildPacket(string jsonString, int code)
         {
             List<byte> buffer = new List<byte>();
 
             buffer.Add((byte)code);// the the code of the packet.
 
-            buffer.AddRange(CreateDataLengthAsBytes(jsonString.Length)); // create the length of the json part.
+            
 
-            byte[] jsonBytesArray = Encoding.ASCII.GetBytes(jsonString); // turn the string into bytes.
-            buffer.AddRange(jsonBytesArray);// add the byte json data to the buffer.
+            // Parse JSON string to BsonDocument
+            BsonDocument bsonDocument = BsonDocument.Parse(jsonString);
+            // Convert BsonDocument to BSON byte array
+            byte[] bsonBytes = bsonDocument.ToBson();
+
+            buffer.AddRange(CreateDataLengthAsBytes(bsonBytes.Length)); // create the length of the bson part.
+
+            buffer.AddRange(bsonBytes);// add the byte json data to the buffer.
 
             return buffer;
         }
+
         private static List<byte> CreateDataLengthAsBytes(int num)
         {
             byte[] bytes = new byte[Codes.CODE_SIZE];
@@ -60,5 +85,20 @@ namespace trivia_client
             // Return the vector of bytes
             return bytes.ToList();
         }
+
+        private static int GetDataLength(byte[] bytes)
+        {
+            int value = 0;
+
+            // Combine each byte into the integer
+            for (int i = 0; i < bytes.Length; ++i)
+            {
+                value |= (int)(bytes[i]) << (8 * (Codes.CODE_SIZE - 1 - i)); // Combine the byte into the integer
+            }
+
+            return value;
+        }
+
+
     }
 }

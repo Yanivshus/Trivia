@@ -15,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 
 
@@ -27,6 +29,7 @@ namespace trivia_client
     {
         TcpClient tcpClient;
         NetworkStream clientStream;
+        loggedUser currentLoggedUser;
         public MainWindow()
         {
             tcpClient = new TcpClient();
@@ -49,19 +52,33 @@ namespace trivia_client
             int currentCode = Codes.LOGIN_REQUEST; // login request code.
             
             loggedUser currUser = new loggedUser { password = userPassword, username = username };// serialize to json.
-            string jsonData = JsonConvert.SerializeObject(currUser);
+            string jsonData = JsonConvert.SerializeObject(currUser);// sirialize the object.
             errorBox.Text = jsonData;
 
-            List<byte> buffer = PacketBuilder.BuildPacket(jsonData, Codes.LOGIN_REQUEST);
+            List<byte> buffer = PacketBuilder.BuildPacket(jsonData, Codes.LOGIN_REQUEST);// build to packet i will send to server.
 
-            clientStream.Write(buffer.ToArray(), 0, buffer.Count());
+            clientStream.Write(buffer.ToArray(), 0, buffer.Count());// write to the tcp stream the massage.
             clientStream.Flush();
 
-            byte[] response = new byte[4096];
-            int bytesRead = clientStream.Read(response, 0, 4096);
+            byte[] response = new byte[1024];
+            int bytesRead = clientStream.Read(response, 0, 1024);//get data from tcp stream.
             if (bytesRead > 0)
             {
-                errorBox.Text = Encoding.ASCII.GetString(response);
+                //check the code.
+                if ((int)response[0] == Codes.LOGIN_RESPONSE)
+                {
+                    byte[] data = PacketBuilder.deserializeToData(response);
+                    // Convert BSON byte array to BsonDocument
+                    BsonDocument bsonDocument = BsonSerializer.Deserialize<BsonDocument>(data);
+
+                    // Convert BsonDocument to JSON string
+                    string jsonString = bsonDocument.ToJson();
+                    errorBox.Text = jsonString;
+                }
+                else
+                {
+                    errorBox.Text = "There was an error signing in!";
+                }
             }
         }
 
