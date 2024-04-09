@@ -76,5 +76,13 @@ namespace trivia_client
                 errorBox.Text = "There was an error signing in!";
             }
         }
+
+        private void signupBtn_Click(object sender, RoutedEventArgs e)
+        {
+            signupW signupWindow = new signupW();
+            signupWindow.Show();
+            // Close the current window if needed
+            Close(); // Assuming this method is within a Window
+        }
     }
 }

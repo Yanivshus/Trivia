@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <None Remove="Trivia.png" />
+    <None Remove="trviaBack.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +21,7 @@
 
   <ItemGroup>
     <Resource Include="Trivia.png" />
+    <Resource Include="trviaBack.jpg" />
   </ItemGroup>
 
 </Project>
