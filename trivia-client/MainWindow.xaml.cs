@@ -43,15 +43,12 @@ namespace trivia_client
 
         private void loginToServer(object sender, RoutedEventArgs e)
         {
-            //get username  and password the user entered.
+            //get username and password the user entered.
             string username = this.UsernameBox.Text;
             string userPassword = this.PasswordBox.Text;
-
-            int currentCode = Codes.LOGIN_REQUEST; // login request code.
             
             loggedUser currTry = new loggedUser { password = userPassword, username = username };// serialize to json.
             string jsonData = JsonConvert.SerializeObject(currTry);// sirialize the object.
-            errorBox.Text = jsonData;
 
             List<byte> buffer = PacketBuilder.BuildPacket(jsonData, Codes.LOGIN_REQUEST);// build to packet i will send to server.
 
@@ -78,10 +75,10 @@ namespace trivia_client
 
         private void signupBtn_Click(object sender, RoutedEventArgs e)
         {
-            signupW signupWindow = new signupW(this.tcpClient, this.clientStream);
+            signupW signupWindow = new signupW(this.tcpClient, this.clientStream, this);
             signupWindow.Show();
             // Close the current window if needed
-            Close(); // Assuming this method is within a Window
+            this.Hide(); // Assuming this method is within a Window
         }
     }
 }
