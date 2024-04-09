@@ -167,7 +167,7 @@ std::vector<unsigned char> Communicator::getData(SOCKET soc)
 		buffer.resize(res);
 	}
 	if (buffer.size() == 0) {
-		throw std::exception("User disconnected");
+		throw std::exception("User disconnected\n");
 	}
 	return buffer;
 }

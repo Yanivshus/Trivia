@@ -29,18 +29,16 @@ namespace trivia_client
     {
         TcpClient tcpClient;
         NetworkStream clientStream;
-        loggedUser currentLoggedUser;
+        user currentLoggedUser;
         public MainWindow()
         {
-            tcpClient = new TcpClient();
+
+            this.tcpClient = new TcpClient();
             IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9999);
-            tcpClient.Connect(serverEndPoint);
-            if (!tcpClient.Connected)
-            {
-                // handle new window of errror later.
-            }
-            clientStream = tcpClient.GetStream();
+            this.tcpClient.Connect(serverEndPoint);
+            this.clientStream = this.tcpClient.GetStream();
             InitializeComponent();
+
         }
 
         private void loginToServer(object sender, RoutedEventArgs e)
@@ -51,8 +49,8 @@ namespace trivia_client
 
             int currentCode = Codes.LOGIN_REQUEST; // login request code.
             
-            loggedUser currUser = new loggedUser { password = userPassword, username = username };// serialize to json.
-            string jsonData = JsonConvert.SerializeObject(currUser);// sirialize the object.
+            loggedUser currTry = new loggedUser { password = userPassword, username = username };// serialize to json.
+            string jsonData = JsonConvert.SerializeObject(currTry);// sirialize the object.
             errorBox.Text = jsonData;
 
             List<byte> buffer = PacketBuilder.BuildPacket(jsonData, Codes.LOGIN_REQUEST);// build to packet i will send to server.
@@ -70,6 +68,7 @@ namespace trivia_client
                 // Convert BsonDocument to JSON string
                 string jsonString = bsonDocument.ToJson();
                 errorBox.Text = jsonString;
+                currentLoggedUser = new user(username, userPassword);
             }
             else
             {
@@ -79,7 +78,7 @@ namespace trivia_client
 
         private void signupBtn_Click(object sender, RoutedEventArgs e)
         {
-            signupW signupWindow = new signupW();
+            signupW signupWindow = new signupW(this.tcpClient, this.clientStream);
             signupWindow.Show();
             // Close the current window if needed
             Close(); // Assuming this method is within a Window

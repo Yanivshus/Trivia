@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,14 +20,19 @@ namespace trivia_client
     /// </summary>
     public partial class signupW : Window
     {
-        public signupW()
+        TcpClient tcpClient;
+        NetworkStream clientStream;
+        public signupW(TcpClient tcpClient, NetworkStream clientStream)
         {
+            this.tcpClient = tcpClient;
+            this.clientStream = clientStream;
             InitializeComponent();
         }
 
         private void goBackClick(object sender, RoutedEventArgs e)
         {
             MainWindow loginWindow = new MainWindow();
+            
             loginWindow.Show();
             // Close the current window if needed
             Close(); // Assuming this method is within a Window
