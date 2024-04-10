@@ -29,13 +29,39 @@ private:
 	RequestHandlerFactory& m_handlerFactory;
 	LoggedUser m_user;
 
-	//need to add to some of the next correct next handler.
+	/// <summary>
+	/// sign outs of the current user
+	/// </summary>
 	RequestResult signout(RequestInfo info);
+
+	/// <summary>
+	/// get the active rooms.
+	/// </summary>
 	RequestResult getRooms(RequestInfo info);
+
+	/// <summary>
+	/// get players in a specific room
+	/// </summary>
 	RequestResult getPlayersInRoom(RequestInfo info);
+
+	/// <summary>
+	/// get personal stats of the current player
+	/// </summary>
 	RequestResult getPersonalStats(RequestInfo info);
+
+	/// <summary>
+	/// get the top 5 highest scores.
+	/// </summary>
 	RequestResult getHighScore(RequestInfo info);
+
+	/// <summary>
+	/// join a room by id.
+	/// </summary>
 	RequestResult joinRoom(RequestInfo info);
+
+	/// <summary>
+	/// cretes a room by user settings.
+	/// </summary>
 	RequestResult createRoom(RequestInfo info);
 
 	/// <summary>

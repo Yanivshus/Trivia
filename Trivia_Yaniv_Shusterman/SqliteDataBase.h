@@ -85,6 +85,7 @@ public:
 	/// <returns>vector of scores in the format , username=score</returns>
 	virtual std::vector<std::string> getHighScores();
 private:
+	// runs a query.
 	bool runQuery(const std::string& query);
 	std::map<std::string, std::string> userList;
 	std::list<Question> questions;
