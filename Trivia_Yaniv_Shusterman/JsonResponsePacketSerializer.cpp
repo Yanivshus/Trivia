@@ -35,16 +35,18 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const
     for (auto& room : err.rooms)
     {
         rooms += room.name;
-        rooms += ":";
-        rooms += room.id;
+        rooms += "=";
+        rooms += std::to_string(room.id);
         rooms += ", ";
     }
 
     if (rooms.size() >= 1) {
         rooms.pop_back(); // removing trailing ','.
+        rooms.pop_back(); // removing trailing ' '.
     }
 
     json j = { {"status", err.status}, {"Rooms", rooms} };
+    
     Codes curr = GET_ROOMS_RESPONSE;
     return createPacket(curr, j);
 }

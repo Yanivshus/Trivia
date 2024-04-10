@@ -43,7 +43,9 @@ namespace trivia_client
 
         private void JoinRoomBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            JoinChooseRoomW joinRoomW = new JoinChooseRoomW(tcpClient, clientStream, currentLoggedUser, this);
+            joinRoomW.Show();
+            this.Hide();
         }
 
         private void StatBtn_Click(object sender, RoutedEventArgs e)
