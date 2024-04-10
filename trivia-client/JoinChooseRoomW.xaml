@@ -17,6 +17,8 @@
             <Button Content="Join room" HorizontalAlignment="Left" Margin="552,372,0,0" VerticalAlignment="Top" Height="30" Width="111" FontFamily="Aharoni" Click="joinRoomBtn"/>
 
             <TextBox HorizontalAlignment="Center" Margin="0,372,0,0" TextWrapping="Wrap" Text="123456" VerticalAlignment="Top" Width="173" Height="30" FontFamily="Aharoni" FontSize="18" Name="idBox"/>
+            
+            <TextBlock HorizontalAlignment="Left" Margin="558,407,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="17" Width="95" Foreground="White" FontSize="16" TextAlignment="Center" Name="errBox"/>
         </Grid>
 
     </Grid>

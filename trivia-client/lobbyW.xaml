@@ -1,0 +1,17 @@
+﻿<Window x:Class="trivia_client.lobbyW"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:trivia_client"
+        mc:Ignorable="d"
+        Title="lobbyW" Height="450" Width="800">
+    <Grid>
+        <Image Source="/trviaBack.jpg" Stretch="Fill"/>
+        <Grid>
+            
+        </Grid>
+        <Button Content="Go back" HorizontalAlignment="Left" Margin="152,348,0,0" VerticalAlignment="Top" Height="37" Width="114" FontFamily="Aharoni" FontSize="18" Click="goBackBtn"/>
+        <Button Content="Start Game" HorizontalAlignment="Left" Margin="528,348,0,0" VerticalAlignment="Top" Height="37" Width="112" FontFamily="Aharoni" FontSize="18" Click="StartGameButton"/>
+    </Grid>
+</Window>

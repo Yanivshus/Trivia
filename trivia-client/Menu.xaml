@@ -10,10 +10,10 @@
         <Image Source="/trviaBack.jpg" Stretch="Fill"/>
         <StackPanel>
             <TextBlock TextWrapping="Wrap" Text="" Height="29" Width="345" x:Name="UserBox" FontSize="16" Foreground="White" TextAlignment="Center"/>
-            <Button Content="Create Room" Width="200" Margin="20" x:Name="CreateRoomBtn" FontSize="16" Height="60" Click="CreateRoomBtn_Click"/>
-            <Button Content="Join Room" Width="200" Margin="20" x:Name="JoinRoomBtn" FontSize="16" Height="60" Click="JoinRoomBtn_Click"/>
-            <Button Content="Statistics" Width="200" Margin="20" x:Name="StatBtn" FontSize="16" Height="60" Click="StatBtn_Click"/>
-            <Button Content="Logout" Width="200" Margin="20" x:Name="LogoutBtn" FontSize="16" Height="60" Click="LogoutBtn_Click"/>
+            <Button Content="Create Room" Width="200" Margin="20" x:Name="CreateRoomBtn" FontSize="16" Height="60" Click="CreateRoomBtn_Click" FontFamily="Aharoni"/>
+            <Button Content="Join Room" Width="200" Margin="20" x:Name="JoinRoomBtn" FontSize="16" Height="60" Click="JoinRoomBtn_Click" FontFamily="Aharoni"/>
+            <Button Content="Statistics" Width="200" Margin="20" x:Name="StatBtn" FontSize="16" Height="60" Click="StatBtn_Click" FontFamily="Aharoni"/>
+            <Button Content="Logout" Width="200" Margin="20" x:Name="LogoutBtn" FontSize="16" Height="60" Click="LogoutBtn_Click" FontFamily="Aharoni"/>
         </StackPanel>
 
     </Grid>

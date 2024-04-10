@@ -84,6 +84,31 @@ namespace trivia_client
 
         private void joinRoomBtn(object sender, RoutedEventArgs e)
         {
+            int id = int.Parse(this.idBox.Text);
+
+            roomJsonObj roomToJoin = new roomJsonObj { roomId = id }; // create room object
+            string jsonData = JsonConvert.SerializeObject(roomToJoin); // serialize to json.
+
+            // build the join room packet.
+            List<byte> buffer = PacketBuilder.BuildPacket(jsonData, Codes.JOIN_ROOM_REQUEST);
+
+            PacketBuilder.sendDataToSocket(clientStream, buffer.ToArray());// send packet.
+
+            byte[] response = PacketBuilder.getDataFromSocket(clientStream);// get reponse from server.
+
+            //check if joined to room.
+            if ((int)response[0] == Codes.JOIN_ROOM_RESPONSE)
+            {
+                lobbyW lobbyWin = new lobbyW(tcpClient, clientStream, currentLoggedUser, this, id);
+                this.Hide();
+                lobbyWin.Show();
+
+            }
+            else
+            {
+                this.errBox.Text = "FAILED TO JOIN ROOM";
+            }
+
 
         }
     }
