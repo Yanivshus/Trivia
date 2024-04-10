@@ -39,7 +39,9 @@ namespace trivia_client
         /// </summary>
         private void HighScoreBtn(object sender, RoutedEventArgs e)
         {
-
+            highScoresW highScoreWin = new highScoresW(tcpClient, clientStream, currentLoggedUser, this);
+            highScoreWin.Show();
+            this.Hide();
         }
 
         /// <summary>

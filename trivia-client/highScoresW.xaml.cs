@@ -19,33 +19,32 @@ using Newtonsoft.Json;
 namespace trivia_client
 {
     /// <summary>
-    /// Interaction logic for PersStatsW.xaml
+    /// Interaction logic for highScoresW.xaml
     /// </summary>
-    public partial class PersStatsW : Window
+    public partial class highScoresW : Window
     {
         TcpClient tcpClient;
         NetworkStream clientStream;
         user currentLoggedUser;
         Window statsMenuW;
-        public PersStatsW(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, Window statsMenuW)
+        public highScoresW(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, Window statsMenuW)
         {
             this.tcpClient = tcpClient;
             this.clientStream = clientStream;
             this.currentLoggedUser = currentLoggedUser;
             this.statsMenuW = statsMenuW;
             InitializeComponent();
-            this.usernameBox.Text = "Stats: " + currentLoggedUser.getUsername;
-            getPersonalStat();
+            showHighScores(); 
         }
 
         /// <summary>
-        /// function to get the personal stats.
+        /// shows the highest scores.
         /// </summary>
-        private void getPersonalStat()
+        private void showHighScores()
         {
             List<byte> buffer = new List<byte>();
             // build packet content.
-            buffer.Add((byte)Codes.GET_PERSONAL_STATS_REQUEST);
+            buffer.Add((byte)Codes.HIGH_SCORE_REQUEST);
             buffer.AddRange(PacketBuilder.CreateDataLengthAsBytes(0));
 
             // send the data to server
@@ -53,7 +52,7 @@ namespace trivia_client
 
             byte[] response = PacketBuilder.getDataFromSocket(clientStream);
 
-            if ((int)response[0] == Codes.GET_PERSONAL_STATS_RESPONSE) 
+            if ((int)response[0] == Codes.GET_HIGH_SCORE_RESPONSE)
             {
                 byte[] bsonData = PacketBuilder.deserializeToData(response); // take only the bson part of the server response.
 
@@ -65,33 +64,36 @@ namespace trivia_client
                 if(jsonString.Length > 0)
                 {
                     //convert the json to object
-                    getPersStatJsonObj stats = JsonConvert.DeserializeObject<getPersStatJsonObj>(jsonString);
+                    getHighScoresJsonObj stats = JsonConvert.DeserializeObject<getHighScoresJsonObj>(jsonString);
 
-                    //build user stats.
-                    string statString = "Avarge answer time: " + stats.AvgAnswerTime + "\n" +
-                        "Number of correct Answers: " + stats.NumCorrectAnswers + "\n" +
-                        "Number of total answers: " + stats.NumTotalAnswers + "\n" +
-                        "Number of player games: " + stats.NumPlayerGames + "\n";
-                    this.statBox.Text = statString;
+                    string[] statsString = stats.HighScores.Split(',');
+
+                    string scores = "";
+                    foreach (string s in statsString)
+                    {
+                        scores += s;
+                        scores += "\n";
+                    }
+
+                    this.statBox.Text = scores;
                 }
                 else
                 {
-                    this.statBox.Text = "Error loading stats.1";
-                }               
+                    this.statBox.Text = "No top 5 :(";
+                }
             }
             else
             {
-                this.statBox.Text = "Error loading stats.2";
+                this.statBox.Text = "No top 5 :(";
             }
-
         }
 
         /// <summary>
-        /// returns back to the stats choice screen.
+        /// goes back to stat menu
         /// </summary>
-        private void GoBackBtn(object sender, RoutedEventArgs e)
+        private void goBackBtn(object sender, RoutedEventArgs e)
         {
-            statsMenuW.Show();
+            this.statsMenuW.Show();
             this.Close();
         }
     }

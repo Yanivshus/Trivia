@@ -7,7 +7,7 @@ Room::Room(RoomData data)
 
 void Room::addUser(LoggedUser user)
 {
-	if (this->m_metadata.maxPlayers < this->m_users.size() + 1)//checking if adding the player will overflow the room size.
+	if (this->m_metadata.maxPlayers < this->m_users.size())//checking if adding the player will overflow the room size.
 	{
 		throw std::exception("The room is full.");
 	}

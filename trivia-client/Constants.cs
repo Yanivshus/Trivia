@@ -121,6 +121,9 @@ namespace trivia_client
             return value;
         }
 
+        /// <summary>
+        /// gets data from socket stream.
+        /// </summary>
         public static byte[] getDataFromSocket(NetworkStream clientStream)
         {
             byte[] response = new byte[1024];
@@ -128,6 +131,10 @@ namespace trivia_client
             return response;
         }
 
+
+        /// <summary>
+        /// send given data to socket stream.
+        /// </summary>
         public static void sendDataToSocket(NetworkStream clientStream, byte[] data)
         {
             clientStream.Write(data.ToArray(), 0, data.Count());// write to the tcp stream the massage.
