@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Newtonsoft.Json;
 
 namespace trivia_client
 {
@@ -36,7 +37,27 @@ namespace trivia_client
 
         private void CreateRoomBtn(object sender, RoutedEventArgs e)
         {
+            // create a room object so i could parse it to json.
+            Room newRoom = new Room { answerTime = int.Parse(this.ansTimeBox.Text), maxUsers = int.Parse(this.maxUsersBox.Text) , questionCount = int.Parse(this.qCountBox.Text) , roomName = this.roomNameBox.Text};
+            string jsonData = JsonConvert.SerializeObject(newRoom);
 
+            // build the packet with the correct codes.
+            List<byte> buffer = PacketBuilder.BuildPacket(jsonData, Codes.CREATE_ROOM_REQUEST);
+
+            PacketBuilder.sendDataToSocket(clientStream, buffer.ToArray()); // send to client.
+
+            byte[] response = PacketBuilder.getDataFromSocket(clientStream);
+
+            if ((int)response[0] == Codes.CREATE_ROOM_RESPONSE)
+            {
+                // the create worked and now we will go back to menu.
+                menuW.Show();
+                this.Close();
+            }
+            else
+            {
+                this.errorBox.Text = "Create room failed.";
+            }
         }
 
         private void GoBackButton(object sender, RoutedEventArgs e)

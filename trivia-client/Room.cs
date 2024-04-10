@@ -8,9 +8,9 @@ namespace trivia_client
 {
     public class Room
     {
-        public string answerTime { get; set; }
-        public string maxUsers { get; set; }
-        public string questionCount { get; set; }
+        public int answerTime { get; set; }
+        public int maxUsers { get; set; }
+        public int questionCount { get; set; }
         public string roomName { get; set; }
     }
 }
