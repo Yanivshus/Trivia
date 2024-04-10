@@ -37,6 +37,15 @@ namespace trivia_client
             this.lobbyWin = lobbyWin;
             this.roomId = roomId;
             InitializeComponent();
+            showPlayers();
+
+        }
+
+        /// <summary>
+        /// this function show the players and the admin.
+        /// </summary>
+        private void showPlayers()
+        {
 
             roomJsonObj roomToGetPlayers = new roomJsonObj { roomId = roomId };
             string jsonData = JsonConvert.SerializeObject(roomToGetPlayers);
@@ -61,11 +70,11 @@ namespace trivia_client
                 //convert the json to object
                 getPlayersJsonObj playersObj = JsonConvert.DeserializeObject<getPlayersJsonObj>(jsonString);
 
-                if(playersObj.Players.Length > 0)
+                if (playersObj.Players.Length > 0)
                 {
                     // split the players into players array so i could get to them.
                     string[] playersStrings = playersObj.Players.Split(',');
-                    
+
                     // if the current user is the admin he will be able to start the game.
                     if (playersStrings[0] == currentLoggedUser.getUsername)
                     {
@@ -76,7 +85,7 @@ namespace trivia_client
                     // add the admin in the first.
                     string playersInRoom = "Admin: " + this.admin + "\n";
                     playersInRoom += "Players: \n";
-                    
+
                     // add all the rest of the players.
                     for (int i = 2; i < playersStrings.Length; i++)
                     {
@@ -93,9 +102,6 @@ namespace trivia_client
                 lobbyWin.Show();
                 this.Close();
             }
-            
-
-
         }
 
         /// <summary>

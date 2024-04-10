@@ -50,7 +50,9 @@ namespace trivia_client
 
         private void StatBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            StatisticsW statWin = new StatisticsW(tcpClient, clientStream, currentLoggedUser, this);
+            statWin.Show();
+            this.Hide();
         }
 
         private void LogoutBtn_Click(object sender, RoutedEventArgs e)
@@ -66,8 +68,7 @@ namespace trivia_client
             if ((int)response[0] == Codes.LOGIN_RESPONSE)
             {
                 // if the logout was succeful we will return to the main menu which is login.
-                MainWindow main = new MainWindow();
-                main.Show();
+                loginW.Show();
                 this.Close();
             }
         }

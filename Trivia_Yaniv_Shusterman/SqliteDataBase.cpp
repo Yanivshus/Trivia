@@ -200,7 +200,7 @@ std::list<Question> SqliteDataBase::getQuestions(const int amount)
 
 double SqliteDataBase::getPlayerAverageAnswerTime(const std::string& username)
 {
-	std::string query = "SELECT AVG(answer_time) FROM stats WHERE username="+username+";";
+	std::string query = "SELECT AVG(answer_time) FROM stats WHERE username='"+username+"';";
 	double res = 0.0;
 	char* errMsg = nullptr;
 	//if qeury didnt worked we will print why.
