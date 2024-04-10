@@ -15,5 +15,6 @@
         <Button Content="Start Game" HorizontalAlignment="Left" Margin="528,348,0,0" VerticalAlignment="Top" Height="37" Width="112" FontFamily="Aharoni" FontSize="18" Click="StartGameButton" Name="startGame" Visibility="Hidden" />
 
         <TextBlock HorizontalAlignment="Center" Margin="0,88,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="239" Width="520" Background="White" TextAlignment="Center" FontFamily="Aharoni" FontSize="18" Name="playersBox"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,38,0,0" TextWrapping="Wrap" Text="PLayers im room:" VerticalAlignment="Top" Height="45" Width="358" Foreground="White" TextAlignment="Center" FontFamily="Aharoni" FontSize="30"/>
     </Grid>
 </Window>
