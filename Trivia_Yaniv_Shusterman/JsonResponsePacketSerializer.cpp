@@ -110,7 +110,7 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const
 
 std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const CreateRoomResponse& err)
 {
-    json j = { {"status", err.status} };
+    json j = { {"roomId", err.id} };
     Codes curr = CREATE_ROOM_RESPONSE;
     return createPacket(curr, j);
 }

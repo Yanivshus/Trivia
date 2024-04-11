@@ -26,7 +26,7 @@ namespace trivia_client
         TcpClient tcpClient;
         NetworkStream clientStream;
         user currentLoggedUser;
-        Window lobbyWin;
+        Window menuWin;
         int roomId;
         string admin;
         public lobbyW(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, Window lobbyWin, int roomId)
@@ -34,7 +34,7 @@ namespace trivia_client
             this.tcpClient = tcpClient;
             this.clientStream = clientStream;
             this.currentLoggedUser = currentLoggedUser;
-            this.lobbyWin = lobbyWin;
+            this.menuWin = lobbyWin;
             this.roomId = roomId;
             InitializeComponent();
             showPlayers();
@@ -87,7 +87,7 @@ namespace trivia_client
                     playersInRoom += "Players: \n";
 
                     // add all the rest of the players.
-                    for (int i = 2; i < playersStrings.Length; i++)
+                    for (int i = 1; i < playersStrings.Length; i++)
                     {
                         playersInRoom += playersStrings[i];
                         playersInRoom += "\n";
@@ -99,7 +99,7 @@ namespace trivia_client
             }
             else
             {
-                lobbyWin.Show();
+                menuWin.Show();
                 this.Close();
             }
         }
@@ -109,7 +109,7 @@ namespace trivia_client
         /// </summary>
         private void goBackBtn(object sender, RoutedEventArgs e)
         {
-            lobbyWin.Show();
+            menuWin.Show();
             this.Close();
         }
 

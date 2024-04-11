@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 
 namespace trivia_client
@@ -50,9 +52,20 @@ namespace trivia_client
 
             if ((int)response[0] == Codes.CREATE_ROOM_RESPONSE)
             {
-                // the create worked and now we will go back to menu.
-                menuW.Show();
+                byte[] bsonData = PacketBuilder.deserializeToData(response); // take only the bson part of the server response.
+
+                // Convert BSON byte array to BsonDocument
+                BsonDocument bsonDocument = BsonSerializer.Deserialize<BsonDocument>(bsonData);
+
+                string jsonString = bsonDocument.ToJson(); // convert to json string
+
+                //convert the json to object
+                roomJsonObj roomResponseObj = JsonConvert.DeserializeObject<roomJsonObj>(jsonString);
+
+                // after we create a room we enter it as an admin.
+                lobbyW lobbyWin = new lobbyW(tcpClient, clientStream, currentLoggedUser, menuW, roomResponseObj.roomId);
                 this.Close();
+                lobbyWin.Show();
             }
             else
             {

@@ -191,7 +191,7 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo info)
 
         this->m_handlerFactory.getRoomManager().createRoom(this->m_user, data);// create the room in the room manager.
         CreateRoomResponse createRes;
-        createRes.status = CREATE_ROOM_RESPONSE;
+        createRes.id = data.id;
         return { JsonResponsePacketSerializer::serializeResponse(createRes), nullptr };
     }
     catch (const std::exception& e)

@@ -56,7 +56,7 @@ typedef struct {
 } JoinRoomResponse;
 
 typedef struct {
-	unsigned int status;
+	unsigned int id;
 } CreateRoomResponse;
 
 //requests
