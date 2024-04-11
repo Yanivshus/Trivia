@@ -78,7 +78,7 @@ namespace trivia_client
                     // if the current user is the admin he will be able to start the game.
                     if (playersStrings[0] == currentLoggedUser.getUsername)
                     {
-                        this.Visibility = Visibility.Visible;
+                        this.startGame.Visibility = Visibility.Visible;
                         this.admin = playersStrings[0];
                     }
 
