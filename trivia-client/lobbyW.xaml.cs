@@ -79,9 +79,9 @@ namespace trivia_client
                     if (playersStrings[0] == currentLoggedUser.getUsername)
                     {
                         this.startGame.Visibility = Visibility.Visible;
-                        this.admin = playersStrings[0];
+                        
                     }
-
+                    this.admin = playersStrings[0];
                     // add the admin in the first.
                     string playersInRoom = "Admin: " + this.admin + "\n";
                     playersInRoom += "Players: \n";
