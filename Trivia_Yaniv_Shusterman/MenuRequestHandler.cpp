@@ -162,7 +162,7 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo info)
     try
     {
         JoinRoomRequest joinReq = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(info.buffer); // desrilize to get room if.
-        this->m_handlerFactory.getRoomManager().getRoom(joinReq.roomId).addUser(this->m_user.getUserName());// add user to the room.
+        this->m_handlerFactory.getRoomManager().getRoom(joinReq.roomId).addUser(LoggedUser(m_user.getUserName(), m_user.getSock()));// add user to the room.
 
         JoinRoomResponse joinRes;
         joinRes.status = JOIN_ROOM_RESPONSE;
@@ -192,7 +192,7 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo info)
         this->m_handlerFactory.getRoomManager().createRoom(this->m_user, data);// create the room in the room manager.
         CreateRoomResponse createRes;
         createRes.id = data.id;
-        return { JsonResponsePacketSerializer::serializeResponse(createRes), nullptr };
+        return { JsonResponsePacketSerializer::serializeResponse(createRes), (IRequestHandler*)this->m_handlerFactory.CreateRoomAdminRequestHandler(this->m_user, this->m_handlerFactory.getRoomManager().getRoom(data.id))};
     }
     catch (const std::exception& e)
     {

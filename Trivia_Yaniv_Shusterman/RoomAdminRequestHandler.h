@@ -35,6 +35,7 @@ private:
 	/// <returns>resault which is serialized response.</returns>
 	RequestResult getRoomState(RequestInfo info);
 public:
+	RoomAdminRequestHandler(RequestHandlerFactory& factory , Room& room, const LoggedUser& user);
 	virtual bool isRequestRelevant(RequestInfo info) override;
 	virtual RequestResult handleRequest(RequestInfo info, SOCKET sock) override;
 	

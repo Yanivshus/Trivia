@@ -26,6 +26,11 @@ StatisticsManager& RequestHandlerFactory::getStatisticsManager()
 	return this->m_StatisticsManager;
 }
 
+RoomAdminRequestHandler RequestHandlerFactory::CreateRoomAdminRequestHandler(LoggedUser user, Room& room)
+{
+	return new RoomAdminRequestHandler(*this, room, user);
+}
+
 void RequestHandlerFactory::setDB(IDatabase* m_database)
 {
 	m_loginManager.setDB(m_database);

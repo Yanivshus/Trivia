@@ -34,6 +34,8 @@ public:
 	// gets the stats manager referense.
 	StatisticsManager& getStatisticsManager();
 
+	// create a admin request handler.
+	RoomAdminRequestHandler* CreateRoomAdminRequestHandler(LoggedUser user, Room& room);
 	// sets the db to the factory.
 	void setDB(IDatabase* m_database);
 };

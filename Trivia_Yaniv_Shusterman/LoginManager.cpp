@@ -13,14 +13,14 @@ void LoginManager::signup(const std::string& username, const std::string& passwo
 	}
 }
 
-void LoginManager::login(const std::string& username, const std::string& password)
+void LoginManager::login(const std::string& username, const std::string& password, SOCKET sock)
 {
 	if (this->m_database->doesUserExist(username) == 1)// check if the user exists before we login.
 	{
 		if (this->m_database->doesPasswordMatch(username, password))//if exists we try to login with username and password.
 		{
 			//add new logged user.
-			LoggedUser newLoggedUser(username);
+			LoggedUser newLoggedUser(username, sock);
 			this->m_loggedUsers.push_back(newLoggedUser);
 		}
 		else
