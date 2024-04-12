@@ -64,8 +64,9 @@ namespace trivia_client
 
                 // after we create a room we enter it as an admin.
                 lobbyW lobbyWin = new lobbyW(tcpClient, clientStream, currentLoggedUser, menuW, roomResponseObj.roomId);
-                this.Close();
                 lobbyWin.Show();
+                this.Close();
+                
             }
             else
             {

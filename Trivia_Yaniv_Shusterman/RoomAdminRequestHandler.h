@@ -34,6 +34,9 @@ private:
 	/// </summary>
 	/// <returns>resault which is serialized response.</returns>
 	RequestResult getRoomState(RequestInfo info);
+
+	//needed to add this function for lobby functionality.
+	RequestResult GetPlayersInRoom(RequestInfo info);
 public:
 	RoomAdminRequestHandler(RequestHandlerFactory& factory , Room room, const LoggedUser& user);
 	virtual bool isRequestRelevant(RequestInfo info) override;

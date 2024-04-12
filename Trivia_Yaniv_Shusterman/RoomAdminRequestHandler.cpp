@@ -21,6 +21,7 @@ RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo info)
     return { JsonResponsePacketSerializer::serializeResponse(resRoom), (IRequestHandler*)this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
 }
 
+
 RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
 {
     std::vector<LoggedUser> users = this->m_room.getAllUsers();
@@ -41,7 +42,35 @@ RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
 
 RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo info)
 {
-    return RequestResult();
+    return RequestResult(); // TODO
+}
+
+RequestResult RoomAdminRequestHandler::GetPlayersInRoom(RequestInfo info)
+{
+    try
+    {
+        GetPlayersInRoomRequest playersReq = JsonRequestPacketDeserializer::deserializeGetPlayersRequest(info.buffer);// get the room id from buffer.
+        std::vector<LoggedUser> players = this->m_handlerFactory.getRoomManager().getRoom(playersReq.roomId).getAllUsers(); // get all the user active in the room.
+
+        //creating vector of strings.
+        std::vector<std::string> playersStr;
+        for (auto& player : players)
+        {
+            playersStr.push_back(player.getUserName());
+        }
+
+        GetPlayersInRoomResponse playersRes;
+        playersRes.players = playersStr;
+        // create the resault packet.
+        return { JsonResponsePacketSerializer::serializeResponse(playersRes), nullptr };
+    }
+    catch (const std::exception& e)
+    {
+        throw e;
+    }
+    catch (const json::exception& e) {
+        throw std::exception("json exception");
+    }
 }
 
 RoomAdminRequestHandler::RoomAdminRequestHandler(RequestHandlerFactory& factory, Room room, const LoggedUser& user) : m_handlerFactory(factory), m_room(room), m_user(user)
@@ -52,7 +81,8 @@ bool RoomAdminRequestHandler::isRequestRelevant(RequestInfo info)
 {
 	if (info.id == CLOSE_ROOM_REQUEST ||
 		info.id == START_GAME_REQUEST ||
-		info.id == GET_ROOM_STATE_REQUEST) 
+		info.id == GET_ROOM_STATE_REQUEST ||
+        info.id == GET_PLAYERS_IN_ROOM_REQUEST) 
 	{
 		return true;
 	}
@@ -72,6 +102,9 @@ RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo info, SOCKET so
         }
         if (info.id == GET_ROOM_STATE_REQUEST) {
             return this->getRoomState(info);
+        }
+        if (info.id == GET_PLAYERS_IN_ROOM_REQUEST) {
+            return this->GetPlayersInRoom(info);
         }
 	}
     catch (const std::exception& e) // if eny thrown exceptions caught , return a error response.
