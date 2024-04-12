@@ -145,6 +145,7 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const
         players.pop_back();
       players.pop_back();
     }
+
     //create json data.
     json j{ {"status", err.status}, {"hasGameBegun", err.hasGameBegun}, {"players", players}, {"questionCount", err.questionCount}, {"answerTimeOut", err.answerTimeOut} };
     Codes curr = GET_ROOM_STATE_RESPONSE;

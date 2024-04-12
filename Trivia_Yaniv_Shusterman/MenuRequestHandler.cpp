@@ -26,7 +26,7 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo info)
 {
     try
     {
-        //gereate a resault and handle it.
+        //genarate a resault and handle it.
         if (info.id == CREATE_ROOM_REQUEST) {
             return this->createRoom(info);
         }
