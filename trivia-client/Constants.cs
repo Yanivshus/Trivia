@@ -14,27 +14,38 @@ namespace trivia_client
 {
     public static class Codes
     {
-		//responses
-        public const int LOGIN_REQUEST = 100;
-		public const int SIGNUP_REQUEST = 101;
-		public const int LOGOUT_REQUSET = 102;
-		public const int GET_PLAYERS_IN_ROOM_REQUEST = 103;
-		public const int JOIN_ROOM_REQUEST = 104;
-		public const int CREATE_ROOM_REQUEST = 105;
-		public const int HIGH_SCORE_REQUEST = 106;
-		public const int GET_ROOMS_REQUEST = 107;
-		public const int GET_PERSONAL_STATS_REQUEST = 108;
-		//requests
-		public const int ERROR_RESPONSE = 115;
-		public const int LOGIN_RESPONSE = 116;
-		public const int SIGNUP_RESPONSE = 117;
-		public const int GET_ROOMS_RESPONSE = 118;
-		public const int GET_PLAYERS_IN_ROOM_RESPONSE = 119;
-		public const int GET_HIGH_SCORE_RESPONSE = 120;
-		public const int GET_PERSONAL_STATS_RESPONSE = 121;
-		public const int JOIN_ROOM_RESPONSE = 122;
-		public const int CREATE_ROOM_RESPONSE = 123;
-		public const int LOGOUT_RESPONSE = 124;
+        //responses
+        public const int LOGIN_REQUEST = 80;
+        public const int SIGNUP_REQUEST = 81;
+        public const int LOGOUT_REQUSET = 82;
+        public const int GET_PLAYERS_IN_ROOM_REQUEST = 83;
+        public const int JOIN_ROOM_REQUEST = 84;
+        public const int CREATE_ROOM_REQUEST = 85;
+        public const int HIGH_SCORE_REQUEST = 86;
+        public const int GET_ROOMS_REQUEST = 87;
+        public const int GET_PERSONAL_STATS_REQUEST = 88;
+
+        public const int CLOSE_ROOM_REQUEST = 89;
+        public const int START_GAME_REQUEST = 90;
+        public const int GET_ROOM_STATE_REQUEST = 91;
+        public const int LEAVE_ROOM_REQUEST = 92;
+
+        public const int ERROR_RESPONSE = 107;
+        public const int LOGIN_RESPONSE = 108;
+        public const int SIGNUP_RESPONSE = 109;
+        public const int GET_ROOMS_RESPONSE = 110;
+        public const int GET_PLAYERS_IN_ROOM_RESPONSE = 111;
+
+        public const int GET_HIGH_SCORE_RESPONSE = 112;
+        public const int GET_PERSONAL_STATS_RESPONSE = 113;
+        public const int JOIN_ROOM_RESPONSE = 114;
+        public const int CREATE_ROOM_RESPONSE = 115;
+        public const int LOGOUT_RESPONSE = 116;
+
+        public const int CLOSE_ROOM_RESPONSE = 117;
+        public const int START_GAME_RESPONSE = 118;
+        public const int GET_ROOM_STATE_RESPONSE = 119;
+        public const int LEAVE_ROOM_RESPONSE = 120;
 
         public const int CODE_SIZE = 4;
     }
