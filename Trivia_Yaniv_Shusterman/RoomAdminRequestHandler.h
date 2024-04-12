@@ -36,6 +36,6 @@ private:
 	RequestResult getRoomState(RequestInfo info);
 public:
 	virtual bool isRequestRelevant(RequestInfo info) override;
-	virtual RequestResult handleRequest(RequestInfo info) override;
+	virtual RequestResult handleRequest(RequestInfo info, SOCKET sock) override;
 	
 };

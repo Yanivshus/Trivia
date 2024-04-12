@@ -4,6 +4,10 @@
 #include "LoggedUser.h"
 #include "Constants.h"
 #include <random>
+#include <iostream>
+#include <limits>
+
+#define INT_MAX 2147483647
 
 class RequestHandlerFactory;
 
@@ -23,7 +27,7 @@ public:
 	/// </summary>
 	/// <param name="info:">request info.</param>
 	/// <returns>result of the hadling (sucess or error)</returns>
-	virtual RequestResult handleRequest(RequestInfo info) override;
+	virtual RequestResult handleRequest(RequestInfo info, SOCKET sock) override;
 
 private:
 	RequestHandlerFactory& m_handlerFactory;

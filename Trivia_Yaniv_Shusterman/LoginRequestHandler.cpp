@@ -17,7 +17,7 @@ bool LoginRequestHandler::isRequestRelevant(RequestInfo info)
     }
 }
 
-RequestResult LoginRequestHandler::handleRequest(RequestInfo info)
+RequestResult LoginRequestHandler::handleRequest(RequestInfo info, SOCKET sock)
 {
 
     try {

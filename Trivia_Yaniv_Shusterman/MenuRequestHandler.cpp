@@ -22,7 +22,7 @@ bool MenuRequestHandler::isRequestRelevant(RequestInfo info)
 
 }
 
-RequestResult MenuRequestHandler::handleRequest(RequestInfo info)
+RequestResult MenuRequestHandler::handleRequest(RequestInfo info, SOCKET sock)
 {
     try
     {
@@ -219,6 +219,5 @@ int MenuRequestHandler::CreateRoomId()
     long long result = static_cast<long long>(time) * rand1 / rand2;
 
     // Ensure the result fits within the range of an int
-    return static_cast<int>(result % std::numeric_limits<int>::max());
-
+    return static_cast<int>(result % INT_MAX);
 }
