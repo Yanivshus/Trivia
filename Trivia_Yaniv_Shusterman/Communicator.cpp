@@ -90,7 +90,7 @@ void Communicator::handleNewClient(SOCKET client_sock)
 	{
 		try
 		{
-			std::vector<unsigned char> buffer = getData(client_sock);
+			std::vector<unsigned char> buffer = Helper::getData(client_sock);
 			const int code = static_cast<int>(buffer[0]); // the code of the msg
 			const int dataLength = getSizeOfData(std::vector<unsigned char>(buffer.begin() + 1, buffer.begin() + SIZE_OF_START));// get the length of the data by slicing the buffer.
 			std::vector<unsigned char> data(buffer.begin() + SIZE_OF_START, buffer.begin() + dataLength + SIZE_OF_START);// get the data itself.
@@ -120,14 +120,14 @@ void Communicator::handleNewClient(SOCKET client_sock)
 				}
 				this->clientListMtx.unlock();
 
-				sendData(client_sock, res.buffer);
+				Helper::sendData(client_sock, res.buffer);
 			}
 			else {
 				//if the request isnt relevnt i will update the client about it.
 				ErrorResponse err;
 				err.massage = "Request isn't relevent.";
 				std::vector<unsigned char> errorBuff = JsonResponsePacketSerializer::serializeResponse(err);// if yes we will send to the client back an error massage.
-				sendData(client_sock, errorBuff);
+				Helper::sendData(client_sock, errorBuff);
 			}
 
 		}
@@ -138,37 +138,6 @@ void Communicator::handleNewClient(SOCKET client_sock)
 			break;
 		}
 	}
-}
-
-void Communicator::sendData(SOCKET soc, std::vector<unsigned char> Msg)
-{
-	const char* data = reinterpret_cast<const char*>(Msg.data());
-
-	if (send(soc, data, Msg.size(), 0) == INVALID_SOCKET)
-	{
-		throw std::exception("Error while sending message to client");
-	}
-}
-
-std::vector<unsigned char> Communicator::getData(SOCKET soc)
-{
-	std::vector<unsigned char> buffer(BUFFER_SIZE);
-	int res = recv(soc, reinterpret_cast<char*>(buffer.data()), BUFFER_SIZE, 0);
-
-
-	if (res == INVALID_SOCKET)
-	{
-		std::string s = "Error while recieving from socket: ";
-		s += std::to_string(soc);
-		throw std::exception(s.c_str());
-	}
-	else {
-		buffer.resize(res);
-	}
-	if (buffer.size() == 0) {
-		throw std::exception("User disconnected\n");
-	}
-	return buffer;
 }
 
 int Communicator::getSizeOfData(std::vector<unsigned char> buffer)

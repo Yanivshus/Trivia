@@ -3,17 +3,49 @@
 
 RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo info)
 {
-    return RequestResult();
+    std::vector<LoggedUser> users = this->m_room.getAllUsers();
+    // run on all of the users and remove them.
+    for (auto user = users.begin(); user != users.end(); user++)
+    {
+        this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).deleteUser(*user);
+
+        //create a leave room packet and send to the current user.
+        LeaveRoomResponse res = { LEAVE_ROOM_RESPONSE };
+        std::vector<unsigned char> buffer = JsonResponsePacketSerializer::serializeResponse(res);
+        Helper::sendData(user->getSock(), buffer);
+    }
+
+    this->m_handlerFactory.getRoomManager().deleteRoom(this->m_room.getRoomData().id); // delete the room.
+    CloseRoomResponse resRoom = { CLOSE_ROOM_RESPONSE };
+    //send the complete resault out of the function.
+    return { JsonResponsePacketSerializer::serializeResponse(resRoom), (IRequestHandler*)this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
 }
 
 RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
 {
-    return RequestResult();
+    std::vector<LoggedUser> users = this->m_room.getAllUsers();
+    // starts game for all the users.
+    for (auto user = users.begin() + 1; user != users.end(); user++)
+    {
+        //need to add later the actual starting of the game and the creation of the handler.
+        //create a leave room packet and send to the current user.
+        StartGameResponse res = { START_GAME_RESPONSE };
+        std::vector<unsigned char> buffer = JsonResponsePacketSerializer::serializeResponse(res);
+        Helper::sendData(user->getSock(), buffer);
+    }
+
+    StartGameResponse res = { START_GAME_RESPONSE };
+    //send the complete resault out of the function.
+    return { JsonResponsePacketSerializer::serializeResponse(res), nullptr };
 }
 
 RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo info)
 {
     return RequestResult();
+}
+
+RoomAdminRequestHandler::RoomAdminRequestHandler(RequestHandlerFactory& factory, Room room, const LoggedUser& user) : m_handlerFactory(factory), m_room(room), m_user(user)
+{
 }
 
 bool RoomAdminRequestHandler::isRequestRelevant(RequestInfo info)

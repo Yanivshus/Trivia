@@ -6,6 +6,7 @@
 #include "RequestHandlerFactory.h"
 #include "LoggedUser.h"
 #include "StructHelper.h"
+#include "Helper.h"
 
 class RequestHandlerFactory;
 
@@ -14,7 +15,6 @@ class RoomAdminRequestHandler : public IRequestHandler
 private:
 	Room m_room;
 	LoggedUser m_user;
-	RoomManger& m_roomManager;
 	RequestHandlerFactory& m_handlerFactory;
 
 	/// <summary>
@@ -35,7 +35,7 @@ private:
 	/// <returns>resault which is serialized response.</returns>
 	RequestResult getRoomState(RequestInfo info);
 public:
-	RoomAdminRequestHandler(RequestHandlerFactory& factory , Room& room, const LoggedUser& user);
+	RoomAdminRequestHandler(RequestHandlerFactory& factory , Room room, const LoggedUser& user);
 	virtual bool isRequestRelevant(RequestInfo info) override;
 	virtual RequestResult handleRequest(RequestInfo info, SOCKET sock) override;
 	

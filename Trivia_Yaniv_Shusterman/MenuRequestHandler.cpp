@@ -102,10 +102,17 @@ RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo info)
     try
     {
         GetPlayersInRoomRequest playersReq = JsonRequestPacketDeserializer::deserializeGetPlayersRequest(info.buffer);// get the room id from buffer.
-        std::vector<std::string> players = this->m_handlerFactory.getRoomManager().getRoom(playersReq.roomId).getAllUsers(); // get all the user active in the room.
+        std::vector<LoggedUser> players = this->m_handlerFactory.getRoomManager().getRoom(playersReq.roomId).getAllUsers(); // get all the user active in the room.
+
+        //creating vector of strings.
+        std::vector<std::string> playersStr;
+        for (auto& player : players)
+        {
+            playersStr.push_back(player.getUserName());
+        }
 
         GetPlayersInRoomResponse playersRes;
-        playersRes.players = players;
+        playersRes.players = playersStr;
         // create the resault packet.
         return { JsonResponsePacketSerializer::serializeResponse(playersRes), nullptr };
     }

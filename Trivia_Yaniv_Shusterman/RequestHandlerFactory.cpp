@@ -26,7 +26,7 @@ StatisticsManager& RequestHandlerFactory::getStatisticsManager()
 	return this->m_StatisticsManager;
 }
 
-RoomAdminRequestHandler RequestHandlerFactory::CreateRoomAdminRequestHandler(LoggedUser user, Room& room)
+RoomAdminRequestHandler* RequestHandlerFactory::CreateRoomAdminRequestHandler(LoggedUser user, Room room)
 {
 	return new RoomAdminRequestHandler(*this, room, user);
 }

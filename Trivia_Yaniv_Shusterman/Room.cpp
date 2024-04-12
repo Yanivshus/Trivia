@@ -32,12 +32,12 @@ void Room::deleteUser(LoggedUser user)
 	}
 }
 
-std::vector<std::string> Room::getAllUsers()
+std::vector<LoggedUser> Room::getAllUsers()
 {
-	std::vector<std::string> stringUsers;
+	std::vector<LoggedUser> Users;
 	for (auto i = this->m_users.begin(); i != this->m_users.end(); i++) // loop through the user list and add theyre username to string vector.
 	{
-		stringUsers.push_back(i->getUserName());
+		Users.push_back(*i);
 	}
-	return stringUsers;
+	return Users;
 }
