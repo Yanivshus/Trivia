@@ -14,8 +14,19 @@ private:
 	LoggedUser m_user;
 	RequestHandlerFactory& m_handlerFactory;
 
+	/// <summary>
+	/// removes user from room and returns the menu handler.
+	/// </summary>
 	RequestResult leaveRoom(RequestInfo info);
+
+	/// <summary>
+	/// get active players in room.
+	/// </summary>
 	RequestResult getPlayersInRoom(RequestInfo info);
+
+	/// <summary>
+	/// returns the room state.
+	/// </summary>
 	RequestResult getRoomState(RequestInfo info);
 public:
 	RoomMemberRequestHandler(RequestHandlerFactory& factory, Room room, const LoggedUser& user);

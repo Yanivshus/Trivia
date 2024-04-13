@@ -6,11 +6,13 @@
 #include "RoomManager.h"
 #include "StatisticsManager.h"
 #include "RoomAdminRequestHandler.h"
+#include "RoomMemberRequestHandler.h"
 #include <iostream>
 
 class LoginRequestHandler;
 class MenuRequestHandler;
 class RoomAdminRequestHandler;
+class RoomMemberRequestHandler;
 
 class RequestHandlerFactory {
 private:
@@ -36,6 +38,9 @@ public:
 
 	// create a admin request handler.
 	RoomAdminRequestHandler* CreateRoomAdminRequestHandler(LoggedUser user, Room room);
+
+	// create room member handler.
+	RoomMemberRequestHandler* CreateRoomMemberRequestHandler(LoggedUser user, Room room);
 
 	// sets the db to the factory.
 	void setDB(IDatabase* m_database);

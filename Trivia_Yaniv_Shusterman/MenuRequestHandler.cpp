@@ -173,7 +173,8 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo info)
 
         JoinRoomResponse joinRes;
         joinRes.status = JOIN_ROOM_RESPONSE;
-        return { JsonResponsePacketSerializer::serializeResponse(joinRes) , nullptr };
+        //returns appropriate room member request handler.
+        return { JsonResponsePacketSerializer::serializeResponse(joinRes) , (IRequestHandler*)this->m_handlerFactory.CreateRoomMemberRequestHandler(this->m_user, this->m_handlerFactory.getRoomManager().getRoom(joinReq.roomId)) };
 
     }
     catch (const std::exception& e)

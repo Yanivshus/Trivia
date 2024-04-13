@@ -31,6 +31,11 @@ RoomAdminRequestHandler* RequestHandlerFactory::CreateRoomAdminRequestHandler(Lo
 	return new RoomAdminRequestHandler(*this, room, user);
 }
 
+RoomMemberRequestHandler* RequestHandlerFactory::CreateRoomMemberRequestHandler(LoggedUser user, Room room)
+{
+	return new RoomMemberRequestHandler(*this, room, user);
+}
+
 void RequestHandlerFactory::setDB(IDatabase* m_database)
 {
 	m_loginManager.setDB(m_database);
