@@ -27,19 +27,21 @@ namespace trivia_client
         TcpClient tcpClient;
         NetworkStream clientStream;
         user currentLoggedUser;
-        Window menuWin;
+        Window roomMenu;
+        Window mainWin;
         int roomId;
         string admin;
 
         private bool stopBackgroundTask = false;//to stop the showPlayer task.
 
-        public lobbyW(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, Window lobbyWin, int roomId)
+        public lobbyW(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, int roomId, Window mainWin)
         {
             this.tcpClient = tcpClient;
             this.clientStream = clientStream;
             this.currentLoggedUser = currentLoggedUser;
-            this.menuWin = lobbyWin;
+           
             this.roomId = roomId;
+            this.mainWin = mainWin;
             this.admin = "";
             InitializeComponent();
 
@@ -175,8 +177,9 @@ namespace trivia_client
             if ((int)response[0] == Codes.LEAVE_ROOM_RESPONSE)
             {
                 
-                menuWin.Show();
+                JoinChooseRoomW roomWindowOpen = new JoinChooseRoomW(tcpClient, clientStream, currentLoggedUser, mainWin);
                 this.Close();
+                roomWindowOpen.Show();
             }
             else
             {

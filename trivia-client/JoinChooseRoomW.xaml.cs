@@ -156,8 +156,8 @@ namespace trivia_client
             //check if joined to room.
             if ((int)response[0] == Codes.JOIN_ROOM_RESPONSE)
             {
-                lobbyW lobbyWin = new lobbyW(tcpClient, clientStream, currentLoggedUser, this, id);
-                this.Hide();
+                lobbyW lobbyWin = new lobbyW(tcpClient, clientStream, currentLoggedUser, id, menuW);
+                this.Close();
                 lobbyWin.Show();
 
             }

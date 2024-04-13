@@ -63,7 +63,7 @@ namespace trivia_client
                 roomJsonObj roomResponseObj = JsonConvert.DeserializeObject<roomJsonObj>(jsonString);
 
                 // after we create a room we enter it as an admin.
-                lobbyW lobbyWin = new lobbyW(tcpClient, clientStream, currentLoggedUser, menuW, roomResponseObj.roomId);
+                lobbyW lobbyWin = new lobbyW(tcpClient, clientStream, currentLoggedUser, roomResponseObj.roomId, menuW);
                 lobbyWin.Show();
                 this.Close();
                 
