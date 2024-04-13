@@ -41,7 +41,25 @@ RequestResult RoomMemberRequestHandler::getPlayersInRoom(RequestInfo info)
 
 RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo info)
 {
-    return RequestResult();
+    GetRoomStateResponse res;
+    // get users
+    std::vector<LoggedUser> users = this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).getAllUsers();
+
+    //creating vector of strings.
+    std::vector<std::string> usersStr;
+    for (auto& user : users)
+    {
+        usersStr.push_back(user.getUserName());
+    }
+
+    //create packet.
+    res.players = usersStr;
+    res.answerTimeOut = this->m_room.getRoomData().timePerQuestion;
+    res.hasGameBegun = this->m_room.getRoomData().isActive;
+    res.questionCount = this->m_room.getRoomData().numOfQuestionsInGame;
+    res.status = GET_ROOM_STATE_RESPONSE;
+
+    return { JsonResponsePacketSerializer::serializeResponse(res), nullptr };
 }
 
 RoomMemberRequestHandler::RoomMemberRequestHandler(RequestHandlerFactory& factory, Room room, const LoggedUser& user) : m_handlerFactory(factory), m_room(room), m_user(user)
