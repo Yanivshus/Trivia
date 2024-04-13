@@ -4,10 +4,14 @@
 RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo info)
 {
     std::vector<LoggedUser> users = this->m_room.getAllUsers();
+
+
     // run on all of the users and remove them.
     for (auto user = users.begin(); user != users.end(); user++)
     {
         this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).deleteUser(*user);
+
+
 
         //create a leave room packet and send to the current user.
         LeaveRoomResponse res = { LEAVE_ROOM_RESPONSE };

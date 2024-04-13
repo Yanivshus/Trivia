@@ -1,3 +1,4 @@
+#pragma once
 #include <WinSock2.h>
 #include <iostream>
 #include <vector>
@@ -5,9 +6,9 @@
 
 #define BUFFER_SIZE 1024
 
-class Helper {
+class Helper 
+{
 public:
-
 	/// <summary>
 	/// send data bu the socket.
 	/// </summary>

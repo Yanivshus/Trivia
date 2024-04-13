@@ -8,6 +8,7 @@
 #include "StructHelper.h"
 #include "Helper.h"
 
+
 class RequestHandlerFactory;
 
 class RoomAdminRequestHandler : public IRequestHandler

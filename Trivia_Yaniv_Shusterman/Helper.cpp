@@ -10,6 +10,7 @@ void Helper::sendData(SOCKET soc, std::vector<unsigned char> Msg)
 	}
 }
 
+
 std::vector<unsigned char> Helper::getData(SOCKET soc)
 {
 	std::vector<unsigned char> buffer(BUFFER_SIZE);

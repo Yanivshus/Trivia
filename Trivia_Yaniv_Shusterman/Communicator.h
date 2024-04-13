@@ -4,7 +4,7 @@
 #include <Windows.h>
 #include "IRequestHandler.h"
 #include "RequestHandlerFactory.h"
-#include "Helper.h"
+
 
 #include <iostream>
 #include <map>
@@ -14,6 +14,8 @@
 #include <mutex>
 #include <vector>
 #include <ctime>
+
+#include "Helper.h"
 
 
 
@@ -50,7 +52,5 @@ public:
 	Communicator(RequestHandlerFactory& r);
 	~Communicator();
 	void startHandleRequests();
-	
-
 
 };
