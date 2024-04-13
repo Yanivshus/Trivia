@@ -12,7 +12,7 @@ LoggedUser::LoggedUser(const std::string& username, SOCKET sock)
 	this->sock = sock;
 }
 
-std::string LoggedUser::getUserName()
+std::string LoggedUser::getUserName() 
 {
 	return this->m_username;
 }

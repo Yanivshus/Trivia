@@ -16,18 +16,18 @@ void Room::addUser(LoggedUser user)
 
 void Room::deleteUser(LoggedUser user)
 {
-	int found = 0;
-	// look for the user to delete.
-	for (auto i = this->m_users.begin(); i != this->m_users.end(); i++)
-	{
-		// if user found i will delete him from the vector.
-		if (i->getUserName() == user.getUserName()) 
-		{
-			i = this->m_users.erase(i);
-			found = 1;
+	// get the user to delete
+	auto it = this->m_users.begin();
+	for (; it != this->m_users.end(); ++it) {
+		if (it->getUserName() == user.getUserName()) {
+			break;  // Found the user, stop the loop
 		}
 	}
-	if (found == 0) {
+	// Delete the user if found
+	if (it != this->m_users.end()) {
+		this->m_users.erase(it);
+	}
+	else {
 		throw std::exception("User not in the room.");
 	}
 }
