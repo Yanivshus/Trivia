@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace trivia_client
 {
@@ -27,6 +28,9 @@ namespace trivia_client
         NetworkStream clientStream;
         user currentLoggedUser;
         Window menuW;
+
+        private bool stopBackgroundTask = false;//to stop the showPlayer task.
+
         public JoinChooseRoomW(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, Window menuW)
         {
             this.tcpClient = tcpClient;
@@ -35,55 +39,108 @@ namespace trivia_client
             this.menuW = menuW;
             InitializeComponent();
 
-            // building the packet to get rooms.
-            List<byte> getRoomsBuffer = new List<byte>();
-            getRoomsBuffer.Add((byte)Codes.GET_ROOMS_REQUEST);// add appropriate code.
-            getRoomsBuffer.AddRange(PacketBuilder.CreateDataLengthAsBytes(0)); // add size of 0 to the packet.
+            StartBackgroundTask();
+            showRoom();// start the background task to show the avliable room
 
-            PacketBuilder.sendDataToSocket(clientStream, getRoomsBuffer.ToArray());// send the packet.
+           
+        }
 
-            //get back the response of the server.
-            byte[] response = PacketBuilder.getDataFromSocket(clientStream);
-
-            //check if the request worked.
-            if ((int)response[0] == Codes.GET_ROOMS_RESPONSE)
+        /// <summary>
+        /// refreshes the active rooms every 3 seconds.
+        /// </summary>
+        private async void showRoom()
+        {
+            await Task.Run(async () =>
             {
-                byte[] bsonData = PacketBuilder.deserializeToData(response); // take only the bson part of the server response.
-
-                // Convert BSON byte array to BsonDocument
-                BsonDocument bsonDocument = BsonSerializer.Deserialize<BsonDocument>(bsonData);
-
-                string jsonString = bsonDocument.ToJson(); // convert to json string
-                
-                //convert the json to object
-                GetRoomJsonObj roomResponseObj = JsonConvert.DeserializeObject<GetRoomJsonObj>(jsonString);
-
-                //check if there are avliable rooms.
-                if(roomResponseObj.Rooms.Length > 0)
+                while(stopBackgroundTask == false)
                 {
-                    // set the text box to show the rooms.
-                    this.roomsBox.Text = roomResponseObj.Rooms;
-                }
-                else
-                {
-                    this.roomsBox.Text = "No rooms avaliable :(";
+                    // building the packet to get rooms.
+                    List<byte> getRoomsBuffer = new List<byte>();
+                    getRoomsBuffer.Add((byte)Codes.GET_ROOMS_REQUEST);// add appropriate code.
+                    getRoomsBuffer.AddRange(PacketBuilder.CreateDataLengthAsBytes(0)); // add size of 0 to the packet.
+
+                    PacketBuilder.sendDataToSocket(clientStream, getRoomsBuffer.ToArray());// send the packet.
+
+                    //get back the response of the server.
+                    byte[] response = PacketBuilder.getDataFromSocket(clientStream);
+
+                    //check if the request worked.
+                    if ((int)response[0] == Codes.GET_ROOMS_RESPONSE)
+                    {
+                        byte[] bsonData = PacketBuilder.deserializeToData(response); // take only the bson part of the server response.
+
+                        // Convert BSON byte array to BsonDocument
+                        BsonDocument bsonDocument = BsonSerializer.Deserialize<BsonDocument>(bsonData);
+
+                        string jsonString = bsonDocument.ToJson(); // convert to json string
+
+                        //convert the json to object
+                        GetRoomJsonObj roomResponseObj = JsonConvert.DeserializeObject<GetRoomJsonObj>(jsonString);
+
+                        //check if there are avliable rooms.
+                        if (roomResponseObj.Rooms.Length > 0)
+                        {
+                            await Dispatcher.InvokeAsync(() =>
+                            { 
+                                // set the text box to show the rooms.
+                                this.roomsBox.Text = roomResponseObj.Rooms;
+                            });
+                        }
+                        else
+                        {
+                            await Dispatcher.InvokeAsync(() =>
+                            {
+                                // set the text box to show the rooms.
+                                this.roomsBox.Text = "No rooms avaliable :(";
+                            });
+                        }
+
+                    }
+                    else
+                    {
+                        await Dispatcher.InvokeAsync(() =>
+                        {
+                            // set the text box to show the rooms.
+                            this.roomsBox.Text = "No rooms avaliable :(";
+                        });
+                    }
+                    await Task.Delay(3000);
                 }
                 
-            }
-            else
-            {
-                this.roomsBox.Text = "No rooms avaliable :(";
-            }
+
+            });
+        }
+
+        /// <summary>
+        /// stop the backgound rooms.
+        /// </summary>
+        private void StopBackgroundTask()
+        {
+            stopBackgroundTask = true;
+        }
+
+        /// <summary>
+        /// starts the backgound task.
+        /// </summary>
+        private void StartBackgroundTask()
+        {
+            stopBackgroundTask = false;
         }
 
         private void goBackBtn(object sender, RoutedEventArgs e)
         {
+            StopBackgroundTask();
+            Thread.Sleep(1000);
+
             this.menuW.Show();
             this.Close();
         }
 
         private void joinRoomBtn(object sender, RoutedEventArgs e)
         {
+            StopBackgroundTask();
+            Thread.Sleep(1000);
+
             int id = int.Parse(this.idBox.Text);
 
             roomJsonObj roomToJoin = new roomJsonObj { roomId = id }; // create room object
@@ -107,6 +164,9 @@ namespace trivia_client
             else
             {
                 this.errBox.Text = "FAILED TO JOIN ROOM";
+                Thread.Sleep(2000);
+                StartBackgroundTask();
+                showRoom();
             }
 
 

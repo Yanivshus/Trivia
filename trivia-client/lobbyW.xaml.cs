@@ -43,6 +43,7 @@ namespace trivia_client
             this.admin = "";
             InitializeComponent();
 
+            StartBackgroundTask();
             showPlayers(); // start the backgound task for update the list of active players.
 
         }
@@ -144,9 +145,17 @@ namespace trivia_client
             stopBackgroundTask = true;
         }
 
+        /// <summary>
+        /// starts the backgound task.
+        /// </summary>
+        private void StartBackgroundTask()
+        {
+            stopBackgroundTask = false;
+        }
+
 
         /// <summary>
-        /// function go back to join room screens. TODO, leave room 
+        /// function go back to join room screens. and exists the room.
         /// </summary>
         private void leaveRoom(object sender, RoutedEventArgs e)
         {
@@ -171,6 +180,7 @@ namespace trivia_client
             }
             else
             {
+                StartBackgroundTask();
                 showPlayers();
                 MessageBox.Show("Problem leaving");
             }
