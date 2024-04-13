@@ -2,6 +2,7 @@
 #include "IDatabase.h"
 #include "sqlite3.h"
 #include <io.h>
+#include <string>
 #include <map>
 
 #define DB_NAME "triviaDB.db"
@@ -34,8 +35,59 @@ public:
 	/// <param name="email:">user email</param>
 	/// <returns>true if worked.</returns>
 	virtual int addNewUser(const std::string& username, const std::string& password, const std::string& email) override;
+
+	/// <summary>
+	/// returns all questions randomized, by requested amount.
+	/// </summary>
+	/// <param name="amount:">amount of questions to get.</param>
+	/// <returns>list of questions.</returns>
+	virtual std::list<Question> getQuestions(const int amount) override;
+
+	/// <summary>
+	/// get the requested player avarege answer time.
+	/// </summary>
+	/// <param name="username:">username of the user we want his avg time.</param>
+	/// <returns>avg time.</returns>
+	virtual double getPlayerAverageAnswerTime(const std::string& username) override;
+
+	/// <summary>
+	/// get the number of correct answers of user.
+	/// </summary>
+	/// <param name="username:">username of the user we want his number of correct answers.</param>
+	/// <returns>number of correct.></returns>
+	virtual int getNumOfCorrectAnswers(const std::string& username) override;
+
+	/// <summary>
+	/// get the number of total answers of user.
+	/// </summary>
+	/// <param name="username:">username of the user we want his number of answers</param>
+	/// <returns>number of answers.</returns>
+	virtual int getNumOfTotalAnswers(const std::string& username) override;
+
+	/// <summary>
+	/// get the number of games a player played.
+	/// </summary>
+	/// <param name="username:">username of the user we want his number of games</param>
+	/// <returns>number of games</returns>
+	virtual int getNumOfPlayerGames(const std::string& username) override;
+
+	/// <summary>
+	/// get player score.
+	/// </summary>
+	/// <param name="username:">user name of the user we want his score.</param>
+	/// <param name="gameId:">score of a specific game.</param>
+	/// <returns>player score.</returns>
+	virtual int getPlayerScore(const std::string& username, int gameId) override;
+
+	/// <summary>
+	/// get top three players with the highest scores.
+	/// </summary>
+	/// <returns>vector of scores in the format , username=score</returns>
+	virtual std::vector<std::string> getHighScores();
 private:
+	// runs a query.
 	bool runQuery(const std::string& query);
 	std::map<std::string, std::string> userList;
+	std::list<Question> questions;
 	sqlite3* _db;
 };

@@ -70,7 +70,9 @@ def main():
             client_socket.sendall(concatenated_bytes)
             
             # Receive data from the server
-            received_data = client_socket.recv(1024)
+            received_data = client_socket.recv(100)
+            for i in received_data:
+                print(i)
             print("Received from server:");
             print(received_data.decode())
 

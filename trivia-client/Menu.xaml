@@ -1,0 +1,20 @@
+﻿<Window x:Class="trivia_client.Menu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:trivia_client"
+        mc:Ignorable="d"
+        Title="Menu" Height="450" Width="800">
+    <Grid>
+        <Image Source="/trviaBack.jpg" Stretch="Fill"/>
+        <StackPanel>
+            <TextBlock TextWrapping="Wrap" Text="" Height="29" Width="345" x:Name="UserBox" FontSize="16" Foreground="White" TextAlignment="Center"/>
+            <Button Content="Create Room" Width="200" Margin="20" x:Name="CreateRoomBtn" FontSize="16" Height="60" Click="CreateRoomBtn_Click" FontFamily="Aharoni"/>
+            <Button Content="Join Room" Width="200" Margin="20" x:Name="JoinRoomBtn" FontSize="16" Height="60" Click="JoinRoomBtn_Click" FontFamily="Aharoni"/>
+            <Button Content="Statistics" Width="200" Margin="20" x:Name="StatBtn" FontSize="16" Height="60" Click="StatBtn_Click" FontFamily="Aharoni"/>
+            <Button Content="Logout" Width="200" Margin="20" x:Name="LogoutBtn" FontSize="16" Height="60" Click="LogoutBtn_Click" FontFamily="Aharoni"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

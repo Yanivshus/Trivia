@@ -14,5 +14,6 @@ private:
 	IDatabase* m_database;
 public:
 	Server();
+	//main server entry point
 	void run();
 };

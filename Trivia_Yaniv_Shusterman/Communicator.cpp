@@ -95,7 +95,6 @@ void Communicator::handleNewClient(SOCKET client_sock)
 			const int dataLength = getSizeOfData(std::vector<unsigned char>(buffer.begin() + 1, buffer.begin() + SIZE_OF_START));// get the length of the data by slicing the buffer.
 			std::vector<unsigned char> data(buffer.begin() + SIZE_OF_START, buffer.begin() + dataLength + SIZE_OF_START);// get the data itself.
 			
-			std::cout << data.data() << std::endl;
 
 			//build the request.
 			RequestInfo reqInfo;
@@ -156,6 +155,7 @@ std::vector<unsigned char> Communicator::getData(SOCKET soc)
 	std::vector<unsigned char> buffer(BUFFER_SIZE);
 	int res = recv(soc, reinterpret_cast<char*>(buffer.data()), BUFFER_SIZE, 0);
 
+
 	if (res == INVALID_SOCKET)
 	{
 		std::string s = "Error while recieving from socket: ";
@@ -166,7 +166,7 @@ std::vector<unsigned char> Communicator::getData(SOCKET soc)
 		buffer.resize(res);
 	}
 	if (buffer.size() == 0) {
-		throw std::exception("User disconnected");
+		throw std::exception("User disconnected\n");
 	}
 	return buffer;
 }
