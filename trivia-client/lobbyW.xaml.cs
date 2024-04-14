@@ -130,7 +130,7 @@ namespace trivia_client
                         // The room got closed by admin.
                         await Dispatcher.InvokeAsync(() =>
                         {
-                            MessageBox.Show("The room closed by admin");
+                            MessageBox.Show("The room closed");
                             handleMemberLeave();
                         });
 

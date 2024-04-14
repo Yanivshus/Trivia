@@ -29,7 +29,7 @@ namespace trivia_client
         user currentLoggedUser;
         Window menuW;
 
-        private bool stopBackgroundTask = false;//to stop the showPlayer task.
+        private CancellationTokenSource cancellationTokenSource;
 
         public JoinChooseRoomW(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, Window menuW)
         {
@@ -39,6 +39,7 @@ namespace trivia_client
             this.menuW = menuW;
             InitializeComponent();
 
+            cancellationTokenSource = new CancellationTokenSource();
             StartBackgroundTask();
             showRoom();// start the background task to show the avliable room
 
@@ -52,7 +53,7 @@ namespace trivia_client
         {
             await Task.Run(async () =>
             {
-                while(stopBackgroundTask == false)
+                while(!cancellationTokenSource.Token.IsCancellationRequested)
                 {
                     // building the packet to get rooms.
                     List<byte> getRoomsBuffer = new List<byte>();
@@ -91,7 +92,7 @@ namespace trivia_client
                             await Dispatcher.InvokeAsync(() =>
                             {
                                 // set the text box to show the rooms.
-                                this.roomsBox.Text = "No rooms avaliable :(";
+                                this.roomsBox.Text = "No rooms avaliable :(1";
                             });
                         }
 
@@ -101,14 +102,14 @@ namespace trivia_client
                         await Dispatcher.InvokeAsync(() =>
                         {
                             // set the text box to show the rooms.
-                            this.roomsBox.Text = "No rooms avaliable :(";
+                            this.roomsBox.Text = "No rooms avaliable :(2";
                         });
                     }
                     await Task.Delay(3000);
                 }
                 
 
-            });
+            }, cancellationTokenSource.Token);
         }
 
         /// <summary>
@@ -116,7 +117,7 @@ namespace trivia_client
         /// </summary>
         private void StopBackgroundTask()
         {
-            stopBackgroundTask = true;
+            cancellationTokenSource.Cancel();
         }
 
         /// <summary>
@@ -124,7 +125,7 @@ namespace trivia_client
         /// </summary>
         private void StartBackgroundTask()
         {
-            stopBackgroundTask = false;
+            cancellationTokenSource = new CancellationTokenSource();
         }
 
         private void goBackBtn(object sender, RoutedEventArgs e)
@@ -134,6 +135,11 @@ namespace trivia_client
 
             this.menuW.Show();
             this.Close();
+        }
+
+        private void handleJoinRoom()
+        {
+
         }
 
         private void joinRoomBtn(object sender, RoutedEventArgs e)
@@ -161,6 +167,12 @@ namespace trivia_client
                 lobbyWin.Show();
 
             }
+            else if((int)response[0] == Codes.GET_ROOMS_RESPONSE)
+            {
+                lobbyW lobbyWin = new lobbyW(tcpClient, clientStream, currentLoggedUser, id, menuW);
+                this.Close();
+                lobbyWin.Show();
+            }
             else
             {
                 this.errBox.Text = "FAILED TO JOIN ROOM";
@@ -168,8 +180,6 @@ namespace trivia_client
                 StartBackgroundTask();
                 showRoom();
             }
-
-
         }
     }
 }

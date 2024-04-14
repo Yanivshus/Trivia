@@ -3,16 +3,20 @@
 
 RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo info)
 {
-    // get all current active users.
+    // get all current active users.   
     std::vector<LoggedUser> users = this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).getAllUsers();
 
     this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).deleteUser(users[0]); // delete the admin from the room
+
+    auto user = users.begin(); 
+    user++; // start from the member users.
+
     // run on all of the users and remove them.
-    for (auto user = users.begin() + 1; user != users.end(); user++)
+    for (; user != users.end(); user++)
     {
         this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).deleteUser(*user); // delete room meber.
 
-        this->m_clients[user->getSock()] = (IRequestHandler*)this->m_handlerFactory.createMenuRequestHandler(this->m_user); // update the user handler
+        this->m_clients[user->getSock()] = (IRequestHandler*)this->m_handlerFactory.createMenuRequestHandler(*user); // update the user handler
 
 
         //create a leave room packet and send to the current user.

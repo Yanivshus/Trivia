@@ -120,6 +120,8 @@ void Communicator::handleNewClient(SOCKET client_sock)
 				}
 				this->clientListMtx.unlock();
 
+				std::cout << "Res:" << (int)res.buffer[0] << std::endl;
+
 				Helper::sendData(client_sock, res.buffer);
 			}
 			else {
