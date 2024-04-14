@@ -37,7 +37,7 @@ public:
 	StatisticsManager& getStatisticsManager();
 
 	// create a admin request handler.
-	RoomAdminRequestHandler* CreateRoomAdminRequestHandler(LoggedUser user, Room room);
+	RoomAdminRequestHandler* CreateRoomAdminRequestHandler(LoggedUser user, Room room, std::map<SOCKET, IRequestHandler*>& m_clients);
 
 	// create room member handler.
 	RoomMemberRequestHandler* CreateRoomMemberRequestHandler(LoggedUser user, Room room);

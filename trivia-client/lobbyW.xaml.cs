@@ -125,6 +125,16 @@ namespace trivia_client
                             });
                         }
                     }
+                    else if((int)response[0] == Codes.LEAVE_ROOM_RESPONSE)
+                    {
+                        // The room got closed by admin.
+                        await Dispatcher.InvokeAsync(() =>
+                        {
+                            MessageBox.Show("The room closed by admin");
+                            handleMemberLeave();
+                        });
+
+                    }
                     else
                     {
                         // Update the UI every 3 seconds
@@ -161,6 +171,28 @@ namespace trivia_client
         /// </summary>
         private void leaveRoom(object sender, RoutedEventArgs e)
         {
+            LeaveRoomFunc();
+        }
+         
+        /// <summary>
+        /// if a clients is forced to leave by close room command this function will make it.
+        /// </summary>
+        private void handleMemberLeave()
+        {
+            StopBackgroundTask();
+            Thread.Sleep(1000);
+             
+            // go back to join room window.
+            JoinChooseRoomW roomWindowOpen = new JoinChooseRoomW(tcpClient, clientStream, currentLoggedUser, mainWin);
+            this.Close();
+            roomWindowOpen.Show();
+        }
+
+        /// <summary>
+        /// function go back to join room screens. and exists the room.
+        /// </summary>
+        private void LeaveRoomFunc()
+        {
             StopBackgroundTask();
             Thread.Sleep(1000);
 
@@ -176,7 +208,7 @@ namespace trivia_client
             //check if leaving worked.
             if ((int)response[0] == Codes.LEAVE_ROOM_RESPONSE)
             {
-                
+
                 JoinChooseRoomW roomWindowOpen = new JoinChooseRoomW(tcpClient, clientStream, currentLoggedUser, mainWin);
                 this.Close();
                 roomWindowOpen.Show();
@@ -188,7 +220,6 @@ namespace trivia_client
                 MessageBox.Show("Problem leaving");
             }
         }
-
         /// <summary>
         /// works only for admin, starts a game.
         /// </summary>
@@ -203,7 +234,34 @@ namespace trivia_client
         /// </summary>
         private void closeRoom(object sender, RoutedEventArgs e)
         {
+            StopBackgroundTask();
+            Thread.Sleep(1000);
 
+            //create the packet.
+            List<byte> closeBuffer = new List<byte>();
+            closeBuffer.Add((byte)Codes.CLOSE_ROOM_REQUEST);
+            closeBuffer.AddRange(PacketBuilder.CreateDataLengthAsBytes(0));
+
+            PacketBuilder.sendDataToSocket(clientStream, closeBuffer.ToArray());//send data to server.
+
+            byte[] response = PacketBuilder.getDataFromSocket(clientStream); // receive server massage.
+
+            //check if leaving worked.
+            if ((int)response[0] == Codes.CLOSE_ROOM_RESPONSE)
+            {
+
+                Menu menuW = new Menu(tcpClient, clientStream, currentLoggedUser, mainWin);
+                this.Close();
+                menuW.Show();
+            }
+            else
+            {
+                StartBackgroundTask();
+                showPlayers();
+                MessageBox.Show("Problem leaving");
+            }
         }
+
+
     }
 }

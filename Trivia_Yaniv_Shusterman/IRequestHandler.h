@@ -6,5 +6,5 @@
 class IRequestHandler {
 public:
 	virtual bool isRequestRelevant(RequestInfo info) = 0;
-	virtual RequestResult handleRequest(RequestInfo info, SOCKET sock) = 0;
+	virtual RequestResult handleRequest(RequestInfo info, SOCKET sock, std::map<SOCKET, IRequestHandler*>& m_clients) = 0;
 };

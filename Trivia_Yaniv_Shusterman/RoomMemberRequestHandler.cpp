@@ -77,7 +77,7 @@ bool RoomMemberRequestHandler::isRequestRelevant(RequestInfo info)
 	return false;
 }
 
-RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo info, SOCKET sock)
+RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo info, SOCKET sock, std::map<SOCKET, IRequestHandler*>& m_clients)
 {
     try
     {

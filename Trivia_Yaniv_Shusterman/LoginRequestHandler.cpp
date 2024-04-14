@@ -17,7 +17,7 @@ bool LoginRequestHandler::isRequestRelevant(RequestInfo info)
     }
 }
 
-RequestResult LoginRequestHandler::handleRequest(RequestInfo info, SOCKET sock)
+RequestResult LoginRequestHandler::handleRequest(RequestInfo info, SOCKET sock, std::map<SOCKET, IRequestHandler*>& m_clients)
 {
 
     try {

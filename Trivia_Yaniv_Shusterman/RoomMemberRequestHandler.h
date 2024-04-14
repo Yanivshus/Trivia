@@ -31,5 +31,5 @@ private:
 public:
 	RoomMemberRequestHandler(RequestHandlerFactory& factory, Room room, const LoggedUser& user);
 	virtual bool isRequestRelevant(RequestInfo info) override;
-	virtual RequestResult handleRequest(RequestInfo info, SOCKET sock) override;
+	virtual RequestResult handleRequest(RequestInfo info, SOCKET sock, std::map<SOCKET, IRequestHandler*>& m_clients) override;
 };

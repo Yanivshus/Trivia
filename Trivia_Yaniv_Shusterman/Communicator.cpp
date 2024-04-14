@@ -112,7 +112,7 @@ void Communicator::handleNewClient(SOCKET client_sock)
 			//checking if the request is relevent to the current user stage.
 			if (this->m_clients.find(client_sock)->second != nullptr && this->m_clients[client_sock]->isRequestRelevant(reqInfo))
 			{
-				RequestResult res = this->m_clients[client_sock]->handleRequest(reqInfo, client_sock);//handling the request.
+				RequestResult res = this->m_clients[client_sock]->handleRequest(reqInfo, client_sock, this->m_clients);//handling the request.
 				//if the returned type of the handler is nullptr the user status will not change.
 				this->clientListMtx.lock();
 				if (res.newHandler != nullptr) {

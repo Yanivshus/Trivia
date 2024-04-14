@@ -7,6 +7,7 @@
 #include "LoggedUser.h"
 #include "StructHelper.h"
 #include "Helper.h"
+#include <map>
 
 
 class RequestHandlerFactory;
@@ -17,6 +18,7 @@ private:
 	Room m_room;
 	LoggedUser m_user;
 	RequestHandlerFactory& m_handlerFactory;
+	std::map<SOCKET, IRequestHandler*>& m_clients;
 
 	/// <summary>
 	/// this function implements all the close room by admin logic.
@@ -39,8 +41,8 @@ private:
 	//needed to add this function for lobby functionality.
 	RequestResult GetPlayersInRoom(RequestInfo info);
 public:
-	RoomAdminRequestHandler(RequestHandlerFactory& factory , Room room, const LoggedUser& user);
+	RoomAdminRequestHandler(RequestHandlerFactory& factory , Room room, const LoggedUser& user, std::map<SOCKET, IRequestHandler*>& m_clients);
 	virtual bool isRequestRelevant(RequestInfo info) override;
-	virtual RequestResult handleRequest(RequestInfo info, SOCKET sock) override;
+	virtual RequestResult handleRequest(RequestInfo info, SOCKET sock, std::map<SOCKET, IRequestHandler*>& m_clients) override;
 	
 };

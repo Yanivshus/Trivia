@@ -22,13 +22,13 @@ bool MenuRequestHandler::isRequestRelevant(RequestInfo info)
 
 }
 
-RequestResult MenuRequestHandler::handleRequest(RequestInfo info, SOCKET sock)
+RequestResult MenuRequestHandler::handleRequest(RequestInfo info, SOCKET sock, std::map<SOCKET, IRequestHandler*>& m_clients)
 {
     try
     {
         //genarate a resault and handle it.
         if (info.id == CREATE_ROOM_REQUEST) {
-            return this->createRoom(info);
+            return this->createRoom(info, m_clients);
         }
         if (info.id == GET_ROOMS_REQUEST) {
             return this->getRooms(info);
@@ -183,7 +183,7 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo info)
     }
 }
 
-RequestResult MenuRequestHandler::createRoom(RequestInfo info)
+RequestResult MenuRequestHandler::createRoom(RequestInfo info, std::map<SOCKET, IRequestHandler*>& m_clients)
 {
     try
     {
@@ -200,7 +200,7 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo info)
         this->m_handlerFactory.getRoomManager().createRoom(this->m_user, data);// create the room in the room manager.
         CreateRoomResponse createRes;
         createRes.id = data.id;
-        return { JsonResponsePacketSerializer::serializeResponse(createRes), (IRequestHandler*)this->m_handlerFactory.CreateRoomAdminRequestHandler(this->m_user, this->m_handlerFactory.getRoomManager().getRoom(data.id))};
+        return { JsonResponsePacketSerializer::serializeResponse(createRes), (IRequestHandler*)this->m_handlerFactory.CreateRoomAdminRequestHandler(this->m_user, this->m_handlerFactory.getRoomManager().getRoom(data.id), m_clients)};
     }
     catch (const std::exception& e)
     {

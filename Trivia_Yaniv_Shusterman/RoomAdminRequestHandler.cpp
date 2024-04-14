@@ -3,14 +3,16 @@
 
 RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo info)
 {
-    std::vector<LoggedUser> users = this->m_room.getAllUsers();
+    // get all current active users.
+    std::vector<LoggedUser> users = this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).getAllUsers();
 
-
+    this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).deleteUser(users[0]); // delete the admin from the room
     // run on all of the users and remove them.
-    for (auto user = users.begin(); user != users.end(); user++)
+    for (auto user = users.begin() + 1; user != users.end(); user++)
     {
-        this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).deleteUser(*user);
+        this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).deleteUser(*user); // delete room meber.
 
+        this->m_clients[user->getSock()] = (IRequestHandler*)this->m_handlerFactory.createMenuRequestHandler(this->m_user); // update the user handler
 
 
         //create a leave room packet and send to the current user.
@@ -95,7 +97,7 @@ RequestResult RoomAdminRequestHandler::GetPlayersInRoom(RequestInfo info)
     }
 }
 
-RoomAdminRequestHandler::RoomAdminRequestHandler(RequestHandlerFactory& factory, Room room, const LoggedUser& user) : m_handlerFactory(factory), m_room(room), m_user(user)
+RoomAdminRequestHandler::RoomAdminRequestHandler(RequestHandlerFactory& factory, Room room, const LoggedUser& user, std::map<SOCKET, IRequestHandler*>& m_clients) : m_handlerFactory(factory), m_room(room), m_user(user), m_clients(m_clients)
 {
 }
 
@@ -111,7 +113,7 @@ bool RoomAdminRequestHandler::isRequestRelevant(RequestInfo info)
 	return false;
 }
 
-RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo info, SOCKET sock)
+RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo info, SOCKET sock, std::map<SOCKET, IRequestHandler*>& m_clients)
 {
 	try
 	{
