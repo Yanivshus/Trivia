@@ -140,7 +140,7 @@ namespace trivia_client
                         // Update the UI every 3 seconds
                         await Dispatcher.InvokeAsync(() =>
                         {
-                            this.playersBox.Text = "error"; // set the players in the appropriate box.
+                            this.playersBox.Text = ((int)response[0]).ToString(); // set the players in the appropriate box.
                         });
                     }
 
