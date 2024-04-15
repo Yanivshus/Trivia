@@ -209,7 +209,6 @@ namespace trivia_client
                 PacketBuilder.getDataFromSocket(clientStream);// get reponse from server.
             }
 
-
             //create the packet.
             List<byte> leaveRoomBuffer = new List<byte>();
             leaveRoomBuffer.Add((byte)Codes.LEAVE_ROOM_REQUEST);

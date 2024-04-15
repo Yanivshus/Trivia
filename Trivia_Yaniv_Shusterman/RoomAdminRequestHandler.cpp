@@ -3,7 +3,6 @@
 
 RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo info)
 {
-    Room room = this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id);
     // get all current active users.   
     std::vector<LoggedUser> users = this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).getAllUsers();
 
