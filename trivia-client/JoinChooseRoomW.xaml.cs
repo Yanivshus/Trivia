@@ -147,6 +147,12 @@ namespace trivia_client
             StopBackgroundTask();
             Thread.Sleep(1000);
 
+            // clean client stream
+            while (clientStream.DataAvailable)
+            {
+                PacketBuilder.getDataFromSocket(clientStream);// get reponse from server.
+            }
+
             int id = int.Parse(this.idBox.Text);
 
             roomJsonObj roomToJoin = new roomJsonObj { roomId = id }; // create room object
@@ -166,12 +172,6 @@ namespace trivia_client
                 this.Close();
                 lobbyWin.Show();
 
-            }
-            else if((int)response[0] == Codes.GET_ROOMS_RESPONSE)
-            {
-                lobbyW lobbyWin = new lobbyW(tcpClient, clientStream, currentLoggedUser, id, menuW);
-                this.Close();
-                lobbyWin.Show();
             }
             else
             {

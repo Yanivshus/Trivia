@@ -181,7 +181,14 @@ namespace trivia_client
         {
             StopBackgroundTask();
             Thread.Sleep(1000);
-             
+
+            // clean client stream
+            while (clientStream.DataAvailable)
+            {
+                PacketBuilder.getDataFromSocket(clientStream);// get reponse from server.
+            }
+
+
             // go back to join room window.
             JoinChooseRoomW roomWindowOpen = new JoinChooseRoomW(tcpClient, clientStream, currentLoggedUser, mainWin);
             this.Close();
@@ -195,6 +202,13 @@ namespace trivia_client
         {
             StopBackgroundTask();
             Thread.Sleep(1000);
+
+            // clean client stream
+            while (clientStream.DataAvailable)
+            {
+                PacketBuilder.getDataFromSocket(clientStream);// get reponse from server.
+            }
+
 
             //create the packet.
             List<byte> leaveRoomBuffer = new List<byte>();
@@ -236,6 +250,13 @@ namespace trivia_client
         {
             StopBackgroundTask();
             Thread.Sleep(1000);
+
+            // clean client stream
+            while (clientStream.DataAvailable)
+            {
+                PacketBuilder.getDataFromSocket(clientStream);// get reponse from server.
+            }
+
 
             //create the packet.
             List<byte> closeBuffer = new List<byte>();
