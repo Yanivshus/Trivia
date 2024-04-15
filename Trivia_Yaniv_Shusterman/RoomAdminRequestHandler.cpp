@@ -34,12 +34,15 @@ RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo info)
 
 RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
 {
-    std::vector<LoggedUser> users = this->m_room.getAllUsers();
+    std::vector<LoggedUser> users = this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).getAllUsers();
+
+    auto user = users.begin();
+    user++; // start from the member users.
+
     // starts game for all the users.
-    for (auto user = users.begin() + 1; user != users.end(); user++)
+    for (; user != users.end(); user++)
     {
         //need to add later the actual starting of the game and the creation of the handler.
-        //create a leave room packet and send to the current user.
         StartGameResponse res = { START_GAME_RESPONSE };
         std::vector<unsigned char> buffer = JsonResponsePacketSerializer::serializeResponse(res);
         Helper::sendData(user->getSock(), buffer);

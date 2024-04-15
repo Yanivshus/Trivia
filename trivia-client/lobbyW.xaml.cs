@@ -59,6 +59,7 @@ namespace trivia_client
             {
                 while (stopBackgroundTask == false)
                 {
+
                     roomJsonObj roomToGetPlayers = new roomJsonObj { roomId = roomId };
                     string jsonData = JsonConvert.SerializeObject(roomToGetPlayers);
 
@@ -125,7 +126,7 @@ namespace trivia_client
                             });
                         }
                     }
-                    else if((int)response[0] == Codes.LEAVE_ROOM_RESPONSE)
+                    else if((int)response[0] == Codes.LEAVE_ROOM_RESPONSE) // in case of a leave caught it means that the admin closed the room.
                     {
                         // The room got closed by admin.
                         await Dispatcher.InvokeAsync(() =>
@@ -133,7 +134,15 @@ namespace trivia_client
                             MessageBox.Show("The room closed");
                             handleMemberLeave();
                         });
-
+                    }
+                    else if ((int)response[0] == Codes.START_GAME_RESPONSE)// in case of a start game caught it means that the admin started the game.
+                    {
+                        // The room got closed by admin.
+                        await Dispatcher.InvokeAsync(() =>
+                        {
+                            MessageBox.Show("The Game is starting.");
+                            handleStartGame();
+                        });
                     }
                     else
                     {
@@ -143,10 +152,26 @@ namespace trivia_client
                             this.playersBox.Text = ((int)response[0]).ToString(); // set the players in the appropriate box.
                         });
                     }
-
                     await Task.Delay(3000);
                 }
             });
+        }
+
+        /// <summary>
+        /// handle start game for a member who forced to start by admin.
+        /// </summary>
+        private void handleStartGame()
+        {
+            StopBackgroundTask();
+            Thread.Sleep(1000);
+
+            // clean client stream
+            while (clientStream.DataAvailable)
+            {
+                PacketBuilder.getDataFromSocket(clientStream);// get reponse from server.
+            }
+
+            // move to the next screen. which is the game.
         }
 
         /// <summary>
@@ -238,7 +263,34 @@ namespace trivia_client
         /// </summary>
         private void StartGameButton(object sender, RoutedEventArgs e)
         {
+            StopBackgroundTask();
+            Thread.Sleep(1000);
 
+            // clean client stream
+            while (clientStream.DataAvailable)
+            {
+                PacketBuilder.getDataFromSocket(clientStream);// get reponse from server.
+            }
+
+            //create the packet.
+            List<byte> closeBuffer = new List<byte>();
+            closeBuffer.Add((byte)Codes.START_GAME_REQUEST);
+            closeBuffer.AddRange(PacketBuilder.CreateDataLengthAsBytes(0));
+
+            PacketBuilder.sendDataToSocket(clientStream, closeBuffer.ToArray());//send data to server.
+
+            byte[] response = PacketBuilder.getDataFromSocket(clientStream); // receive server massage.
+
+            if ((int)response[0] == Codes.START_GAME_RESPONSE)
+            {
+                MessageBox.Show("The Game is starting.");
+                // move to the next screen which is starting.
+            }
+            else
+            {
+                StartBackgroundTask();
+                showPlayers();              
+            }
         }
 
 
