@@ -5,6 +5,9 @@
 #include <string>
 #include <map>
 
+#define ERROR_GAME_RES 0
+#define _GAME_RES 1
+
 class IRequestHandler; // fix circular includes.
 
 typedef struct {

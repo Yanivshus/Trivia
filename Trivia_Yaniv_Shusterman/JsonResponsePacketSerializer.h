@@ -33,6 +33,10 @@ public:
 	static std::vector<unsigned char> serializeResponse(const LeaveRoomResponse& err);
 
 	//v4
+	static std::vector<unsigned char> serializeResponse(const GetGameResultsResponse& err);
+	static std::vector<unsigned char> serializeResponse(const SubmitAnswerResponse& err);
+	static std::vector<unsigned char> serializeResponse(const GetQuestionResponse& err);
+	static std::vector<unsigned char> serializeResponse(const LeaveGameResponse& err);
 
 private:
 	/// <summary>

@@ -48,3 +48,11 @@ CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(st
 	req.roomName = jsData["roomName"];
 	return req;
 }
+
+SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerRequest(std::vector<unsigned char> buffer)
+{
+	json jsData = json::from_bson(buffer);// parsing into json object
+	SubmitAnswerRequest req;
+	req.answerId = jsData["correctAnsId"];
+	return req;
+}
