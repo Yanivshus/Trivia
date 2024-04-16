@@ -3,6 +3,7 @@
 #include "Constants.h"
 #include <vector>
 #include <string>
+#include <map>
 
 class IRequestHandler; // fix circular includes.
 
@@ -81,6 +82,35 @@ typedef struct
 typedef struct {
 	unsigned int status;
 } LeaveRoomResponse;
+
+//v4
+typedef struct {
+	unsigned int status;
+} LeaveGameResponse;
+
+typedef struct {
+	unsigned int status;
+	std::string question;
+	std::map<unsigned int, std::string> answers;
+} GetQuestionResponse;
+
+typedef struct {
+	unsigned int status;
+	unsigned int correctAnswerId;
+} SubmitAnswerResponse;
+
+typedef struct {
+	std::string username;
+	unsigned int corrrectAnswerCount;
+	unsigned int wrongAnsswerCount;
+	unsigned int averageAnswerTime;
+} PlayerResults;
+
+typedef struct {
+	unsigned int status;
+	std::vector<PlayerResults> results;
+} GetGameResultsResponse;
+
 
 
 
