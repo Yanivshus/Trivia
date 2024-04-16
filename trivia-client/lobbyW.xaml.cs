@@ -27,10 +27,10 @@ namespace trivia_client
         TcpClient tcpClient;
         NetworkStream clientStream;
         user currentLoggedUser;
-        Window roomMenu;
         Window mainWin;
         int roomId;
         string admin;
+        roomStateJson roomData;
 
         private bool stopBackgroundTask = false;//to stop the showPlayer task.
 
@@ -39,16 +39,58 @@ namespace trivia_client
             this.tcpClient = tcpClient;
             this.clientStream = clientStream;
             this.currentLoggedUser = currentLoggedUser;
-           
             this.roomId = roomId;
             this.mainWin = mainWin;
             this.admin = "";
+
             InitializeComponent();
+
+            getRoomStateFunc(); // get rooom data.
+
+            // set the room data.
+            this.DataBox.Text = "User: " + currentLoggedUser.getUsername + "\n" +
+                "Question count: " + roomData.questionCount.ToString() + "\n" +
+                "Question timeout: " + roomData.answerTimeOut.ToString();
+
 
             StartBackgroundTask();
             showPlayers(); // start the backgound task for update the list of active players.
 
         }
+
+        /// <summary>
+        /// get the room state and data.
+        /// </summary>
+        private void getRoomStateFunc()
+        {
+
+            //create the packet.
+            List<byte> stateBuffer = new List<byte>();
+            stateBuffer.Add((byte)Codes.GET_ROOM_STATE_REQUEST);
+            stateBuffer.AddRange(PacketBuilder.CreateDataLengthAsBytes(0));
+
+            PacketBuilder.sendDataToSocket(clientStream, stateBuffer.ToArray()); // send the packet
+
+            byte[] response = PacketBuilder.getDataFromSocket(clientStream);// receive data from socket.
+
+            // check if the correct response is back.
+            if ((int)response[0] == Codes.GET_ROOM_STATE_RESPONSE)
+            {
+                byte[] bsonData = PacketBuilder.deserializeToData(response); // take only the bson part of the server response.
+
+                // Convert BSON byte array to BsonDocument
+                BsonDocument bsonDocument = BsonSerializer.Deserialize<BsonDocument>(bsonData);
+
+                string jsonString = bsonDocument.ToJson(); // convert to json string
+
+                roomStateJson stateJs = JsonConvert.DeserializeObject<roomStateJson>(jsonString);
+
+                // set the room;
+                roomData = stateJs; // set the room data.
+            }
+
+        }
+
 
         /// <summary>
         /// this function show the players and the admin.
@@ -85,6 +127,7 @@ namespace trivia_client
 
                         if (playersObj.Players.Length > 0)
                         {
+                            roomData.players = playersObj.Players; // set the current players.
                             // split the players into players array so i could get to them.
                             string[] playersStrings = playersObj.Players.Split(',');
 

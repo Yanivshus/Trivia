@@ -17,5 +17,6 @@
 
         <TextBlock HorizontalAlignment="Center" Margin="0,88,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="239" Width="520" Background="White" TextAlignment="Center" FontFamily="Aharoni" FontSize="18" Name="playersBox"/>
         <TextBlock HorizontalAlignment="Center" Margin="0,38,0,0" TextWrapping="Wrap" Text="PLayers im room:" VerticalAlignment="Top" Height="45" Width="358" Foreground="White" TextAlignment="Center" FontFamily="Aharoni" FontSize="30"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="73" Width="166" Foreground="White" TextAlignment="Left" FontFamily="Aharoni" FontSize="15" Name="DataBox"/>
     </Grid>
 </Window>

@@ -42,6 +42,7 @@ RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
     // starts game for all the users.
     for (; user != users.end(); user++)
     {
+
         //need to add later the actual starting of the game and the creation of the handler.
         StartGameResponse res = { START_GAME_RESPONSE };
         std::vector<unsigned char> buffer = JsonResponsePacketSerializer::serializeResponse(res);
