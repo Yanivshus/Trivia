@@ -157,5 +157,9 @@ typedef struct {
 
 
 
+typedef struct {
+	unsigned int answerId;
+} SubmitAnswerRequest;
+
 
 
