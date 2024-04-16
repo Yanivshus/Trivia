@@ -59,6 +59,31 @@ typedef struct {
 	unsigned int id;
 } CreateRoomResponse;
 
+//v3
+typedef struct {
+	unsigned int status;
+} CloseRoomResponse;
+
+
+typedef struct {
+	unsigned int status;
+} StartGameResponse;
+
+typedef struct 
+{
+	unsigned int status;
+	bool hasGameBegun;
+	std::vector<std::string> players;
+	unsigned int questionCount;
+	unsigned int answerTimeOut;
+} GetRoomStateResponse;
+
+typedef struct {
+	unsigned int status;
+} LeaveRoomResponse;
+
+
+
 //requests
 typedef struct {
 	std::string username;

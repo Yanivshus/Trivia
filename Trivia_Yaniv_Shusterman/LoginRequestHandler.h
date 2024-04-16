@@ -22,5 +22,5 @@ public:
 	/// </summary>
 	/// <param name="info:">request info.</param>
 	/// <returns>result of the hadling (sucess or error)</returns>
-	virtual RequestResult handleRequest(RequestInfo info) override;
+	virtual RequestResult handleRequest(RequestInfo info, SOCKET sock, std::map<SOCKET, IRequestHandler*>& m_clients) override;
 };

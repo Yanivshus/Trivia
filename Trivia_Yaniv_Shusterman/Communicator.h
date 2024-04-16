@@ -5,6 +5,7 @@
 #include "IRequestHandler.h"
 #include "RequestHandlerFactory.h"
 
+
 #include <iostream>
 #include <map>
 #include <thread>
@@ -14,10 +15,12 @@
 #include <vector>
 #include <ctime>
 
+#include "Helper.h"
+
 
 
 #define PORT 9999
-#define BUFFER_SIZE 1024
+
 #define LENGTH_DATA 4
 
 class Communicator {
@@ -40,20 +43,6 @@ private:
 	std::mutex clientListMtx;//using with the clientsList.
 
 	/// <summary>
-	/// send data bu the socket.
-	/// </summary>
-	/// <param name="soc:">socket of client.</param>
-	/// <param name="Msg:">msg to send.</param>
-	void sendData(SOCKET soc, std::vector<unsigned char> Msg);
-
-	/// <summary>
-	/// get data from server.
-	/// </summary>
-	/// <param name="soc:">socket of client.</param>
-	/// <returns>vector of bytes which is the data.</returns>
-	std::vector<unsigned char> getData(SOCKET soc);
-
-	/// <summary>
 	/// turn the len of data back to int from vector of 4 bytes.
 	/// </summary>
 	/// <param name="buffer:">vector of bytes.</param>
@@ -63,7 +52,5 @@ public:
 	Communicator(RequestHandlerFactory& r);
 	~Communicator();
 	void startHandleRequests();
-	
-
 
 };

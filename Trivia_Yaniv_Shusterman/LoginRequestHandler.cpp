@@ -17,7 +17,7 @@ bool LoginRequestHandler::isRequestRelevant(RequestInfo info)
     }
 }
 
-RequestResult LoginRequestHandler::handleRequest(RequestInfo info)
+RequestResult LoginRequestHandler::handleRequest(RequestInfo info, SOCKET sock, std::map<SOCKET, IRequestHandler*>& m_clients)
 {
 
     try {
@@ -31,11 +31,11 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo info)
             std::cout << "Username: " << req.username << std::endl;
 
             LoginManager& log_manager = this->m_handlerFactory.getLoginManager();//getting the login manager
-            log_manager.login(req.username, req.password);// trying to log the user.
-
+            log_manager.login(req.username, req.password, sock);// trying to log the user.
+            
             //setting the next handler to be the menu.
             LoginResponse res = { LOGIN_RESPONSE };
-            return { JsonResponsePacketSerializer::serializeResponse(res) , (IRequestHandler*)this->m_handlerFactory.createMenuRequestHandler(LoggedUser(req.username))};
+            return { JsonResponsePacketSerializer::serializeResponse(res) , (IRequestHandler*)this->m_handlerFactory.createMenuRequestHandler(LoggedUser(req.username, sock))};
         }
 
         else if (info.id == SIGNUP_REQUEST)

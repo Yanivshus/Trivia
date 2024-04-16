@@ -22,13 +22,13 @@ bool MenuRequestHandler::isRequestRelevant(RequestInfo info)
 
 }
 
-RequestResult MenuRequestHandler::handleRequest(RequestInfo info)
+RequestResult MenuRequestHandler::handleRequest(RequestInfo info, SOCKET sock, std::map<SOCKET, IRequestHandler*>& m_clients)
 {
     try
     {
-        //gereate a resault and handle it.
+        //genarate a resault and handle it.
         if (info.id == CREATE_ROOM_REQUEST) {
-            return this->createRoom(info);
+            return this->createRoom(info, m_clients);
         }
         if (info.id == GET_ROOMS_REQUEST) {
             return this->getRooms(info);
@@ -102,10 +102,17 @@ RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo info)
     try
     {
         GetPlayersInRoomRequest playersReq = JsonRequestPacketDeserializer::deserializeGetPlayersRequest(info.buffer);// get the room id from buffer.
-        std::vector<std::string> players = this->m_handlerFactory.getRoomManager().getRoom(playersReq.roomId).getAllUsers(); // get all the user active in the room.
+        std::vector<LoggedUser> players = this->m_handlerFactory.getRoomManager().getRoom(playersReq.roomId).getAllUsers(); // get all the user active in the room.
+
+        //creating vector of strings.
+        std::vector<std::string> playersStr;
+        for (auto& player : players)
+        {
+            playersStr.push_back(player.getUserName());
+        }
 
         GetPlayersInRoomResponse playersRes;
-        playersRes.players = players;
+        playersRes.players = playersStr;
         // create the resault packet.
         return { JsonResponsePacketSerializer::serializeResponse(playersRes), nullptr };
     }
@@ -162,11 +169,12 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo info)
     try
     {
         JoinRoomRequest joinReq = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(info.buffer); // desrilize to get room if.
-        this->m_handlerFactory.getRoomManager().getRoom(joinReq.roomId).addUser(this->m_user.getUserName());// add user to the room.
+        this->m_handlerFactory.getRoomManager().getRoom(joinReq.roomId).addUser(LoggedUser(m_user.getUserName(), m_user.getSock()));// add user to the room.
 
         JoinRoomResponse joinRes;
         joinRes.status = JOIN_ROOM_RESPONSE;
-        return { JsonResponsePacketSerializer::serializeResponse(joinRes) , nullptr };
+        //returns appropriate room member request handler.
+        return { JsonResponsePacketSerializer::serializeResponse(joinRes) , (IRequestHandler*)this->m_handlerFactory.CreateRoomMemberRequestHandler(this->m_user, this->m_handlerFactory.getRoomManager().getRoom(joinReq.roomId)) };
 
     }
     catch (const std::exception& e)
@@ -175,7 +183,7 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo info)
     }
 }
 
-RequestResult MenuRequestHandler::createRoom(RequestInfo info)
+RequestResult MenuRequestHandler::createRoom(RequestInfo info, std::map<SOCKET, IRequestHandler*>& m_clients)
 {
     try
     {
@@ -192,7 +200,7 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo info)
         this->m_handlerFactory.getRoomManager().createRoom(this->m_user, data);// create the room in the room manager.
         CreateRoomResponse createRes;
         createRes.id = data.id;
-        return { JsonResponsePacketSerializer::serializeResponse(createRes), nullptr };
+        return { JsonResponsePacketSerializer::serializeResponse(createRes), (IRequestHandler*)this->m_handlerFactory.CreateRoomAdminRequestHandler(this->m_user, this->m_handlerFactory.getRoomManager().getRoom(data.id), m_clients)};
     }
     catch (const std::exception& e)
     {
@@ -219,6 +227,5 @@ int MenuRequestHandler::CreateRoomId()
     long long result = static_cast<long long>(time) * rand1 / rand2;
 
     // Ensure the result fits within the range of an int
-    return static_cast<int>(result % std::numeric_limits<int>::max());
-
+    return static_cast<int>(result % INT_MAX);
 }

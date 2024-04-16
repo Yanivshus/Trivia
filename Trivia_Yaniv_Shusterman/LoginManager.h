@@ -23,7 +23,7 @@ public:
 	/// </summary>
 	/// <param name="username:">username of user to log to.</param>
 	/// <param name="password">password of user to log to.</param>
-	void login(const std::string& username, const std::string& password);
+	void login(const std::string& username, const std::string& password, SOCKET sock);
 
 	/// <summary>
 	/// logout from user acount.

@@ -115,6 +115,50 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const
     return createPacket(curr, j);
 }
 
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const CloseRoomResponse& err)
+{
+    json j = { {"status", err.status} };
+    Codes curr = CLOSE_ROOM_RESPONSE;
+    return createPacket(curr, j);
+}
+
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const StartGameResponse& err)
+{
+    json j = { {"status", err.status} };
+    Codes curr = START_GAME_RESPONSE;
+    return createPacket(curr, j);
+}
+
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const GetRoomStateResponse& err)
+{
+    std::string players = "";
+
+    //create list of players.
+    for (auto& player : err.players)
+    {
+        players += player;
+        players += ", ";
+    }
+
+    //poop the trailing ", ".
+    if (players.size() > 0) {
+        players.pop_back();
+      players.pop_back();
+    }
+
+    //create json data.
+    json j{ {"status", err.status}, {"hasGameBegun", err.hasGameBegun}, {"players", players}, {"questionCount", err.questionCount}, {"answerTimeOut", err.answerTimeOut} };
+    Codes curr = GET_ROOM_STATE_RESPONSE;
+    return createPacket(curr, j);
+}
+
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const LeaveRoomResponse& err)
+{
+    json j = { {"status", err.status} };
+    Codes curr = LEAVE_ROOM_RESPONSE;
+    return createPacket(curr, j);
+}
+
 std::vector<unsigned char> JsonResponsePacketSerializer::createPacket(const int code, json data)
 {
     std::vector<unsigned char> bytesVec;

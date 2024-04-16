@@ -26,6 +26,16 @@ StatisticsManager& RequestHandlerFactory::getStatisticsManager()
 	return this->m_StatisticsManager;
 }
 
+RoomAdminRequestHandler* RequestHandlerFactory::CreateRoomAdminRequestHandler(LoggedUser user, Room room, std::map<SOCKET, IRequestHandler*>& m_clients)
+{
+	return new RoomAdminRequestHandler(*this, room, user, m_clients);
+}
+
+RoomMemberRequestHandler* RequestHandlerFactory::CreateRoomMemberRequestHandler(LoggedUser user, Room room)
+{
+	return new RoomMemberRequestHandler(*this, room, user);
+}
+
 void RequestHandlerFactory::setDB(IDatabase* m_database)
 {
 	m_loginManager.setDB(m_database);
