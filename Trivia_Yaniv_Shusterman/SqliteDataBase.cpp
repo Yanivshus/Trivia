@@ -242,7 +242,7 @@ int SqliteDataBase::getNumOfTotalAnswers(const std::string& username)
 
 int SqliteDataBase::getNumOfPlayerGames(const std::string& username)
 {
-	std::string query = "SELECT COUNT(DISTINCT game_id) FROM stats WHERE username='" + username + "'";
+	std::string query = "SELECT COUNT(GAME_ID) FROM statistics WHERE username='" + username + "'";
 	int res = 0;
 
 	char* errMsg = nullptr;
@@ -256,7 +256,7 @@ int SqliteDataBase::getNumOfPlayerGames(const std::string& username)
 
 int SqliteDataBase::getPlayerScore(const std::string& username, int gameId)
 {
-	std::string query = "SELECT SUM(score) FROM stats WHERE username='"+username+"' AND game_id="+std::to_string(gameId) + ";";
+	std::string query = "SELECT SCORE FROM statistics WHERE username='"+username+"' AND GAME_ID="+std::to_string(gameId) + ";";
 	int res = 0;
 
 	char* errMsg = nullptr;
@@ -271,7 +271,7 @@ int SqliteDataBase::getPlayerScore(const std::string& username, int gameId)
 std::vector<std::string> SqliteDataBase::getHighScores()
 {
 	std::vector<std::string> scores;
-	std::string query = "SELECT username,SUM(score) SCORESUM FROM stats GROUP BY username ORDER BY SCORESUM DESC LIMIT 5;";
+	std::string query = "SELECT username,SUM(SCORE) SCORESUM FROM statistics GROUP BY username ORDER BY SCORESUM DESC LIMIT 5";
 
 	char* errMsg = nullptr;
 	//if qeury didnt worked we will print why.
@@ -283,6 +283,25 @@ std::vector<std::string> SqliteDataBase::getHighScores()
 }
 
 
+
+
+int SqliteDataBase::submitGameStatistics(GameData data, int gameId, const std::string& uNmae)
+{
+	
+	// turn all stats to strings.
+	std::string avg = std::to_string(data.averageAnswerTime);
+	std::string correct = std::to_string(data.correctAnswerCount);
+	std::string worng = std::to_string(data.wrongAnswerCount);
+	//TODO : CALC SCORE FORMULA
+	std::string query = "INSERT INTO statistics (GAME_ID, USERNAME, CORRECT, WRONG, AVG_TIME, SCORE) VALUES (" + std::to_string(gameId) + ", '" + uNmae + "', " + correct + ", " + worng + ", " + avg + ", 90);"; // need to add score.
+	
+	if (runQuery(query) == 0)
+	{
+		return 0;
+	}
+	return 1;
+
+}
 
 bool SqliteDataBase::runQuery(const std::string& query)
 {

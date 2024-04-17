@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Constants.h"
+#include "Question.h"
 #include <vector>
 #include <string>
 #include <map>
@@ -163,3 +164,9 @@ typedef struct {
 
 
 
+typedef struct {
+	Question currentQuestion;
+	unsigned int correctAnswerCount;
+	unsigned int wrongAnswerCount;
+	unsigned int averageAnswerTime;
+} GameData;

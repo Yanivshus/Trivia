@@ -1,6 +1,7 @@
 #pragma once
 #include "IDatabase.h"
 #include "sqlite3.h"
+#include "StructHelper.h"
 #include <io.h>
 #include <string>
 #include <map>
@@ -84,6 +85,12 @@ public:
 	/// </summary>
 	/// <returns>vector of scores in the format , username=score</returns>
 	virtual std::vector<std::string> getHighScores();
+
+	/// <summary>
+	/// submits scores to the db when game finished.
+	/// </summary>
+	/// <returns></returns>
+	virtual int submitGameStatistics(GameData data, );
 private:
 	// runs a query.
 	bool runQuery(const std::string& query);
