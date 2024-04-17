@@ -3,6 +3,7 @@
 #include "Question.h"
 #include <list>
 #include <vector>
+#include "StructHelper.h"
 
 class IDatabase {
 public:
