@@ -9,6 +9,7 @@ private:
 	std::string m_question;
 	std::vector<std::string> m_possiableAnswers; 
 public:
+	Question() {};
 	Question(std::string m_question, std::vector<std::string> m_possiableAnswers);
 	//getters.
 	std::string getQuestion();

@@ -31,7 +31,7 @@ public:
 
 private:
 	RequestHandlerFactory& m_handlerFactory;
-	LoggedUser m_user;
+	const LoggedUser m_user;
 
 	/// <summary>
 	/// sign outs of the current user

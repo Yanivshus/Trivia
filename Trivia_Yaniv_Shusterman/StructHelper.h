@@ -163,10 +163,3 @@ typedef struct {
 } SubmitAnswerRequest;
 
 
-
-typedef struct {
-	Question currentQuestion;
-	unsigned int correctAnswerCount;
-	unsigned int wrongAnswerCount;
-	unsigned int averageAnswerTime;
-} GameData;

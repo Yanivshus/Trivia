@@ -4,6 +4,7 @@
 #include <list>
 #include <vector>
 #include "StructHelper.h"
+#include "GameData.h"
 
 class IDatabase {
 public:
