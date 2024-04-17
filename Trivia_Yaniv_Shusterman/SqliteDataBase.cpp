@@ -79,7 +79,12 @@ int getFloatCallback(void* data, int argc, char** argv, char** azColName)
 // Callback function implementation
 int intCallback(void* data, int argc, char** argv, char** azColName) {
 	if (argc > 0) {
-		*(int*)data = atoi(argv[0]);
+		if (argv[0] == NULL) {
+			*(int*)data = 0;
+		}
+		else {
+			*(int*)data = atoi(argv[0]);
+		}
 	}
 	return 0; 
 }
