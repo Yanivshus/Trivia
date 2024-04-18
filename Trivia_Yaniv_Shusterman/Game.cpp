@@ -33,3 +33,53 @@ Question Game::getQuestionForUser(LoggedUser& user) const
 
 	return Question("", std::vector<std::string>());
 }
+
+void Game::submitAnswer(const LoggedUser& user, const unsigned int ans)
+{
+	GameData* data = nullptr;
+	// run on the players and look for asked player.
+	for (auto& player : this->m_players)
+	{
+		if (user.getUserName() == player.first.getUserName())
+		{
+			data = &player.second; // save the player game data.
+		}
+	}
+
+	// check if the answer was correct.
+	if (ans == 3) {
+		data->correctAnswerCount++; // if yes we will update the correct answer count.
+	}
+	else {
+		data->wrongAnswerCount++; // if not we will update the wrong answer count.
+	}
+
+
+	// check if the questions are over.
+	if (data->currentQuestion.getQuestion() != "over") 
+	{
+		// now i will set the next question index.
+		int place = 0;
+		int flag = 0;
+		for (place = 0; place < this->m_questions.size() && flag == 0; place++)
+		{
+			// if the current question found i will save its index.
+			if (this->m_questions[place].getQuestion() == data->currentQuestion.getQuestion()) {
+				flag++;
+			}
+		}
+		 
+		// set the next question the user will have to answer by its index.
+		if (place + 1 != this->m_questions.size()) {
+			data->currentQuestion = this->m_questions[place + 1];
+		}
+		else {
+			data->currentQuestion = Question("over", std::vector<std::string>());
+
+			data->averageAnswerTime = (double)time(0) - data->averageAnswerTime; // find the time differnce between the start of the game and now which is the end.
+
+			data->averageAnswerTime /= (data->correctAnswerCount + data ->wrongAnswerCount); // divide the time difference by amount of question to find avg time per question.
+		}
+	}
+
+}
