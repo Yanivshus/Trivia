@@ -22,6 +22,7 @@ Game& GameManager::createGame(const Room& room)
 	}
 
 	this->m_games.push_back(game); // add to active games.
+	this->m_database->addGameToGames(room.getRoomData().id);// add the id of the game to the db for later use.
 	return game;
 }
 

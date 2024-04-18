@@ -88,8 +88,13 @@ public:
 	/// <summary>
 	/// submits scores to the db when game finished.
 	/// </summary>
-	/// <returns></returns>
-	virtual int submitGameStatistics(GameData data, int gameId, const std::string& uNmae);
+	virtual int submitGameStatistics(GameData data, int gameId, const std::string& uNmae) override;
+
+	/// <summary>
+	/// add a game to games table.
+	/// </summary>
+	/// <param name="gameId:">gamed id to add.</param>
+	virtual int addGameToGames(const unsigned int gameId) override;
 private:
 	// runs a query.
 	bool runQuery(const std::string& query);

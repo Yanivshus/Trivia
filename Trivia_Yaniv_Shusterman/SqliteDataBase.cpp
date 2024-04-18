@@ -308,6 +308,16 @@ int SqliteDataBase::submitGameStatistics(GameData data, int gameId, const std::s
 
 }
 
+int SqliteDataBase::addGameToGames(const unsigned int gameId)
+{
+	std::string query = "INSERT INTO game (ID) VALUES(" + std::to_string(gameId) + ")";
+	if (runQuery(query) == 0)
+	{
+		return 0;
+	}
+	return 1;
+}
+
 bool SqliteDataBase::runQuery(const std::string& query)
 {
 	char* errMsg = nullptr;
