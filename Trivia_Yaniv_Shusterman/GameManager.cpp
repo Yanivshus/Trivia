@@ -25,7 +25,7 @@ Game& GameManager::createGame(const Room& room)
 	return game;
 }
 
-void GameManager::deleteGame(unsigned int gameId)
+void GameManager::deleteGame(const unsigned int gameId)
 {
 	//run on the games.
 	for (auto i = this->m_games.rbegin(); i != this->m_games.rend(); i++)
@@ -34,6 +34,18 @@ void GameManager::deleteGame(unsigned int gameId)
 		if (i->getGameId() == gameId) 
 		{
 			this->m_games.erase(std::next(i).base()); // delete from vector.
+		}
+	}
+}
+
+Game& GameManager::getGame(const int gameId)
+{
+	for (auto& game : this->m_games)
+	{
+		//return the game if found.
+		if (game.getGameId() == gameId) 
+		{
+			return game;
 		}
 	}
 }
