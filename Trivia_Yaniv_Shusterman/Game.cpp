@@ -81,5 +81,34 @@ void Game::submitAnswer(const LoggedUser& user, const unsigned int ans)
 			data->averageAnswerTime /= (data->correctAnswerCount + data ->wrongAnswerCount); // divide the time difference by amount of question to find avg time per question.
 		}
 	}
+	else {
+		throw std::exception("Game is over.");
+	}
 
+}
+
+void Game::removePlayer(const LoggedUser& user)
+{
+
+	auto it = this->m_players.find(user);// look for the user.
+	if (it != this->m_players.end()) // if found earse it.
+	{
+		this->m_players.erase(user);
+	}
+	else {
+		throw std::exception("User not exists.");
+	}
+}
+
+bool Game::checkIfAllPlayersFinishedPlaying() const
+{
+	for (auto& user : this->m_players)
+	{
+		// if there is a user who didnt finish we will return false.
+		if(user.second.currentQuestion.getQuestion() != "over") 
+		{
+			return false;
+		}
+	}
+	return true;// else true will be returned.
 }
