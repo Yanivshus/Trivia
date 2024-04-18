@@ -1,0 +1,23 @@
+#pragma once;
+
+#include "IRequestHandler.h"
+#include "Game.h"
+#include "RequestHandlerFactory.h"
+#include "Constants.h"
+
+class RequestHandlerFactory;
+
+class GameRequestHandler : public IRequestHandler {
+
+public:
+	virtual bool isRequestRelevant(RequestInfo info);
+	virtual RequestResult handleRequest(RequestInfo info, SOCKET sock, std::map<SOCKET, IRequestHandler*>& m_clients);
+
+	GameRequestHandler(const LoggedUser& m_user, RequestHandlerFactory& m_handlerFactory, Game& game); 
+
+	// to do , add function.
+private:
+	Game& m_game;
+	const LoggedUser m_user;
+	RequestHandlerFactory& m_handlerFactory;
+};

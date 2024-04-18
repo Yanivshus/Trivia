@@ -7,12 +7,16 @@
 #include "StatisticsManager.h"
 #include "RoomAdminRequestHandler.h"
 #include "RoomMemberRequestHandler.h"
+#include "GameRequestHandler.h"
+#include "GameManager.h"
 #include <iostream>
 
+// for circular include.
 class LoginRequestHandler;
 class MenuRequestHandler;
 class RoomAdminRequestHandler;
 class RoomMemberRequestHandler;
+class GameRequestHandler;
 
 class RequestHandlerFactory {
 private:
@@ -20,6 +24,7 @@ private:
 	LoginManager m_loginManager;
 	RoomManger m_roomManager;
 	StatisticsManager m_StatisticsManager;
+	GameManager m_gameManager;
 public:
 	// returns login request handler.
 	LoginRequestHandler* createLoginRequestHandler();
@@ -33,6 +38,9 @@ public:
 	// gets the room manager referense.
 	RoomManger& getRoomManager();
 
+	// gets the game manager referense;
+	GameManager& getGameManager();
+
 	// gets the stats manager referense.
 	StatisticsManager& getStatisticsManager();
 
@@ -41,6 +49,9 @@ public:
 
 	// create room member handler.
 	RoomMemberRequestHandler* CreateRoomMemberRequestHandler(LoggedUser user, Room room);
+
+	// create a game request handler.
+	GameRequestHandler* CreateGameRequestHandler(LoggedUser user, Game& game);
 
 	// sets the db to the factory.
 	void setDB(IDatabase* m_database);

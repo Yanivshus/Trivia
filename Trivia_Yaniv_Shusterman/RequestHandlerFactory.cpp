@@ -21,6 +21,11 @@ RoomManger& RequestHandlerFactory::getRoomManager()
 	return this->m_roomManager;
 }
 
+GameManager& RequestHandlerFactory::getGameManager()
+{
+	return this->m_gameManager;
+}
+
 StatisticsManager& RequestHandlerFactory::getStatisticsManager()
 {
 	return this->m_StatisticsManager;
@@ -36,8 +41,14 @@ RoomMemberRequestHandler* RequestHandlerFactory::CreateRoomMemberRequestHandler(
 	return new RoomMemberRequestHandler(*this, room, user);
 }
 
+GameRequestHandler* RequestHandlerFactory::CreateGameRequestHandler(LoggedUser user, Game& game)
+{
+	return new GameRequestHandler(user, *this, game);
+}
+
 void RequestHandlerFactory::setDB(IDatabase* m_database)
 {
 	m_loginManager.setDB(m_database);
 	m_StatisticsManager.setDB(m_database);
+	m_gameManager.setDB(m_database);
 }
