@@ -1,3 +1,4 @@
+#pragma once
 #include "LoggedUser.h"
 #include "map"
 #include "Question.h"
