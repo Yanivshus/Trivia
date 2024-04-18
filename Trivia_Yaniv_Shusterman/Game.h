@@ -19,4 +19,8 @@ public:
 	void removePlayer(const LoggedUser& user);
 	bool checkIfAllPlayersFinishedPlaying() const;
 
+	//getters.
+	std::map<LoggedUser, GameData>& getPlayersInGame();
+	int getGameId();
+
 };

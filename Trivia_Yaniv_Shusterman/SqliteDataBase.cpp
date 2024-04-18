@@ -116,7 +116,7 @@ bool SqliteDataBase::open()
 			return false;
 		}
 
-		query = "CREATE TABLE IF NOT EXISTS game (ID INTEGER,PRIMARY KEY(ID AUTOINCREMENT));";
+		query = "CREATE TABLE IF NOT EXISTS game (ID INTEGER,PRIMARY KEY(ID));";
 
 		if (!runQuery(query))
 		{

@@ -112,3 +112,13 @@ bool Game::checkIfAllPlayersFinishedPlaying() const
 	}
 	return true;// else true will be returned.
 }
+
+std::map<LoggedUser, GameData>& Game::getPlayersInGame()
+{
+	return this->m_players;
+}
+
+int Game::getGameId()
+{
+	return this->m_gameId;
+}
