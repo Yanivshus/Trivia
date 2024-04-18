@@ -10,8 +10,8 @@ class RequestHandlerFactory;
 class GameRequestHandler : public IRequestHandler {
 
 public:
-	virtual bool isRequestRelevant(RequestInfo info);
-	virtual RequestResult handleRequest(RequestInfo info, SOCKET sock, std::map<SOCKET, IRequestHandler*>& m_clients);
+	virtual bool isRequestRelevant(RequestInfo info) override;
+	virtual RequestResult handleRequest(RequestInfo info, SOCKET sock, std::map<SOCKET, IRequestHandler*>& m_clients) override;
 
 	GameRequestHandler(const LoggedUser& m_user, RequestHandlerFactory& m_handlerFactory, Game& game); 
 
