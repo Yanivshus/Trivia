@@ -108,6 +108,7 @@ typedef struct {
 	unsigned int corrrectAnswerCount;
 	unsigned int wrongAnsswerCount;
 	unsigned int averageAnswerTime;
+	unsigned int score;
 } PlayerResults;
 
 typedef struct {
