@@ -297,8 +297,11 @@ int SqliteDataBase::submitGameStatistics(GameData data, int gameId, const std::s
 	std::string avg = std::to_string(data.averageAnswerTime);
 	std::string correct = std::to_string(data.correctAnswerCount);
 	std::string worng = std::to_string(data.wrongAnswerCount);
-	//TODO : CALC SCORE FORMULA
-	std::string query = "INSERT INTO statistics (GAME_ID, USERNAME, CORRECT, WRONG, AVG_TIME, SCORE) VALUES (" + std::to_string(gameId) + ", '" + uNmae + "', " + correct + ", " + worng + ", " + avg + ", 90);"; // need to add score.
+
+	//tryout formula for the score.
+	unsigned int score = ((data.correctAnswerCount + data.wrongAnswerCount) * 100) / data.averageAnswerTime;
+	
+	std::string query = "INSERT INTO statistics (GAME_ID, USERNAME, CORRECT, WRONG, AVG_TIME, SCORE) VALUES (" + std::to_string(gameId) + ", '" + uNmae + "', " + correct + ", " + worng + ", " + avg + ", "+std::to_string(score) + ");"; // need to add score.
 	
 	if (runQuery(query) == 0)
 	{

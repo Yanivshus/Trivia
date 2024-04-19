@@ -19,7 +19,7 @@ public:
 	/// returns a question for user if the question arent over.
 	/// </summary>
 	/// <param name="user:">user who asked for another question.</param>
-	Question getQuestionForUser(LoggedUser& user) const;
+	Question getQuestionForUser(const LoggedUser& user) const;
 
 	/// <summary>
 	/// submits an answer, check if it corrrect and update the stats by that.

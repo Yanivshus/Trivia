@@ -19,7 +19,7 @@ Game::Game(std::vector<Question> questions, std::vector<LoggedUser> users, const
 	}
 }
 
-Question Game::getQuestionForUser(LoggedUser& user) const
+Question Game::getQuestionForUser(const LoggedUser& user) const
 {
 	// run on the players and look for asked pplayer.
 	for (auto& player : this->m_players)
@@ -36,6 +36,7 @@ Question Game::getQuestionForUser(LoggedUser& user) const
 
 void Game::submitAnswer(const LoggedUser& user, const unsigned int ans)
 {
+
 	GameData* data = nullptr;
 	// run on the players and look for asked player.
 	for (auto& player : this->m_players)
@@ -46,18 +47,17 @@ void Game::submitAnswer(const LoggedUser& user, const unsigned int ans)
 		}
 	}
 
-	// check if the answer was correct.
-	if (ans == 3) {
-		data->correctAnswerCount++; // if yes we will update the correct answer count.
-	}
-	else {
-		data->wrongAnswerCount++; // if not we will update the wrong answer count.
-	}
-
-
 	// check if the questions are over.
-	if (data->currentQuestion.getQuestion() != "over") 
+	if (data->currentQuestion.getQuestion() != "over")
 	{
+		// check if the answer was correct.
+		if (ans == 3) {
+			data->correctAnswerCount++; // if yes we will update the correct answer count.
+		}
+		else {
+			data->wrongAnswerCount++; // if not we will update the wrong answer count.
+		}
+
 		// now i will set the next question index.
 		int place = 0;
 		int flag = 0;
@@ -80,9 +80,6 @@ void Game::submitAnswer(const LoggedUser& user, const unsigned int ans)
 
 			data->averageAnswerTime /= (data->correctAnswerCount + data ->wrongAnswerCount); // divide the time difference by amount of question to find avg time per question.
 		}
-	}
-	else {
-		throw std::exception("Game is over.");
 	}
 
 }

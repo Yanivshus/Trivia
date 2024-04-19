@@ -53,6 +53,8 @@ public:
 	// create a game request handler.
 	GameRequestHandler* CreateGameRequestHandler(LoggedUser user, Game& game);
 
+	IDatabase* getDB() const;
+
 	// sets the db to the factory.
 	void setDB(IDatabase* m_database);
 };

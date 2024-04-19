@@ -46,6 +46,11 @@ GameRequestHandler* RequestHandlerFactory::CreateGameRequestHandler(LoggedUser u
 	return new GameRequestHandler(user, *this, game);
 }
 
+IDatabase* RequestHandlerFactory::getDB() const
+{
+	return this->m_database;
+}
+
 void RequestHandlerFactory::setDB(IDatabase* m_database)
 {
 	m_loginManager.setDB(m_database);
