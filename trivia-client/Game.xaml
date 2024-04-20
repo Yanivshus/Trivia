@@ -10,10 +10,10 @@
         <Image Source="/trviaBack.jpg" Stretch="Fill"/>
         <TextBlock HorizontalAlignment="Center" Margin="0,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="60" Width="400"  Background="White" TextAlignment="Center" Name="qBox" FontSize="22" FontFamily="Aharoni"/>
         
-        <Button Content="" HorizontalAlignment="Left" Margin="200,187,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans1Box" Click="ans1Box_Click"/>
-        <Button Content="" HorizontalAlignment="Left" Margin="427,182,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans2Box" Click="ans2Box_Click"/>
-        <Button Content="" HorizontalAlignment="Left" Margin="427,272,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans3Box" Click="ans3Box_Click"/>
-        <Button Content="" HorizontalAlignment="Left" Margin="200,272,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans4Box" Click="ans4Box_Click"/>
+        <Button Content="" HorizontalAlignment="Left" Margin="200,187,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans1Btn" Click="ansBtnClick"/>
+        <Button Content="" HorizontalAlignment="Left" Margin="427,182,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans2Btn" Click="ansBtnClick"/>
+        <Button Content="" HorizontalAlignment="Left" Margin="427,272,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans3Btn" Click="ansBtnClick"/>
+        <Button Content="" HorizontalAlignment="Left" Margin="200,272,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans4Btn" Click="ansBtnClick"/>
         
         <Button Content="Leave Game" HorizontalAlignment="Left" Margin="10,389,0,0" VerticalAlignment="Top" Height="35" Width="110" Background="White" FontFamily="Aharoni" FontSize="17" Name="leaveGame" Click="leaveGame_Click"/>
     </Grid>

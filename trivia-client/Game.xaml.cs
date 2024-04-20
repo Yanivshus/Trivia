@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,12 +20,36 @@ namespace trivia_client
     /// </summary>
     public partial class Game : Window
     {
-        public Game()
+        int gameId = 0;
+        roomStateJson roomData;
+        TcpClient tcpClient;
+        NetworkStream clientStream;
+        user currentLoggedUser;
+        Button[] ansButtons = new Button[4];
+        public Game(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, int roomId, roomStateJson roomData)
         {
+            this.tcpClient = tcpClient;
+            this.clientStream = clientStream;   
+            this.currentLoggedUser = currentLoggedUser;
+            this.gameId = roomId;
+            this.roomData = roomData;
             InitializeComponent();
+
+            // set the buttons.
+            ansButtons[0] = this.ans1Btn;
+            ansButtons[1] = this.ans2Btn;
+            ansButtons[2] = this.ans3Btn;
+            ansButtons[3] = this.ans4Btn;
         }
 
-        private void ans1Box_Click(object sender, RoutedEventArgs e)
+
+
+        private void leaveGame_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ansBtnClick(object sender, RoutedEventArgs e)
         {
 
         }

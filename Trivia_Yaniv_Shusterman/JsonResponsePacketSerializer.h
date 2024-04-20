@@ -3,6 +3,8 @@
 #include "StructHelper.h"
 #include <vector>
 #include "Constants.h"
+#include <algorithm>
+#include <random>
 
 
 using json = nlohmann::json;
