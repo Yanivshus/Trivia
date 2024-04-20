@@ -62,11 +62,28 @@ namespace trivia_client
 
         private void setAnswersToButtons(string answers)
         {
-            string[] ansAndId = answers.Split(", ");
-            ansButtons[0].Content = ansAndId[0];
-            ansButtons[1].Content = ansAndId[1];
-            ansButtons[2].Content = ansAndId[2];
-            ansButtons[3].Content = ansAndId[3];
+            if (answers.Length > 0)
+            {
+                string[] ansAndId = answers.Split(", ");
+                 
+                // aplit each answer and its id.
+                string[] ans1 = ansAndId[0].Split("=");
+                string[] ans2 = ansAndId[1].Split("=");
+                string[] ans3 = ansAndId[2].Split("=");
+                string[] ans4 = ansAndId[3].Split("=");
+
+                // set the content of each button to be a possiable answer.
+                ansButtons[0].Content = ans1[1];
+                ansButtons[1].Content = ans2[1];
+                ansButtons[2].Content = ans3[1];
+                ansButtons[3].Content = ans4[1];
+
+                // set the tag to be the actual id of the answer.
+                ansButtons[0].Tag = int.Parse(ans1[0]);
+                ansButtons[1].Tag = int.Parse(ans2[0]);
+                ansButtons[2].Tag = int.Parse(ans3[0]);
+                ansButtons[3].Tag = int.Parse(ans4[0]);
+            }
         }
 
         // initializes the timer.
@@ -89,8 +106,7 @@ namespace trivia_client
             if (timeLeft <= 0)
             {
                 timer.Stop();
-                MessageBox.Show("Time's up!");
-                // Add code here to handle when time is up (e.g., move to next question)
+                submitAnswer(0);
             }
         }
 

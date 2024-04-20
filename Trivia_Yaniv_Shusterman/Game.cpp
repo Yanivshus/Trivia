@@ -70,8 +70,8 @@ void Game::submitAnswer(const LoggedUser& user, const unsigned int ans)
 		}
 		 
 		// set the next question the user will have to answer by its index.
-		if (place + 1 != this->m_questions.size()) {
-			data->currentQuestion = this->m_questions[place + 1];
+		if (place != this->m_questions.size()) {
+			data->currentQuestion = this->m_questions[place];
 		}
 		else {
 			data->currentQuestion = Question("over", std::vector<std::string>());
