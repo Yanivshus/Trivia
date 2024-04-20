@@ -53,6 +53,7 @@ namespace trivia_client
 
             totalTime = this.roomData.answerTimeOut; // set the timout per question.
 
+            StartTimer();
             Question q = getQuestion();
             this.qBox.Text = q.question;
             setAnswersToButtons(q.answers);
