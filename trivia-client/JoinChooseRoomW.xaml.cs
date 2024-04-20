@@ -28,15 +28,17 @@ namespace trivia_client
         NetworkStream clientStream;
         user currentLoggedUser;
         Window menuW;
+        Window LoginW;
 
         private CancellationTokenSource cancellationTokenSource;
 
-        public JoinChooseRoomW(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, Window menuW)
+        public JoinChooseRoomW(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, Window menuW, Window LoginW)
         {
             this.tcpClient = tcpClient;
             this.clientStream = clientStream;   
             this.currentLoggedUser = currentLoggedUser;
             this.menuW = menuW;
+            this.LoginW = LoginW;
             InitializeComponent();
 
             cancellationTokenSource = new CancellationTokenSource();
@@ -168,7 +170,7 @@ namespace trivia_client
             //check if joined to room.
             if ((int)response[0] == Codes.JOIN_ROOM_RESPONSE)
             {
-                lobbyW lobbyWin = new lobbyW(tcpClient, clientStream, currentLoggedUser, id, menuW);
+                lobbyW lobbyWin = new lobbyW(tcpClient, clientStream, currentLoggedUser, id, menuW, LoginW);
                 this.Close();
                 lobbyWin.Show();
 

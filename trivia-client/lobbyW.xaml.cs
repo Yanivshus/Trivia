@@ -30,17 +30,19 @@ namespace trivia_client
         Window mainWin;
         int roomId;
         string admin;
+        Window loginWin;
         roomStateJson roomData;
 
         private bool stopBackgroundTask = false;//to stop the showPlayer task.
 
-        public lobbyW(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, int roomId, Window mainWin)
+        public lobbyW(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, int roomId, Window mainWin, Window loginWin)
         {
             this.tcpClient = tcpClient;
             this.clientStream = clientStream;
             this.currentLoggedUser = currentLoggedUser;
             this.roomId = roomId;
             this.mainWin = mainWin;
+            this.loginWin = loginWin;
             this.admin = "";
 
             InitializeComponent();
@@ -56,7 +58,7 @@ namespace trivia_client
 
             StartBackgroundTask();
             showPlayers(); // start the backgound task for update the list of active players.
-
+            this.loginWin = loginWin;
         }
 
         /// <summary>
@@ -215,7 +217,7 @@ namespace trivia_client
                 PacketBuilder.getDataFromSocket(clientStream);// get reponse from server.
             }
 
-            Game gameS = new Game(tcpClient, clientStream, currentLoggedUser, roomId, roomData);
+            Game gameS = new Game(tcpClient, clientStream, currentLoggedUser, roomId, roomData, loginWin);
             gameS.Show();
             this.Close();
             
@@ -262,7 +264,7 @@ namespace trivia_client
 
 
             // go back to join room window.
-            JoinChooseRoomW roomWindowOpen = new JoinChooseRoomW(tcpClient, clientStream, currentLoggedUser, mainWin);
+            JoinChooseRoomW roomWindowOpen = new JoinChooseRoomW(tcpClient, clientStream, currentLoggedUser, mainWin, loginWin);
             this.Close();
             roomWindowOpen.Show();
         }
@@ -294,7 +296,7 @@ namespace trivia_client
             if ((int)response[0] == Codes.LEAVE_ROOM_RESPONSE)
             {
 
-                JoinChooseRoomW roomWindowOpen = new JoinChooseRoomW(tcpClient, clientStream, currentLoggedUser, mainWin);
+                JoinChooseRoomW roomWindowOpen = new JoinChooseRoomW(tcpClient, clientStream, currentLoggedUser, mainWin, loginWin);
                 this.Close();
                 roomWindowOpen.Show();
             }
@@ -333,7 +335,7 @@ namespace trivia_client
                 MessageBox.Show("The Game is starting.");
 
                 // start game.
-                Game gameS = new Game(tcpClient, clientStream, currentLoggedUser, roomId, roomData);
+                Game gameS = new Game(tcpClient, clientStream, currentLoggedUser, roomId, roomData, loginWin);
                 gameS.Show();
                 this.Close();
             }

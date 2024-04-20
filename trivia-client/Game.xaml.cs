@@ -30,6 +30,7 @@ namespace trivia_client
         TcpClient tcpClient;
         NetworkStream clientStream;
         user currentLoggedUser;
+        Window LoginW;
         Button[] ansButtons = new Button[4];
         int[] ansIdByButton = new int[4]; // to now the id of the answer by the button (answer).
 
@@ -37,13 +38,14 @@ namespace trivia_client
         private int totalTime = 10; // Total time in seconds
         private int timeLeft;
 
-        public Game(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, int roomId, roomStateJson roomData)
+        public Game(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, int roomId, roomStateJson roomData, Window LoginW)
         {
             this.tcpClient = tcpClient;
             this.clientStream = clientStream;   
             this.currentLoggedUser = currentLoggedUser;
             this.gameId = roomId;
             this.roomData = roomData;
+            this.LoginW = LoginW;
             InitializeComponent();
 
             // set the buttons.
@@ -117,8 +119,8 @@ namespace trivia_client
         }
 
 
-        // make a single tick in the timer.
-        private void Timer_Tick(object sender, EventArgs e)
+        // make a single tick in the timer. and moves to next question if timer is up.
+        private async void Timer_Tick(object sender, EventArgs e)
         {
             timeLeft--;
             UpdateTimerDisplay();
@@ -126,6 +128,31 @@ namespace trivia_client
             {
                 timer.Stop();
                 submitAnswer(0);
+                setAllToRed(); // set all the buttons to be red beacuse when user doesnt enter answer he is wrong.
+                
+                // Create a timer to wait for 1 second asynchronously
+                var iT = new System.Timers.Timer(2000);
+                var tcs = new TaskCompletionSource<bool>();
+                iT.Elapsed += (s, args) => tcs.SetResult(true);
+                iT.AutoReset = false;
+                iT.Start();
+                await tcs.Task;
+
+
+                setAllToWhite();
+                // move to the next question.
+                Question q = getQuestion();
+                if (q.question != "over")
+                {
+                    this.qBox.Text = q.question;
+                    setAnswersToButtons(q.answers);
+                    RestartTimer();
+                }
+                else
+                {
+                    MessageBox.Show("Game done for now");
+                    // move to the results screen.
+                }
             }
         }
 
@@ -144,31 +171,39 @@ namespace trivia_client
             UpdateTimerDisplay();
             timer.Start();
         }
+         
 
-        private void dissableButtons()
-        {
-            ansButtons[0].IsEnabled = false;
-            ansButtons[1].IsEnabled = false;
-            ansButtons[2].IsEnabled = false;
-            ansButtons[3].IsEnabled = false;
-        }
-
-        private void enableButtons()
-        {
-            ansButtons[0].IsEnabled = true;
-            ansButtons[1].IsEnabled = true;
-            ansButtons[2].IsEnabled = true;
-            ansButtons[3].IsEnabled = true;
-        }
-
+        // leaves the game.
         private void leaveGame_Click(object sender, RoutedEventArgs e)
         {
+            //create the packet.
+            List<byte> closeBuffer = new List<byte>();
+            closeBuffer.Add((byte)Codes.LEAVE_GAME_REQUEST);
+            closeBuffer.AddRange(PacketBuilder.CreateDataLengthAsBytes(0));
 
+            PacketBuilder.sendDataToSocket(clientStream, closeBuffer.ToArray());//send data to server.
+
+            byte[] response = PacketBuilder.getDataFromSocket(clientStream); // receive server massage.
+
+            if ((int)response[0] == Codes.LEAVE_GAME_RESPONSE)
+            {
+                timer.Stop();
+                // move to the menu screen.
+                Menu menu = new Menu(tcpClient, clientStream, currentLoggedUser, LoginW);
+                menu.Show();
+                this.Close();
+                
+            }
+            else
+            {
+                MessageBox.Show("Problem leaving game.");
+            }
         }
 
+        // the main answer function, submit the user answer to server and get the next question.
         private async void ansBtnClick(object sender, RoutedEventArgs e)
         {
-            setAllToWhite();
+            
             // get all the details from button.
             Button selectedBtn = (Button)sender;
             int answerId = int.Parse(selectedBtn.Tag.ToString());
@@ -185,17 +220,21 @@ namespace trivia_client
             {
                 selectedBtn.Background = Brushes.Red;
             }
-
-            //dissableButtons();
-            await Task.Delay(1000);
+           
+            // Create a timer to wait for 2 second asynchronously
+            var iT = new System.Timers.Timer(2000);
+            var tcs = new TaskCompletionSource<bool>();
+            iT.Elapsed += (s, args) => tcs.SetResult(true);
+            iT.AutoReset = false;
+            iT.Start();
+            await tcs.Task;
 
 
             Question q = getQuestion();
             if (q.question != "over")
             {
                 this.qBox.Text = q.question;
-                enableButtons();
-                
+                setAllToWhite(); // set all the answers to neatral
                 setAnswersToButtons(q.answers);
                 RestartTimer();
             }

@@ -27,14 +27,16 @@ namespace trivia_client
         NetworkStream clientStream;
         user currentLoggedUser;
         Window menuW;
-        public CreateRoomW(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, Window menuW)
+        Window LoginW;
+        public CreateRoomW(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, Window menuW, Window loginW)
         {
             this.tcpClient = tcpClient;
             this.clientStream = clientStream;
             this.currentLoggedUser = currentLoggedUser;
             this.menuW = menuW;
+            this.LoginW = loginW;
             InitializeComponent();
-
+            
         }
 
         private void CreateRoomBtn(object sender, RoutedEventArgs e)
@@ -63,7 +65,7 @@ namespace trivia_client
                 roomJsonObj roomResponseObj = JsonConvert.DeserializeObject<roomJsonObj>(jsonString);
 
                 // after we create a room we enter it as an admin.
-                lobbyW lobbyWin = new lobbyW(tcpClient, clientStream, currentLoggedUser, roomResponseObj.roomId, menuW);
+                lobbyW lobbyWin = new lobbyW(tcpClient, clientStream, currentLoggedUser, roomResponseObj.roomId, menuW, LoginW);
                 lobbyWin.Show();
                 this.Close();
                 

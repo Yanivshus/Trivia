@@ -174,5 +174,7 @@ RequestResult GameRequestHandler::leaveGame(RequestInfo info)
 
 void GameRequestHandler::saveInDB(const LoggedUser& user, const GameData& data)
 {
-	this->m_handlerFactory.getDB()->submitGameStatistics(data, this->m_game.getGameId(), user.getUserName()); // save the results to the db.
+	int id = this->m_game.getGameId();
+	std::string name = user.getUserName();
+	this->m_handlerFactory.getDB()->submitGameStatistics(data, id, name); // save the results to the db.
 }

@@ -53,6 +53,7 @@ IDatabase* RequestHandlerFactory::getDB() const
 
 void RequestHandlerFactory::setDB(IDatabase* m_database)
 {
+	this->m_database = m_database;
 	m_loginManager.setDB(m_database);
 	m_StatisticsManager.setDB(m_database);
 	m_gameManager.setDB(m_database);
