@@ -166,7 +166,7 @@ namespace trivia_client
 
         }
 
-        private void ansBtnClick(object sender, RoutedEventArgs e)
+        private async void ansBtnClick(object sender, RoutedEventArgs e)
         {
             setAllToWhite();
             // get all the details from button.
@@ -187,7 +187,7 @@ namespace trivia_client
             }
 
             //dissableButtons();
-            Thread.Sleep(1000);
+            await Task.Delay(1000);
 
 
             Question q = getQuestion();
