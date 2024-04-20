@@ -85,6 +85,7 @@ RequestResult GameRequestHandler::submitAnswer(RequestInfo info)
 		// submit the answer to the game.
 		this->m_handlerFactory.getGameManager().getGame(this->m_game.getGameId()).submitAnswer(this->m_user, req.answerId);
 		SubmitAnswerResponse res = { SUBMIT_ANSWER_RESPONSE, 3 }; // the correct answer alwayes will be in the 3 spot.
+		return { JsonResponsePacketSerializer::serializeResponse(res), nullptr };
 	}
 	catch (std::exception& e) // if eny thrown exceptions caught , return a error response.
 	{

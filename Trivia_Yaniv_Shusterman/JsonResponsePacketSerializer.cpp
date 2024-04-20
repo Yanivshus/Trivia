@@ -200,30 +200,33 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const
 std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const GetQuestionResponse& err)
 {
     std::string answersQ = "";
-
-    // Copy the key-value pairs into a vector
-    std::vector<std::pair<int, std::string>> keyValuePairs(err.answers.begin(), err.answers.end());
-
-    // Shuffle the vector
-    std::random_device rd;
-    std::mt19937 g(rd());
-    std::shuffle(keyValuePairs.begin(), keyValuePairs.end(), g);
-
     // Create a new map with shuffled elements
     std::map<int, std::string> shuffledMap;
+    if (err.answers.size() > 0) {
+        // Copy the key-value pairs into a vector
+        std::vector<std::pair<int, std::string>> keyValuePairs(err.answers.begin(), err.answers.end());
 
-    for (const auto& pair : keyValuePairs) {
-        shuffledMap.insert(pair);
+        // Shuffle the vector
+        std::random_device rd;
+        std::mt19937 g(rd());
+        std::shuffle(keyValuePairs.begin(), keyValuePairs.end(), g);
+
+        // insert to the new map the shuffled vector.
+        for (const auto& pair : keyValuePairs) {
+            shuffledMap.insert(pair);
+        }
+
+        for (const auto& ans : shuffledMap)
+        {
+            // add the answer id and answer itself.
+            answersQ += std::to_string(ans.first);
+            answersQ += "=";
+            answersQ += ans.second;
+            answersQ += ", ";
+        }
     }
 
-    for (const auto& ans : keyValuePairs)
-    {
-        // add the answer id and answer itself.
-        answersQ += std::to_string(ans.first);
-        answersQ += "=";
-        answersQ += ans.second;
-        answersQ += ", ";
-    }
+
      
     // pop trailing ", "
     if (answersQ.size() > 0) {
@@ -232,7 +235,7 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const
     }
 
     //build packet.
-    json j = { {"status", err.status}, {"answers", answersQ} };
+    json j = { {"status", err.status}, {"answers", answersQ}, {"question",err.question} };
     Codes curr = GET_QUESTION_RESPONSE;
     return createPacket(curr, j);
 
