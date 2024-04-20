@@ -39,9 +39,12 @@ RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
     auto user = users.begin();
     user++; // start from the member users.
 
+    Game& new_game = this->m_handlerFactory.getGameManager().createGame(this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id)); // create the game.
+
     // starts game for all the users.
     for (; user != users.end(); user++)
     {
+        this->m_clients[user->getSock()] = (IRequestHandler*)this->m_handlerFactory.CreateGameRequestHandler(*user, new_game); // set the game to the user.
 
         //need to add later the actual starting of the game and the creation of the handler.
         StartGameResponse res = { START_GAME_RESPONSE };
@@ -51,7 +54,7 @@ RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
 
     StartGameResponse res = { START_GAME_RESPONSE };
     //send the complete resault out of the function.
-    return { JsonResponsePacketSerializer::serializeResponse(res), nullptr };
+    return { JsonResponsePacketSerializer::serializeResponse(res), (IRequestHandler*)this->m_handlerFactory.CreateGameRequestHandler(this->m_user, new_game) };
 }
 
 RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo info)
