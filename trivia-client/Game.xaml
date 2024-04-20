@@ -8,15 +8,15 @@
         Title="Game" Height="450" Width="800">
     <Grid>
         <Image Source="/trviaBack.jpg" Stretch="Fill"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="60" Width="400"  Background="White" TextAlignment="Center" Name="qBox" FontSize="22" FontFamily="Aharoni"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="90" Width="400"  Background="White" TextAlignment="Center" Name="qBox" FontSize="22" FontFamily="Aharoni"/>
 
         <Button Content="" HorizontalAlignment="Left" Margin="200,187,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans1Btn" Click="ansBtnClick"/>
         <Button Content="" HorizontalAlignment="Left" Margin="427,182,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans2Btn" Click="ansBtnClick"/>
         <Button Content="" HorizontalAlignment="Left" Margin="427,272,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans3Btn" Click="ansBtnClick"/>
         <Button Content="" HorizontalAlignment="Left" Margin="200,272,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans4Btn" Click="ansBtnClick"/>
 
-        <Button Content="Leave Game" HorizontalAlignment="Left" Margin="10,389,0,0" VerticalAlignment="Top" Height="35" Width="110" Background="White" FontFamily="Aharoni" FontSize="17" Name="leaveGame" Click="leaveGame_Click"/>
+        <Button Content="Leave Game" HorizontalAlignment="Left" Margin="23,377,0,0" VerticalAlignment="Top" Height="35" Width="110" Background="White" FontFamily="Aharoni" FontSize="17" Name="leaveGame" Click="leaveGame_Click"/>
 
-        <TextBlock HorizontalAlignment="Left" Margin="693,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="31" Width="97" Background="White" Name="timerText" TextAlignment="Center" FontSize="20" FontFamily="Aharoni"/>
+        <TextBlock HorizontalAlignment="Left" Margin="681,23,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="31" Width="97" Background="White" Name="timerText" TextAlignment="Center" FontSize="20" FontFamily="Aharoni"/>
     </Grid>
 </Window>

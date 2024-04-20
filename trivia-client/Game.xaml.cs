@@ -55,7 +55,17 @@ namespace trivia_client
 
             Question q = getQuestion();
             this.qBox.Text = q.question;
+            setAnswersToButtons(q.answers);
 
+        }
+
+        private void setAnswersToButtons(string answers)
+        {
+            string[] ansAndId = answers.Split(", ");
+            ansButtons[0].Content = ansAndId[0];
+            ansButtons[1].Content = ansAndId[1];
+            ansButtons[2].Content = ansAndId[2];
+            ansButtons[3].Content = ansAndId[3];
         }
 
         // initializes the timer.
