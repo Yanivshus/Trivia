@@ -127,7 +127,7 @@ namespace trivia_client
             if (timeLeft <= 0)
             {
                 timer.Stop();
-                submitAnswer(0);
+                submitAnswer(0); // submit wrong answer.
                 setAllToRed(); // set all the buttons to be red beacuse when user doesnt enter answer he is wrong.
                 
                 // Create a timer to wait for 1 second asynchronously
@@ -173,7 +173,7 @@ namespace trivia_client
         }
          
 
-        // leaves the game.
+        // leaves the game. Back to main menu.
         private void leaveGame_Click(object sender, RoutedEventArgs e)
         {
             //create the packet.
