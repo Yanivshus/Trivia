@@ -53,6 +53,7 @@ namespace trivia_client
                 "Question timeout: " + roomData.answerTimeOut.ToString();
 
 
+
             StartBackgroundTask();
             showPlayers(); // start the backgound task for update the list of active players.
 
