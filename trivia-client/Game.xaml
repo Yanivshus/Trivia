@@ -8,12 +8,12 @@
         Title="Game" Height="450" Width="800">
     <Grid>
         <Image Source="/trviaBack.jpg" Stretch="Fill"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="90" Width="400"  Background="White" TextAlignment="Center" Name="qBox" FontSize="22" FontFamily="Aharoni"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="115" Width="400"  Background="White" TextAlignment="Center" Name="qBox" FontSize="22" FontFamily="Aharoni"/>
 
-        <Button Content="" HorizontalAlignment="Left" Margin="200,187,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans1Btn" Click="ansBtnClick" Tag=""/>
-        <Button Content="" HorizontalAlignment="Left" Margin="427,182,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans2Btn" Click="ansBtnClick" Tag=""/>
-        <Button Content="" HorizontalAlignment="Left" Margin="427,272,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans3Btn" Click="ansBtnClick" Tag=""/>
-        <Button Content="" HorizontalAlignment="Left" Margin="200,272,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans4Btn" Click="ansBtnClick" Tag=""/>
+        <Button Content="" HorizontalAlignment="Left" Margin="200,182,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans1Btn" Click="ansBtnClick" Tag="0"/>
+        <Button Content="" HorizontalAlignment="Left" Margin="427,182,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans2Btn" Click="ansBtnClick" Tag="1"/>
+        <Button Content="" HorizontalAlignment="Left" Margin="427,272,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans3Btn" Click="ansBtnClick" Tag="2"/>
+        <Button Content="" HorizontalAlignment="Left" Margin="200,272,0,0" VerticalAlignment="Top" Height="50" Width="173"  Background="White" FontFamily="Aharoni" FontSize="17" Name="ans4Btn" Click="ansBtnClick" Tag="3"/>
 
         <Button Content="Leave Game" HorizontalAlignment="Left" Margin="23,377,0,0" VerticalAlignment="Top" Height="35" Width="110" Background="White" FontFamily="Aharoni" FontSize="17" Name="leaveGame" Click="leaveGame_Click"/>
 

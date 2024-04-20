@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace trivia_client
 {
@@ -53,6 +54,7 @@ namespace trivia_client
 
             totalTime = this.roomData.answerTimeOut; // set the timout per question.
 
+            // initialize the first question.
             StartTimer();
             Question q = getQuestion();
             this.qBox.Text = q.question;
@@ -97,6 +99,23 @@ namespace trivia_client
             timer.Start();
         }
 
+        private void setAllToRed()
+        {
+            ansButtons[0].Background = Brushes.Red;
+            ansButtons[1].Background = Brushes.Red;
+            ansButtons[2].Background = Brushes.Red;
+            ansButtons[3].Background = Brushes.Red;
+        }
+
+
+        private void setAllToWhite()
+        {
+            ansButtons[0].Background = Brushes.White;
+            ansButtons[1].Background = Brushes.White;
+            ansButtons[2].Background = Brushes.White;
+            ansButtons[3].Background = Brushes.White;
+        }
+
 
         // make a single tick in the timer.
         private void Timer_Tick(object sender, EventArgs e)
@@ -121,13 +140,26 @@ namespace trivia_client
         // restarts the timer.
         private void RestartTimer()
         {
-            timer.Stop();
             timeLeft = totalTime;
             UpdateTimerDisplay();
             timer.Start();
         }
 
+        private void dissableButtons()
+        {
+            ansButtons[0].IsEnabled = false;
+            ansButtons[1].IsEnabled = false;
+            ansButtons[2].IsEnabled = false;
+            ansButtons[3].IsEnabled = false;
+        }
 
+        private void enableButtons()
+        {
+            ansButtons[0].IsEnabled = true;
+            ansButtons[1].IsEnabled = true;
+            ansButtons[2].IsEnabled = true;
+            ansButtons[3].IsEnabled = true;
+        }
 
         private void leaveGame_Click(object sender, RoutedEventArgs e)
         {
@@ -136,7 +168,45 @@ namespace trivia_client
 
         private void ansBtnClick(object sender, RoutedEventArgs e)
         {
-            
+            setAllToWhite();
+            // get all the details from button.
+            Button selectedBtn = (Button)sender;
+            int answerId = int.Parse(selectedBtn.Tag.ToString());
+            string ans = selectedBtn.Content.ToString();
+
+          
+            timer.Stop();
+
+            if(submitAnswer(answerId) == answerId)
+            {
+                selectedBtn.Background = Brushes.Green;
+            }
+            else
+            {
+                selectedBtn.Background = Brushes.Red;
+            }
+
+            //dissableButtons();
+            Thread.Sleep(1000);
+
+
+            Question q = getQuestion();
+            if (q.question != "over")
+            {
+                this.qBox.Text = q.question;
+                enableButtons();
+                
+                setAnswersToButtons(q.answers);
+                RestartTimer();
+            }
+            else
+            {
+                MessageBox.Show("Game done for now");
+                // move to the results screen.
+            }
+
+
+
         }
 
 
