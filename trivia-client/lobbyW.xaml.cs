@@ -215,7 +215,10 @@ namespace trivia_client
                 PacketBuilder.getDataFromSocket(clientStream);// get reponse from server.
             }
 
-            // move to the next screen. which is the game.
+            Game gameS = new Game(tcpClient, clientStream, currentLoggedUser, roomId, roomData);
+            gameS.Show();
+            this.Close();
+            
         }
 
         /// <summary>
@@ -328,7 +331,11 @@ namespace trivia_client
             if ((int)response[0] == Codes.START_GAME_RESPONSE)
             {
                 MessageBox.Show("The Game is starting.");
-                // move to the next screen which is starting.
+
+                // start game.
+                Game gameS = new Game(tcpClient, clientStream, currentLoggedUser, roomId, roomData);
+                gameS.Show();
+                this.Close();
             }
             else
             {

@@ -115,7 +115,7 @@ std::map<LoggedUser, GameData>& Game::getPlayersInGame()
 	return this->m_players;
 }
 
-int Game::getGameId()
+int Game::getGameId() const
 {
 	return this->m_gameId;
 }

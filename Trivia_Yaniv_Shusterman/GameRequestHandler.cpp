@@ -42,7 +42,7 @@ RequestResult GameRequestHandler::handleRequest(RequestInfo info, SOCKET sock, s
 	}
 }
 
-GameRequestHandler::GameRequestHandler(const LoggedUser& m_user, RequestHandlerFactory& m_handlerFactory, Game& game) : m_user(m_user) , m_handlerFactory(m_handlerFactory) , m_game(m_game)
+GameRequestHandler::GameRequestHandler(const LoggedUser& m_user, RequestHandlerFactory& m_handlerFactory, Game& game) : m_user(m_user) , m_handlerFactory(m_handlerFactory) , m_game(game)
 {
 }
 

@@ -41,6 +41,6 @@ public:
 
 	//getters.
 	std::map<LoggedUser, GameData>& getPlayersInGame();
-	int getGameId();
+	int getGameId() const;
 
 };
