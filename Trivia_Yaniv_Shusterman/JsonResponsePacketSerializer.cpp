@@ -163,6 +163,7 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const
 {
     std::string results = "";
     // if the game ended we return results, else the results will be empty.
+   
     if (err.status == 1) {
         // add all the players results sepereted by ", " and each stat seperated by "="
         for (const auto& res : err.results)
@@ -174,6 +175,8 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const
             results += std::to_string(res.wrongAnsswerCount);
             results += "=";
             results += std::to_string(res.averageAnswerTime);
+            results += "=";
+            results += std::to_string(res.score);
             results += ", ";
         }
 

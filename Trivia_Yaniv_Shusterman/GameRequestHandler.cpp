@@ -28,6 +28,7 @@ RequestResult GameRequestHandler::handleRequest(RequestInfo info, SOCKET sock, s
 		if (info.id == LEAVE_GAME_REQUEST) {
 			return this->leaveGame(info);
 		}
+		
 	}
 	catch (std::exception& e) // if eny thrown exceptions caught , return a error response.
 	{
@@ -52,7 +53,6 @@ RequestResult GameRequestHandler::getQuestion(RequestInfo info)
 		// get the current active game.
 		Game& game = this->m_handlerFactory.getGameManager().getGame(this->m_game.getGameId());
 		Question curr = game.getQuestionForUser(this->m_user); // get user current question.
-
 		std::map<unsigned int, std::string> answers;
 		unsigned int i = 0;
 
@@ -62,6 +62,7 @@ RequestResult GameRequestHandler::getQuestion(RequestInfo info)
 			answers[i] = ans;
 			i++;
 		}
+		
 
 		// build the res packet.
 		GetQuestionResponse res = { GET_QUESTION_RESPONSE, curr.getQuestion(), answers };
@@ -110,7 +111,11 @@ RequestResult GameRequestHandler::getGameResult(RequestInfo info)
 			{
 				unsigned int score = ((player.second.correctAnswerCount + player.second.wrongAnswerCount) * 100) / player.second.averageAnswerTime; // calculate the score by the formula.
 				PlayerResults playerRes = { player.first.getUserName(), player.second.correctAnswerCount, player.second.wrongAnswerCount, player.second.averageAnswerTime, score }; // make a player result instance.
-				this->saveInDB(player.first, player.second); // save the user stats to the db.
+				
+				// if the player hasn't left the game i will save his results.
+				if (player.second.hasPlayersFinished != true) {
+					this->saveInDB(player.first, player.second); // save the user stats to the db.
+				}
 
 				results.push_back(playerRes); // add to the vector of players results.
 			}
@@ -155,8 +160,11 @@ RequestResult GameRequestHandler::leaveGame(RequestInfo info)
 
 				// save to db.
 				this->saveInDB(player.first, player.second);
+				player.second.hasPlayersFinished = true; // seet the player to be finished so i won't save his stats twice in the db when getting the results.
 			}
 		}
+
+
 
 		//return menu instance to user.
 		LeaveRoomResponse res = { LEAVE_GAME_RESPONSE };

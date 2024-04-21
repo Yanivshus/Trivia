@@ -240,8 +240,9 @@ namespace trivia_client
             }
             else
             {
-                MessageBox.Show("Game done for now");
-                // move to the results screen.
+                resWin resultsW = new resWin(tcpClient, clientStream, currentLoggedUser, LoginW);
+                resultsW.Show();
+                this.Close();
             }
 
 

@@ -29,12 +29,15 @@ Game& GameManager::createGame(const Room& room)
 void GameManager::deleteGame(const unsigned int gameId)
 {
 	//run on the games.
-	for (auto i = this->m_games.rbegin(); i != this->m_games.rend(); i++)
+	for (auto i = this->m_games.begin(); i != this->m_games.end(); )
 	{
 		// if game found it will be delted.
-		if (i->getGameId() == gameId) 
+		if (i->getGameId() == gameId)
 		{
-			this->m_games.erase(std::next(i).base()); // delete from vector.
+			i = this->m_games.erase(i);
+		}
+		else {
+			++i;
 		}
 	}
 }

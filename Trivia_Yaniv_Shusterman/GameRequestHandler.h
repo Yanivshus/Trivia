@@ -42,6 +42,7 @@ private:
 	/// </summary>
 	RequestResult leaveGame(RequestInfo info);
 
+
 	/// <summary>
 	/// saves user results in the db.
 	/// </summary>
