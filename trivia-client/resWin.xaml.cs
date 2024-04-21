@@ -39,7 +39,12 @@ namespace trivia_client
             this.roomId = roomId;
             InitializeComponent();
             uBox.Text = currentLoggedUser.getUsername; // set the username box to the current logged user.
+            dealWithResults();
 
+        }
+
+        private async void dealWithResults()
+        {
             int status = 0;
             string gameRes = "";
             while (status == 0)
@@ -66,11 +71,18 @@ namespace trivia_client
 
                     status = res.status;
                     gameRes = res.results;
-
                 }
+
+                // Create a timer to wait for 1 second asynchronously
+                var iT = new System.Timers.Timer(1500);
+                var tcs = new TaskCompletionSource<bool>();
+                iT.Elapsed += (s, args) => tcs.SetResult(true);
+                iT.AutoReset = false;
+                iT.Start();
+                await tcs.Task;
+
                 this.resBox.Text = "Wait for everyone to finish";
 
-                Thread.Sleep(1500);
             }
 
             string[] resByPLayers = gameRes.Split(", ");
@@ -78,8 +90,9 @@ namespace trivia_client
             // Sort the list of substrings based on the last element after the last "="
             var sortedSubstrings = resByPLayers.OrderByDescending(s => int.Parse(s.Substring(s.LastIndexOf('=') + 1)));
 
+            // get the stats of each player.
             string resultsOnScreen = "";
-            foreach ( var substring in sortedSubstrings )
+            foreach (var substring in sortedSubstrings)
             {
                 string[] stats = substring.Split("=");
                 resultsOnScreen += stats[0];

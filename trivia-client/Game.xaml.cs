@@ -47,7 +47,7 @@ namespace trivia_client
             this.roomData = roomData;
             this.LoginW = LoginW;
             InitializeComponent();
-
+            this.uBox.Text = currentLoggedUser.getUsername;
             // set the buttons.
             ansButtons[0] = this.ans1Btn;
             ansButtons[1] = this.ans2Btn;
