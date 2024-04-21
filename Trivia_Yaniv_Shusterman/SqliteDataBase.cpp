@@ -299,7 +299,7 @@ int SqliteDataBase::submitGameStatistics(GameData data, int gameId, const std::s
 	std::string worng = std::to_string(data.wrongAnswerCount);
 
 	//tryout formula for the score.
-	unsigned int score = ((data.correctAnswerCount + data.wrongAnswerCount) * 100) / data.averageAnswerTime;
+	unsigned int score = ((data.correctAnswerCount) * 1000) / (data.averageAnswerTime + data.wrongAnswerCount); // calculate the score by the formula.
 	
 	std::string query = "INSERT INTO statistics (GAME_ID, USERNAME, CORRECT, WRONG, AVG_TIME, SCORE) VALUES (" + std::to_string(gameId) + ", '" + uNmae + "', " + correct + ", " + worng + ", " + avg + ", "+std::to_string(score) + ");"; // need to add score.
 	

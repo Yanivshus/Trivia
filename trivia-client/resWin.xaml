@@ -11,5 +11,7 @@
         <Button Content="Leave" HorizontalAlignment="Left" Margin="325,355,0,0" VerticalAlignment="Top" Height="56" Width="143" Background="White" FontFamily="Aharoni" FontSize="25" IsEnabled="False" Click="leaveBtn" Name="leaveResBtn"/>
         <TextBlock HorizontalAlignment="Left" Margin="129,83,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="245" Width="546" Background="White" FontFamily="Aharoni" FontSize="25" TextAlignment="Center" Name="resBox"/>
         <Label Content="Results: " HorizontalAlignment="Left" Margin="325,25,0,0" VerticalAlignment="Top" Height="44" Width="143" FontSize="25" Foreground="White" FontFamily="Aharoni" />
+        <TextBlock HorizontalAlignment="Left" Margin="29,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="44" Width="132" Foreground="White" FontFamily="Aharoni" FontSize="18" Name="uBox"/>
     </Grid>
+
 </Window>

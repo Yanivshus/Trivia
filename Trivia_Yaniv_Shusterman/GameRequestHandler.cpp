@@ -109,7 +109,7 @@ RequestResult GameRequestHandler::getGameResult(RequestInfo info)
 			// run on all the players.
 			for (auto& player : this->m_handlerFactory.getGameManager().getGame(this->m_game.getGameId()).getPlayersInGame())
 			{
-				unsigned int score = ((player.second.correctAnswerCount + player.second.wrongAnswerCount) * 100) / player.second.averageAnswerTime; // calculate the score by the formula.
+				unsigned int score = ((player.second.correctAnswerCount) * 1000) / (player.second.averageAnswerTime + player.second.wrongAnswerCount); // calculate the score by the formula.
 				PlayerResults playerRes = { player.first.getUserName(), player.second.correctAnswerCount, player.second.wrongAnswerCount, player.second.averageAnswerTime, score }; // make a player result instance.
 				
 				// if the player hasn't left the game i will save his results.

@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace trivia_client
 {
@@ -37,6 +38,7 @@ namespace trivia_client
             this.LoginW = LoginW;
             this.roomId = roomId;
             InitializeComponent();
+            uBox.Text = currentLoggedUser.getUsername; // set the username box to the current logged user.
 
             int status = 0;
             string gameRes = "";
@@ -66,9 +68,29 @@ namespace trivia_client
                     gameRes = res.results;
 
                 }
+                this.resBox.Text = "Wait for everyone to finish";
+
+                Thread.Sleep(1500);
             }
 
-            this.resBox.Text = gameRes;
+            string[] resByPLayers = gameRes.Split(", ");
+
+            // Sort the list of substrings based on the last element after the last "="
+            var sortedSubstrings = resByPLayers.OrderByDescending(s => int.Parse(s.Substring(s.LastIndexOf('=') + 1)));
+
+            string resultsOnScreen = "";
+            foreach ( var substring in sortedSubstrings )
+            {
+                string[] stats = substring.Split("=");
+                resultsOnScreen += stats[0];
+                resultsOnScreen += "\n";
+                resultsOnScreen += "Number of correct answers: " + stats[1] + "\n";
+                resultsOnScreen += "Number of wrong answers: " + stats[2] + "\n";
+                resultsOnScreen += "Averge answer time: " + stats[3] + "\n";
+                resultsOnScreen += "Score: " + stats[4] + "\n";
+            }
+
+            this.resBox.Text = resultsOnScreen;
             this.leaveResBtn.IsEnabled = true;
         }
 
