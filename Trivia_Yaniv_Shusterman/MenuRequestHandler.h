@@ -63,10 +63,14 @@ private:
 	/// </summary>
 	RequestResult joinRoom(RequestInfo info);
 
+
 	/// <summary>
 	/// cretes a room by user settings.
 	/// </summary>
 	RequestResult createRoom(RequestInfo info, std::map<SOCKET, IRequestHandler*>& m_clients);
+
+	RequestResult deleteGame(RequestInfo info);
+
 
 	/// <summary>
 	/// genrate a id for a room (time * random number(100-1000)) / random number(1-10);

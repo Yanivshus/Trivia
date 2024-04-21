@@ -34,6 +34,7 @@ namespace trivia_client
         public const int SUBMIT_ANSWER_REQUEST = 94;
         public const int GET_QUESTION_REQUEST = 95;
         public const int LEAVE_GAME_REQUEST = 96;
+        public const int DELETE_GAME_REQUEST = 97;
 
 
 
@@ -58,6 +59,7 @@ namespace trivia_client
 	    public const int SUBMIT_ANSWER_RESPONSE = 122;
 	    public const int GET_QUESTION_RESPONSE = 123;
         public const int LEAVE_GAME_RESPONSE = 124;
+        public const int DELETE_GAME_RESPONSE = 125;
 
         public const int CODE_SIZE = 4;
     }

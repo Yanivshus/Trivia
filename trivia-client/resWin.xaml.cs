@@ -28,12 +28,14 @@ namespace trivia_client
         NetworkStream clientStream;
         user currentLoggedUser;
         Window LoginW;
-        public resWin(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, Window LoginW)
+        int roomId;
+        public resWin(TcpClient tcpClient, NetworkStream clientStream, user currentLoggedUser, Window LoginW, int roomId)
         {
             this.tcpClient = tcpClient;
             this.clientStream = clientStream;
             this.currentLoggedUser = currentLoggedUser;
             this.LoginW = LoginW;
+            this.roomId = roomId;
             InitializeComponent();
 
             int status = 0;
@@ -41,11 +43,11 @@ namespace trivia_client
             while (status == 0)
             {
                 //create the packet.
-                List<byte> closeBuffer = new List<byte>();
-                closeBuffer.Add((byte)Codes.GET_GAME_RESULTS_REQUEST);
-                closeBuffer.AddRange(PacketBuilder.CreateDataLengthAsBytes(0));
+                List<byte> buffer = new List<byte>();
+                buffer.Add((byte)Codes.GET_GAME_RESULTS_REQUEST);
+                buffer.AddRange(PacketBuilder.CreateDataLengthAsBytes(0));
 
-                PacketBuilder.sendDataToSocket(clientStream, closeBuffer.ToArray());//send data to server.
+                PacketBuilder.sendDataToSocket(clientStream, buffer.ToArray());//send data to server.
 
                 byte[] response = PacketBuilder.getDataFromSocket(clientStream); // receive server massage.
 
@@ -67,6 +69,23 @@ namespace trivia_client
             }
 
             this.resBox.Text = gameRes;
+            this.leaveResBtn.IsEnabled = true;
+        }
+
+        private void leaveBtn(object sender, RoutedEventArgs e)
+        {
+            roomJsonObj delReq = new roomJsonObj { roomId = this.roomId};
+            string jsonData = JsonConvert.SerializeObject(delReq);
+
+            List<byte> buffer = PacketBuilder.BuildPacket(jsonData, Codes.DELETE_GAME_REQUEST);
+
+            PacketBuilder.sendDataToSocket(clientStream, buffer.ToArray());//send data to server.
+
+            byte[] response = PacketBuilder.getDataFromSocket(clientStream); // receive server massage.
+
+            Menu menuWin = new Menu(tcpClient, clientStream, currentLoggedUser, LoginW);
+            menuWin.Show();
+            this.Close();
         }
     }
 }

@@ -116,6 +116,10 @@ typedef struct {
 	std::vector<PlayerResults> results;
 } GetGameResultsResponse;
 
+typedef struct {
+	unsigned int status;
+} DeleteGameResponse;
+
 
 
 
@@ -157,7 +161,9 @@ typedef struct {
 	unsigned int answerTimeout;
 } CreateRoomRequest;
 
-
+typedef struct {
+	unsigned int roomId;
+} DeleteGameRequest;
 
 typedef struct {
 	unsigned int answerId;

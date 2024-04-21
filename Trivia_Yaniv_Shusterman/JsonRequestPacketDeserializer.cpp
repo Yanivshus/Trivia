@@ -56,3 +56,11 @@ SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerReques
 	req.answerId = jsData["correctAnsId"];
 	return req;
 }
+
+DeleteGameRequest JsonRequestPacketDeserializer::deserializeDeleteGameRequest(std::vector<unsigned char> buffer)
+{
+	json jsData = json::from_bson(buffer);// parsing into json object
+	DeleteGameRequest req;
+	req.roomId = jsData["roomId"];
+	return req;
+}

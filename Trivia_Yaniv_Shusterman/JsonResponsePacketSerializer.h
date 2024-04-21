@@ -39,6 +39,8 @@ public:
 	static std::vector<unsigned char> serializeResponse(const SubmitAnswerResponse& err);
 	static std::vector<unsigned char> serializeResponse(const GetQuestionResponse& err);
 	static std::vector<unsigned char> serializeResponse(const LeaveGameResponse& err);
+	static std::vector<unsigned char> serializeResponse(const DeleteGameResponse& err);
+
 
 private:
 	/// <summary>

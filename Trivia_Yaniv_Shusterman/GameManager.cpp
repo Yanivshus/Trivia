@@ -26,20 +26,23 @@ Game& GameManager::createGame(const Room& room)
 	return *game;
 }
 
+
 void GameManager::deleteGame(const unsigned int gameId)
 {
 	//run on the games.
 	for (auto i = this->m_games.begin(); i != this->m_games.end(); )
 	{
-		// if game found it will be delted.
+		// if game found it will be deleted.
 		if (i->getGameId() == gameId)
 		{
 			i = this->m_games.erase(i);
+			return;
 		}
 		else {
 			++i;
 		}
 	}
+	throw std::exception("Couldn't delete");
 }
 
 Game& GameManager::getGame(const int gameId)

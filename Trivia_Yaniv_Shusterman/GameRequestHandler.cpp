@@ -115,15 +115,11 @@ RequestResult GameRequestHandler::getGameResult(RequestInfo info)
 				// if the player hasn't left the game i will save his results.
 				if (player.second.hasPlayersFinished != true) {
 					this->saveInDB(player.first, player.second); // save the user stats to the db.
+					player.second.hasPlayersFinished = true;
 				}
 
 				results.push_back(playerRes); // add to the vector of players results.
 			}
-
-
-			// delete the room and the game because all the user finished.
-			this->m_handlerFactory.getRoomManager().deleteRoom(this->m_game.getGameId());
-			this->m_handlerFactory.getGameManager().deleteGame(this->m_game.getGameId());
 
 			// return to the user the result and create an menu instance because the game is finished.
 			GetGameResultsResponse res = { 1, results };
@@ -164,8 +160,6 @@ RequestResult GameRequestHandler::leaveGame(RequestInfo info)
 			}
 		}
 
-
-
 		//return menu instance to user.
 		LeaveRoomResponse res = { LEAVE_GAME_RESPONSE };
 		return { JsonResponsePacketSerializer::serializeResponse(res), (IRequestHandler*)this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
@@ -179,6 +173,8 @@ RequestResult GameRequestHandler::leaveGame(RequestInfo info)
 		throw e;
 	}
 }
+
+
 
 void GameRequestHandler::saveInDB(const LoggedUser& user, const GameData& data)
 {

@@ -150,8 +150,9 @@ namespace trivia_client
                 }
                 else
                 {
-                    MessageBox.Show("Game done for now");
-                    // move to the results screen.
+                    resWin resultsW = new resWin(tcpClient, clientStream, currentLoggedUser, LoginW, gameId);
+                    resultsW.Show();
+                    this.Close();
                 }
             }
         }
@@ -240,7 +241,7 @@ namespace trivia_client
             }
             else
             {
-                resWin resultsW = new resWin(tcpClient, clientStream, currentLoggedUser, LoginW);
+                resWin resultsW = new resWin(tcpClient, clientStream, currentLoggedUser, LoginW, gameId);
                 resultsW.Show();
                 this.Close();
             }
