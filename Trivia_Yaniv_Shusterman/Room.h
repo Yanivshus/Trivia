@@ -23,7 +23,7 @@ public:
 	/// <param name="user:">user to delete.</param>
 	void deleteUser(LoggedUser user);
 
-	std::vector<LoggedUser> getAllUsers();
+	std::vector<LoggedUser> getAllUsers() const;
 	
 	unsigned int isRoomActive() { return this->m_metadata.isActive; };
 

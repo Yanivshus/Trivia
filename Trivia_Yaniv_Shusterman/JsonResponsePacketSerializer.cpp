@@ -155,9 +155,101 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const
 std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const LeaveRoomResponse& err)
 {
     json j = { {"status", err.status} };
-    Codes curr = LEAVE_ROOM_RESPONSE;
+    Codes curr = LEAVE_GAME_RESPONSE;
     return createPacket(curr, j);
 }
+
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const GetGameResultsResponse& err)
+{
+    std::string results = "";
+    // if the game ended we return results, else the results will be empty.
+   
+    if (err.status == 1) {
+        // add all the players results sepereted by ", " and each stat seperated by "="
+        for (const auto& res : err.results)
+        {
+            results += res.username;
+            results += "=";
+            results += std::to_string(res.corrrectAnswerCount);
+            results += "=";
+            results += std::to_string(res.wrongAnsswerCount);
+            results += "=";
+            results += std::to_string(res.averageAnswerTime);
+            results += "=";
+            results += std::to_string(res.score);
+            results += ", ";
+        }
+
+        // remove trailing ", "
+        if (results.size() > 0) 
+        {
+            results.pop_back();
+            results.pop_back();
+        }
+    }
+
+    json j = { {"status", err.status}, {"results", results} };
+    Codes curr = GET_GAME_RESULTS_RESPONSE;
+    return createPacket(curr, j);
+}
+
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const SubmitAnswerResponse& err)
+{
+    json j = { {"status", err.status}, {"correctAnsId", err.correctAnswerId}};
+    Codes curr = SUBMIT_ANSWER_RESPONSE;
+    return createPacket(curr, j);
+}
+
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const GetQuestionResponse& err)
+{
+    std::string answersQ = "";   
+    if (err.answers.size() > 0) {
+        // Copy the key-value pairs into a vector
+        std::vector<std::pair<int, std::string>> keyValuePairs(err.answers.begin(), err.answers.end());
+
+        // Shuffle the vector
+        std::random_device rd;
+        std::mt19937 g(rd());
+        std::shuffle(keyValuePairs.begin(), keyValuePairs.end(), g);
+
+        for (const auto& ans : keyValuePairs)
+        {
+            // add the answer id and answer itself.
+            answersQ += std::to_string(ans.first);
+            answersQ += "=";
+            answersQ += ans.second;
+            answersQ += ", ";
+        }
+    }
+
+    // pop trailing ", "
+    if (answersQ.size() > 0) {
+        answersQ.pop_back();
+        answersQ.pop_back();
+    }
+
+    //build packet.
+    json j = { {"status", err.status}, {"answers", answersQ}, {"question",err.question} };
+    Codes curr = GET_QUESTION_RESPONSE;
+    return createPacket(curr, j);
+
+}
+
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const LeaveGameResponse& err)
+{
+    json j = { {"status", err.status} };
+    Codes curr = LEAVE_GAME_RESPONSE;
+    return createPacket(curr, j);
+}
+
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const DeleteGameResponse& err)
+{
+    json j = { {"status", err.status} };
+    Codes curr = DELETE_GAME_RESPONSE;
+    return createPacket(curr, j);
+}
+
+
 
 std::vector<unsigned char> JsonResponsePacketSerializer::createPacket(const int code, json data)
 {

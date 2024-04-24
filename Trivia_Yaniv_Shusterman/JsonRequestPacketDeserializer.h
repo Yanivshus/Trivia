@@ -30,4 +30,17 @@ public:
 	/// deserializing a buffer of byte into an approptiate CreateRoom Request struct.
 	/// </summary>
 	static CreateRoomRequest deserializeCreateRoomRequest(std::vector<unsigned char> buffer);
+
+
+	/// <summary>
+	/// deserialize the buffer to submit room request.
+	/// </summary>
+	static SubmitAnswerRequest deserializeSubmitAnswerRequest(std::vector<unsigned char> buffer);
+
+
+	/// <summary>
+	/// deserilzes delete game request to struct.
+	/// </summary>
+
+	static DeleteGameRequest deserializeDeleteGameRequest(std::vector<unsigned char> buffer);
 };

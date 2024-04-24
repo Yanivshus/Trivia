@@ -11,7 +11,7 @@ class RequestHandlerFactory;
 class RoomMemberRequestHandler : public IRequestHandler {
 private:
 	Room m_room;
-	LoggedUser m_user;
+	const LoggedUser m_user;
 	RequestHandlerFactory& m_handlerFactory;
 
 	/// <summary>

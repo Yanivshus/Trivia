@@ -14,7 +14,8 @@ bool MenuRequestHandler::isRequestRelevant(RequestInfo info)
         info.id == JOIN_ROOM_REQUEST ||
         info.id == HIGH_SCORE_REQUEST ||
         info.id == LOGOUT_REQUSET ||
-        info.id == GET_PERSONAL_STATS_REQUEST) 
+        info.id == GET_PERSONAL_STATS_REQUEST ||
+        info.id == DELETE_GAME_REQUEST) 
     {
         return true;
     }
@@ -47,6 +48,9 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo info, SOCKET sock, s
         }
         if (info.id == GET_PERSONAL_STATS_REQUEST) {
             return this->getPersonalStats(info);
+        }
+        if (info.id == DELETE_GAME_REQUEST) {
+            return this->deleteGame(info);
         }
     }
     catch (const std::exception& e) // if eny thrown exceptions caught , return a error response.
@@ -207,6 +211,24 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo info, std::map<SOCKET, 
         throw e;
     }
 
+}
+
+RequestResult MenuRequestHandler::deleteGame(RequestInfo info)
+{
+    try {
+        DeleteGameRequest deleteReq = JsonRequestPacketDeserializer::deserializeDeleteGameRequest(info.buffer);
+
+        // delete both the room and the game.
+        this->m_handlerFactory.getGameManager().deleteGame(deleteReq.roomId);
+        this->m_handlerFactory.getRoomManager().deleteRoom(deleteReq.roomId);
+
+        DeleteGameResponse res = { DELETE_GAME_RESPONSE };
+        return { JsonResponsePacketSerializer::serializeResponse(res), nullptr };
+    }
+    catch (const std::exception& e)
+    {
+        throw e;
+    }
 }
 
 int MenuRequestHandler::CreateRoomId()

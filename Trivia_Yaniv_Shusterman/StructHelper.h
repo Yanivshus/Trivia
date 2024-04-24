@@ -1,8 +1,13 @@
 #pragma once
 #include <iostream>
 #include "Constants.h"
+#include "Question.h"
 #include <vector>
 #include <string>
+#include <map>
+
+#define ERROR_GAME_RES 0
+#define _GAME_RES 1
 
 class IRequestHandler; // fix circular includes.
 
@@ -82,6 +87,40 @@ typedef struct {
 	unsigned int status;
 } LeaveRoomResponse;
 
+//v4
+typedef struct {
+	unsigned int status;
+} LeaveGameResponse;
+
+typedef struct {
+	unsigned int status;
+	std::string question;
+	std::map<unsigned int, std::string> answers;
+} GetQuestionResponse;
+
+typedef struct {
+	unsigned int status;
+	unsigned int correctAnswerId;
+} SubmitAnswerResponse;
+
+typedef struct {
+	std::string username;
+	unsigned int corrrectAnswerCount;
+	unsigned int wrongAnsswerCount;
+	unsigned int averageAnswerTime;
+	unsigned int score;
+} PlayerResults;
+
+typedef struct {
+	unsigned int status;
+	std::vector<PlayerResults> results;
+} GetGameResultsResponse;
+
+typedef struct {
+	unsigned int status;
+} DeleteGameResponse;
+
+
 
 
 //requests
@@ -122,7 +161,12 @@ typedef struct {
 	unsigned int answerTimeout;
 } CreateRoomRequest;
 
+typedef struct {
+	unsigned int roomId;
+} DeleteGameRequest;
 
-
+typedef struct {
+	unsigned int answerId;
+} SubmitAnswerRequest;
 
 

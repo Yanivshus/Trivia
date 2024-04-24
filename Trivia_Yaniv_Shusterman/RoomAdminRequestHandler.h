@@ -16,7 +16,7 @@ class RoomAdminRequestHandler : public IRequestHandler
 {
 private:
 	Room m_room;
-	LoggedUser m_user;
+	const LoggedUser m_user;
 	RequestHandlerFactory& m_handlerFactory;
 	std::map<SOCKET, IRequestHandler*>& m_clients;
 

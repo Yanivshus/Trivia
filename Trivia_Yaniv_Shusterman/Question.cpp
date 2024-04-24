@@ -6,7 +6,7 @@ Question::Question(std::string m_question, std::vector<std::string> m_possiableA
 	this->m_possiableAnswers = m_possiableAnswers;
 }
 
-std::string Question::getQuestion()
+std::string Question::getQuestion() const
 {
 	return this->m_question;
 }

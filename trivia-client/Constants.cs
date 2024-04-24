@@ -30,6 +30,14 @@ namespace trivia_client
         public const int GET_ROOM_STATE_REQUEST = 91;
         public const int LEAVE_ROOM_REQUEST = 92;
 
+        public const int GET_GAME_RESULTS_REQUEST = 93;
+        public const int SUBMIT_ANSWER_REQUEST = 94;
+        public const int GET_QUESTION_REQUEST = 95;
+        public const int LEAVE_GAME_REQUEST = 96;
+        public const int DELETE_GAME_REQUEST = 97;
+
+
+
         public const int ERROR_RESPONSE = 107;
         public const int LOGIN_RESPONSE = 108;
         public const int SIGNUP_RESPONSE = 109;
@@ -46,6 +54,12 @@ namespace trivia_client
         public const int START_GAME_RESPONSE = 118;
         public const int GET_ROOM_STATE_RESPONSE = 119;
         public const int LEAVE_ROOM_RESPONSE = 120;
+
+        public const int GET_GAME_RESULTS_RESPONSE = 121;
+	    public const int SUBMIT_ANSWER_RESPONSE = 122;
+	    public const int GET_QUESTION_RESPONSE = 123;
+        public const int LEAVE_GAME_RESPONSE = 124;
+        public const int DELETE_GAME_RESPONSE = 125;
 
         public const int CODE_SIZE = 4;
     }

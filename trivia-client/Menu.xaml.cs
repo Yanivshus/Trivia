@@ -36,14 +36,14 @@ namespace trivia_client
 
         private void CreateRoomBtn_Click(object sender, RoutedEventArgs e)
         {
-            CreateRoomW cRoomW = new CreateRoomW(tcpClient, clientStream, currentLoggedUser, this);
+            CreateRoomW cRoomW = new CreateRoomW(tcpClient, clientStream, currentLoggedUser, this, loginW);
             cRoomW.Show();
             this.Hide();
         }
 
         private void JoinRoomBtn_Click(object sender, RoutedEventArgs e)
         {
-            JoinChooseRoomW joinRoomW = new JoinChooseRoomW(tcpClient, clientStream, currentLoggedUser, this);
+            JoinChooseRoomW joinRoomW = new JoinChooseRoomW(tcpClient, clientStream, currentLoggedUser, this, loginW);
             joinRoomW.Show();
             this.Hide();
         }

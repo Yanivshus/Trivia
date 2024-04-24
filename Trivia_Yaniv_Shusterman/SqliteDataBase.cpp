@@ -79,7 +79,12 @@ int getFloatCallback(void* data, int argc, char** argv, char** azColName)
 // Callback function implementation
 int intCallback(void* data, int argc, char** argv, char** azColName) {
 	if (argc > 0) {
-		*(int*)data = atoi(argv[0]);
+		if (argv[0] == NULL) {
+			*(int*)data = 0;
+		}
+		else {
+			*(int*)data = atoi(argv[0]);
+		}
 	}
 	return 0; 
 }
@@ -104,21 +109,21 @@ bool SqliteDataBase::open()
 			return false;
 		}
 
-		query = "CREATE TABLE IF NOT EXISTS questions (ID INTEGER, question TEXT, w_answer1 TEXT, w_answer2 TEXT, w_answer3	TEXT,c_answer4	TEXT, PRIMARY KEY(ID AUTOINCREMENT));";
+		query = "CREATE TABLE IF NOT EXISTS questions (ID INTEGER, question	TEXT, w_answer1	TEXT, w_answer2	TEXT, w_answer3	TEXT, c_answer4	TEXT, PRIMARY KEY(ID AUTOINCREMENT))";
 
 		if (!runQuery(query))
 		{
 			return false;
 		}
 
-		query = "CREATE TABLE IF NOT EXISTS game (ID INTEGER,PRIMARY KEY(ID AUTOINCREMENT));";
+		query = "CREATE TABLE IF NOT EXISTS game (ID INTEGER,PRIMARY KEY(ID))";
 
 		if (!runQuery(query))
 		{
 			return false;
 		}
 
-		query = "CREATE TABLE IF NOT EXISTS stats (ID INTEGER,game_id	INTEGER,username TEXT NOT NULL,iscorrect INTEGER,answer_time INTEGER NOT NULL,score	INTEGER,PRIMARY KEY(ID AUTOINCREMENT),FOREIGN KEY(game_id) REFERENCES game(ID),FOREIGN KEY(username) REFERENCES users(username));";
+		query = "CREATE TABLE IF NOT EXISTS statistics (ID INTEGER, GAME_ID INTEGER, USERNAME	TEXT NOT NULL, CORRECT INTEGER NOT NULL, WRONG INTEGER NOT NULL, AVG_TIME INTEGER, SCORE INTEGER, PRIMARY KEY(ID AUTOINCREMENT), FOREIGN KEY(GAME_ID) REFERENCES game(ID), FOREIGN KEY(USERNAME) REFERENCES users(username));";
 
 		if (!runQuery(query))
 		{
@@ -200,7 +205,7 @@ std::list<Question> SqliteDataBase::getQuestions(const int amount)
 
 double SqliteDataBase::getPlayerAverageAnswerTime(const std::string& username)
 {
-	std::string query = "SELECT AVG(answer_time) FROM stats WHERE username='"+username+"';";
+	std::string query = "SELECT AVG(AVG_TIME) FROM statistics WHERE username='"+username+"';";
 	double res = 0.0;
 	char* errMsg = nullptr;
 	//if qeury didnt worked we will print why.
@@ -214,7 +219,7 @@ double SqliteDataBase::getPlayerAverageAnswerTime(const std::string& username)
 
 int SqliteDataBase::getNumOfCorrectAnswers(const std::string& username)
 {
-	std::string query = "SELECT COUNT(iscorrect) FROM stats WHERE username='" + username + "' AND iscorrect=1;";
+	std::string query = "SELECT SUM(CORRECT) FROM statistics WHERE username='" + username + "';";
 	int res = 0;
 
 	char* errMsg = nullptr;
@@ -228,7 +233,7 @@ int SqliteDataBase::getNumOfCorrectAnswers(const std::string& username)
 
 int SqliteDataBase::getNumOfTotalAnswers(const std::string& username)
 {
-	std::string query = "SELECT COUNT(username) FROM stats WHERE username='"+username+"'";
+	std::string query = "SELECT SUM(CORRECT + WRONG) AS Total_Score FROM statistics WHERE username ='"+username+"'";
 	int res = 0;
 
 	char* errMsg = nullptr;
@@ -242,7 +247,7 @@ int SqliteDataBase::getNumOfTotalAnswers(const std::string& username)
 
 int SqliteDataBase::getNumOfPlayerGames(const std::string& username)
 {
-	std::string query = "SELECT COUNT(DISTINCT game_id) FROM stats WHERE username='" + username + "'";
+	std::string query = "SELECT COUNT(GAME_ID) FROM statistics WHERE username='" + username + "'";
 	int res = 0;
 
 	char* errMsg = nullptr;
@@ -256,7 +261,7 @@ int SqliteDataBase::getNumOfPlayerGames(const std::string& username)
 
 int SqliteDataBase::getPlayerScore(const std::string& username, int gameId)
 {
-	std::string query = "SELECT SUM(score) FROM stats WHERE username='"+username+"' AND game_id="+std::to_string(gameId) + ";";
+	std::string query = "SELECT SCORE FROM statistics WHERE username='"+username+"' AND GAME_ID="+std::to_string(gameId) + ";";
 	int res = 0;
 
 	char* errMsg = nullptr;
@@ -271,7 +276,7 @@ int SqliteDataBase::getPlayerScore(const std::string& username, int gameId)
 std::vector<std::string> SqliteDataBase::getHighScores()
 {
 	std::vector<std::string> scores;
-	std::string query = "SELECT username,SUM(score) SCORESUM FROM stats GROUP BY username ORDER BY SCORESUM DESC LIMIT 5;";
+	std::string query = "SELECT username,SUM(SCORE) SCORESUM FROM statistics GROUP BY username ORDER BY SCORESUM DESC LIMIT 5";
 
 	char* errMsg = nullptr;
 	//if qeury didnt worked we will print why.
@@ -283,6 +288,38 @@ std::vector<std::string> SqliteDataBase::getHighScores()
 }
 
 
+
+
+int SqliteDataBase::submitGameStatistics(GameData data, int gameId, const std::string& uNmae)
+{
+	
+	// turn all stats to strings.
+	std::string avg = std::to_string(data.averageAnswerTime);
+	std::string correct = std::to_string(data.correctAnswerCount);
+	std::string worng = std::to_string(data.wrongAnswerCount);
+
+	//tryout formula for the score.
+	unsigned int score = ((data.correctAnswerCount) * 1000) / (data.averageAnswerTime + data.wrongAnswerCount); // calculate the score by the formula.
+	
+	std::string query = "INSERT INTO statistics (GAME_ID, USERNAME, CORRECT, WRONG, AVG_TIME, SCORE) VALUES (" + std::to_string(gameId) + ", '" + uNmae + "', " + correct + ", " + worng + ", " + avg + ", "+std::to_string(score) + ");"; // need to add score.
+	
+	if (runQuery(query) == 0)
+	{
+		return 0;
+	}
+	return 1;
+
+}
+
+int SqliteDataBase::addGameToGames(const unsigned int gameId)
+{
+	std::string query = "INSERT INTO game (ID) VALUES(" + std::to_string(gameId) + ")";
+	if (runQuery(query) == 0)
+	{
+		return 0;
+	}
+	return 1;
+}
 
 bool SqliteDataBase::runQuery(const std::string& query)
 {

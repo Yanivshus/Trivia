@@ -9,6 +9,10 @@ private:
 public:
 	LoggedUser(const LoggedUser& other);
 	LoggedUser(const std::string& username, SOCKET sock);
-	std::string getUserName(); // getter
-	SOCKET getSock();
+	std::string getUserName() const; // getter
+	SOCKET getSock() const;
+
+	// operators for map use.
+	bool operator==(const LoggedUser& user) const;
+	bool operator<(const LoggedUser& user) const;
 };
