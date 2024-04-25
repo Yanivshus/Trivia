@@ -51,7 +51,7 @@ RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
         std::vector<unsigned char> buffer = JsonResponsePacketSerializer::serializeResponse(res);
         Helper::sendData(user->getSock(), buffer);
     }
-
+    
     StartGameResponse res = { START_GAME_RESPONSE };
     //send the complete resault out of the function.
     return { JsonResponsePacketSerializer::serializeResponse(res), (IRequestHandler*)this->m_handlerFactory.CreateGameRequestHandler(this->m_user, new_game) };
