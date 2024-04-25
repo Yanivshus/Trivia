@@ -52,8 +52,10 @@ std::vector<RoomData> RoomManger::getRooms()
 
 	// run on the room and get theyre data.
 	for (auto i = this->m_rooms.begin(); i != this->m_rooms.end(); i++)
-	{
-		dataOnRooms.push_back(i->second.getRoomData());
+	{   // if the room is active we will send it to client.
+		if (i->second.isRoomActive() != 0) {
+			dataOnRooms.push_back(i->second.getRoomData());
+		}
 	}
 	return dataOnRooms;
 }

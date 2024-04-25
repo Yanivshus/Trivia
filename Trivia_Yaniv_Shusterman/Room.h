@@ -26,6 +26,7 @@ public:
 	std::vector<LoggedUser> getAllUsers() const;
 	
 	unsigned int isRoomActive() { return this->m_metadata.isActive; };
+	void setRoomActive(unsigned int isActive) { this->m_metadata.isActive = isActive; };
 
 	RoomData getRoomData() const { return this->m_metadata; };
 };
