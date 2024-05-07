@@ -63,7 +63,6 @@ private:
 	/// </summary>
 	RequestResult joinRoom(RequestInfo info);
 
-
 	/// <summary>
 	/// cretes a room by user settings.
 	/// </summary>
