@@ -120,6 +120,10 @@ typedef struct {
 	unsigned int status;
 } DeleteGameResponse;
 
+typedef struct {
+	unsigned int status;
+} AddQuestionResponse;
+
 
 
 

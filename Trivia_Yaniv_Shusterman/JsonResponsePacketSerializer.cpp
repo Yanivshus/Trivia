@@ -249,6 +249,13 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const
     return createPacket(curr, j);
 }
 
+std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const AddQuestionResponse& err)
+{
+    json j = { {"status", err.status} };
+    Codes curr = ADD_QUESTION_RESPONSE;
+    return createPacket(curr, j);
+}
+
 
 
 std::vector<unsigned char> JsonResponsePacketSerializer::createPacket(const int code, json data)

@@ -49,7 +49,15 @@
             <StackPanel HorizontalAlignment="Center" Margin="0,57,0,0" VerticalAlignment="Top" Height="286" Width="506" Background="White" x:Name="roomContainer">
             </StackPanel>
 
-            <Button Content="Go Back" HorizontalAlignment="Left" Margin="177,372,0,0" VerticalAlignment="Top" Height="30" Width="81" FontFamily="Aharoni" Click="goBackBtn" />
+            <Button Content="Go Back" HorizontalAlignment="Left" Margin="177,372,0,0" VerticalAlignment="Top" Height="30" Width="81" FontFamily="Aharoni" Click="goBackBtn" >
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
             
             <TextBlock HorizontalAlignment="Left" Margin="381,372,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="30" Width="195" Foreground="Red" FontSize="16" TextAlignment="Center" Name="errBox"/>
         </Grid>

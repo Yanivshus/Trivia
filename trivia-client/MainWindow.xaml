@@ -19,14 +19,13 @@
                 <TextBox HorizontalAlignment="Left" Margin="147,16,0,0" TextWrapping="Wrap" Text="user" x:Name="UsernameBox" VerticalAlignment="Top" Width="453" FontFamily="Aharoni" Height="35" FontSize="22"/>
                 <TextBox HorizontalAlignment="Left" Margin="147,59,0,0" TextWrapping="Wrap" Text="user123" x:Name="PasswordBox" VerticalAlignment="Top" Width="453" FontFamily="Aharoni" Height="33" FontSize="22"/>
                 <Button Content="sign-in" HorizontalAlignment="Left" Margin="123,352,0,0" VerticalAlignment="Top" Height="41" Width="113" Click="loginToServer" FontFamily="Aharoni" RenderTransformOrigin="1,0" FontSize="16">
-                    <UIElement.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform AngleX="0"/>
-                            <RotateTransform/>
-                            <TranslateTransform X="0"/>
-                        </TransformGroup>
-                    </UIElement.RenderTransform>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
                 </Button>
                 <TextBlock HorizontalAlignment="Center" Margin="0,393,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="17" Width="368" x:Name="errorBox" Foreground="White">
                  <UIElement.RenderTransform>
@@ -38,7 +37,15 @@
                      </TransformGroup>
                  </UIElement.RenderTransform>
                 </TextBlock>
-                <Button Content="sign-up" HorizontalAlignment="Left" Margin="443,352,0,0" VerticalAlignment="Top" Height="41" Width="103" Name = "signupBtn" Click="signupBtn_Click" FontFamily="Aharoni" RenderTransformOrigin="0.501,0.5" FontSize="16"/>
+                <Button Content="sign-up" HorizontalAlignment="Left" Margin="443,352,0,0" VerticalAlignment="Top" Height="41" Width="103" Name = "signupBtn" Click="signupBtn_Click" FontFamily="Aharoni" RenderTransformOrigin="0.501,0.5" FontSize="16">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
             </Grid>
         </StackPanel>
     </Grid>

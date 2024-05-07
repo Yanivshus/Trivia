@@ -21,8 +21,24 @@
             <TextBox HorizontalAlignment="Left" Margin="230,200,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="430" Height="37" FontSize="20" Name="ansTimeBox" FontFamily="Aharoni"/>
             <TextBlock HorizontalAlignment="Left" Margin="130,200,0,0" TextWrapping="Wrap" Text="Ans time:" VerticalAlignment="Top" Height="37" Width="101" FontSize="18" Foreground="White" FontFamily="Aharoni"/>
 
-            <Button Content="Create Room" HorizontalAlignment="Left" Margin="487,301,0,0" VerticalAlignment="Top" Height="50" Width="148" Click="CreateRoomBtn" FontFamily="Aharoni" RenderTransformOrigin="0.506,-0.037"/>
-            <Button Content="Go Back" HorizontalAlignment="Left" Margin="202,301,0,0" VerticalAlignment="Top" Height="50" Width="126" Click="GoBackButton" FontFamily="Aharoni"/>
+            <Button Content="Create Room" HorizontalAlignment="Left" Margin="487,301,0,0" VerticalAlignment="Top" Height="50" Width="148" Click="CreateRoomBtn" FontFamily="Aharoni" RenderTransformOrigin="0.506,-0.037">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Content="Go Back" HorizontalAlignment="Left" Margin="202,301,0,0" VerticalAlignment="Top" Height="50" Width="126" Click="GoBackButton" FontFamily="Aharoni">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
 
             <TextBlock HorizontalAlignment="Center" Margin="0,381,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="33" Width="132" TextAlignment="Center" FontSize="16" Foreground="White" Name="errorBox"/>
 

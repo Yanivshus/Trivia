@@ -74,6 +74,10 @@ private:
 	/// </summary>
 	RequestResult deleteGame(RequestInfo info);
 
+	/// <summary>
+	/// adds new question to game.
+	/// </summary>
+
 	RequestResult addQuestion(RequestInfo info);
 
 	/// <summary>

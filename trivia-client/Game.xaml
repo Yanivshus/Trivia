@@ -37,7 +37,15 @@
         <Button Content="" HorizontalAlignment="Left" Margin="427,272,0,0" VerticalAlignment="Top" Height="50" Width="173" Style="{StaticResource CustomButtonStyle}" Background="White" FontFamily="Aharoni" FontSize="17" Name="ans3Btn" Click="ansBtnClick" Tag="2"/>
         <Button Content="" HorizontalAlignment="Left" Margin="200,272,0,0" VerticalAlignment="Top" Height="50" Width="173" Style="{StaticResource CustomButtonStyle}" Background="White" FontFamily="Aharoni" FontSize="17" Name="ans4Btn" Click="ansBtnClick" Tag="3"/>
 
-        <Button Content="Leave Game" HorizontalAlignment="Left" Margin="23,377,0,0" VerticalAlignment="Top" Height="35" Width="110" Background="White" FontFamily="Aharoni" FontSize="17" Name="leaveGame" Click="leaveGame_Click"/>
+        <Button Content="Leave Game" HorizontalAlignment="Left" Margin="23,377,0,0" VerticalAlignment="Top" Height="35" Width="110" Background="White" FontFamily="Aharoni" FontSize="17" Name="leaveGame" Click="leaveGame_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
 
         <TextBlock HorizontalAlignment="Left" Margin="681,23,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="47" Width="96" Background="White" Name="timerText" TextAlignment="Center" FontSize="20" FontFamily="Aharoni"/>
         <TextBlock HorizontalAlignment="Left" Margin="23,19,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="27" Width="140"  Background="White" FontFamily="Aharoni" FontSize="20" TextAlignment="Center" Name="uBox"/>

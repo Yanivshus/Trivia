@@ -9,9 +9,33 @@
     <Grid>
         <Image Source="/trviaBack.jpg" Stretch="Fill"/>
         <Grid>
-            <Button Content="High Scores" HorizontalAlignment="Left" Margin="609,360,0,0" VerticalAlignment="Top" Height="45" Width="133" FontFamily="Aharoni" FontSize="18" Click="HighScoreBtn"/>
-            <Button Content="Personal Score" HorizontalAlignment="Left" Margin="345,360,0,0" VerticalAlignment="Top" Height="45" Width="142" FontFamily="Aharoni" FontSize="18" Click="PersScoreBtn"/>
-            <Button Content="Go Back" HorizontalAlignment="Left" Margin="104,360,0,0" VerticalAlignment="Top" Height="45" Width="121" FontFamily="Aharoni" FontSize="18" Click="GoBackBtn"/>
+            <Button Content="High Scores" HorizontalAlignment="Left" Margin="609,360,0,0" VerticalAlignment="Top" Height="45" Width="133" FontFamily="Aharoni" FontSize="18" Click="HighScoreBtn">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Content="Personal Score" HorizontalAlignment="Left" Margin="345,360,0,0" VerticalAlignment="Top" Height="45" Width="142" FontFamily="Aharoni" FontSize="18" Click="PersScoreBtn">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Content="Go Back" HorizontalAlignment="Left" Margin="104,360,0,0" VerticalAlignment="Top" Height="45" Width="121" FontFamily="Aharoni" FontSize="18" Click="GoBackBtn">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
             <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="35" Width="92" Foreground="White" TextAlignment="Center" FontSize="18" FontFamily="Aharoni" Name="userBox"/>
 
         </Grid>

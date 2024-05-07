@@ -72,5 +72,19 @@ namespace trivia_client
                 this.Close();
             }
         }
+
+        private void quitGame(object sender, RoutedEventArgs e)
+        {
+            loginW.Close();
+            this.Close();
+        }
+
+        private void addQuestion(object sender, RoutedEventArgs e)
+        {
+            addQuestionW qWin = new addQuestionW(tcpClient, clientStream, currentLoggedUser, this);
+            this.Hide();
+            qWin.Show();
+
+        }
     }
 }
