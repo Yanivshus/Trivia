@@ -95,6 +95,17 @@ public:
 	/// </summary>
 	/// <param name="gameId:">gamed id to add.</param>
 	virtual int addGameToGames(const unsigned int gameId) override;
+
+	/// <summary>
+	/// add question to database.
+	/// </summary>
+	/// <param name="question:">the question</param>
+	/// <param name="w_answer1:">first wrong answer</param>
+	/// <param name="w_answer2:">second wrong answer</param>
+	/// <param name="w_answer3:">third wrong answer</param>
+	/// <param name="c_answer4:">correct answer</param>
+	/// <returns></returns>
+	virtual int addQuestionToDB(const std::string& question, const std::string& w_answer1, const std::string& w_answer2, const std::string& w_answer3, const std::string& c_answer4) override;
 private:
 	// runs a query.
 	bool runQuery(const std::string& query);

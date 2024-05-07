@@ -64,3 +64,15 @@ DeleteGameRequest JsonRequestPacketDeserializer::deserializeDeleteGameRequest(st
 	req.roomId = jsData["roomId"];
 	return req;
 }
+
+QuestionAddition JsonRequestPacketDeserializer::deserializeAddQuestion(std::vector<unsigned char> buffer)
+{
+	json jsData = json::from_bson(buffer);
+	QuestionAddition req;
+	req.question = jsData["question"];
+	req.w_answer1 = jsData["w_answer1"];
+	req.w_answer2 = jsData["w_answer2"];
+	req.w_answer3 = jsData["w_answer3"];
+	req.c_answer4 = jsData["c_answer4"];
+	return req;
+}

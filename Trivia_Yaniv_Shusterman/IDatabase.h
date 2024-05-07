@@ -23,4 +23,5 @@ public:
 	virtual std::vector<std::string> getHighScores() = 0;
 	virtual int submitGameStatistics(GameData data, int gameId, const std::string& uNmae) = 0;
 	virtual int addGameToGames(const unsigned int gameId) = 0;
+	virtual int addQuestionToDB(const std::string& question, const std::string& w_answer1, const std::string& w_answer2, const std::string& w_answer3, const std::string& c_answer4) = 0;
 };

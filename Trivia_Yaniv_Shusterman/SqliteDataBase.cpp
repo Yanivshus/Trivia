@@ -321,6 +321,15 @@ int SqliteDataBase::addGameToGames(const unsigned int gameId)
 	return 1;
 }
 
+int SqliteDataBase::addQuestionToDB(const std::string& question, const std::string& w_answer1, const std::string& w_answer2, const std::string& w_answer3, const std::string& c_answer4)
+{
+	std::string query = "INSERT INTO questions  (question, w_answer1, w_answer2, w_answer3, c_answer4) VALUES ('"+question+"','"+w_answer1+"','"+w_answer2+"','"+w_answer3+"','"+c_answer4+"')";
+	if (runQuery(query) == 0) {
+		return 0;
+	}
+	return 1;
+}
+
 bool SqliteDataBase::runQuery(const std::string& query)
 {
 	char* errMsg = nullptr;

@@ -169,4 +169,12 @@ typedef struct {
 	unsigned int answerId;
 } SubmitAnswerRequest;
 
+typedef struct {
+	std::string question;
+	std::string w_answer1;
+	std::string w_answer2;
+	std::string w_answer3;
+	std::string c_answer4;
+} QuestionAddition;
+
 

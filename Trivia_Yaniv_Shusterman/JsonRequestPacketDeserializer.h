@@ -43,4 +43,11 @@ public:
 	/// </summary>
 
 	static DeleteGameRequest deserializeDeleteGameRequest(std::vector<unsigned char> buffer);
+
+	/// <summary>
+	/// deserialize add question to questions.
+	/// </summary>
+	static QuestionAddition deserializeAddQuestion(std::vector<unsigned char> buffer);
+
+	
 };
