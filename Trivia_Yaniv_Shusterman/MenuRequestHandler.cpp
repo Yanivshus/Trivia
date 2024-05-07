@@ -231,6 +231,12 @@ RequestResult MenuRequestHandler::deleteGame(RequestInfo info)
     }
 }
 
+RequestResult MenuRequestHandler::addQuestion(RequestInfo info)
+{
+    QuestionAddition addReq = JsonRequestPacketDeserializer::deserializeAddQuestion(info.buffer);
+    this->m_handlerFactory.getDB()->addQuestionToDB(addReq.question, addReq.w_answer1, addReq.w_answer2, addReq.w_answer3, addReq.c_answer4); // add the question.
+}
+
 int MenuRequestHandler::CreateRoomId()
 {
     time_t time = std::time(0);

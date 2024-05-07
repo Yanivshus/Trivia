@@ -69,8 +69,12 @@ private:
 	/// </summary>
 	RequestResult createRoom(RequestInfo info, std::map<SOCKET, IRequestHandler*>& m_clients);
 
+	/// <summary>
+	/// deletes a game and a room.
+	/// </summary>
 	RequestResult deleteGame(RequestInfo info);
 
+	RequestResult addQuestion(RequestInfo info);
 
 	/// <summary>
 	/// genrate a id for a room (time * random number(100-1000)) / random number(1-10);
