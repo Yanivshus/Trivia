@@ -137,6 +137,9 @@ typedef struct {
 	std::string username;
 	std::string password;
 	std::string email;
+	std::string adrres;
+	std::string phone;
+	std::string date;
 } SignupRequest;
 
 typedef struct {

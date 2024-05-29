@@ -4,6 +4,7 @@
 #include "LoggedUser.h"
 #include <vector>
 #include <exception>
+#include <regex>
 
 class LoginManager {
 private:
@@ -16,7 +17,7 @@ public:
 	/// <param name="username:">user usernaem</param>
 	/// <param name="password:">user password</param>
 	/// <param name="email:">user email</param>
-	void signup(const std::string& username, const std::string& password, const std::string& email);
+	void signup(const std::string& username, const std::string& password, const std::string& email, const std::string& addres, const std::string& phone, const std::string& date);
 
 	/// <summary>
 	/// login to a user if possiable.

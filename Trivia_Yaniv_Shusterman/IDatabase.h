@@ -13,7 +13,7 @@ public:
 
 	virtual int doesUserExist(const std::string& username) = 0;
 	virtual int doesPasswordMatch(const std::string& username, const std::string& password) = 0;
-	virtual int addNewUser(const std::string& username, const std::string& password, const std::string& email) = 0;
+	virtual int addNewUser(const std::string& username, const std::string& password, const std::string& email, const std::string& addres, const std::string& phone, const std::string& date) = 0;
 	virtual std::list<Question> getQuestions(const int amount) = 0;
 	virtual double getPlayerAverageAnswerTime(const std::string& username) = 0;
 	virtual int getNumOfCorrectAnswers(const std::string& username) = 0;

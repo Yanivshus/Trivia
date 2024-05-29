@@ -101,8 +101,9 @@ bool SqliteDataBase::open()
 
 	if (fileExists != 0)
 	{
+
 		// creating the tables.
-		std::string query = "CREATE TABLE IF NOT EXISTS users (username TEXT,password TEXT,email TEXT,PRIMARY KEY(username))";
+		std::string query = "CREATE TABLE IF NOT EXISTS users (username TEXT,password TEXT,email TEXT,address TEXT, phone TEXT, data TEXT ,PRIMARY KEY(username))";
 
 		if (!runQuery(query))
 		{
@@ -129,6 +130,12 @@ bool SqliteDataBase::open()
 		{
 			return false;
 		}
+		// add starting question to db.
+		addQuestionToDB("Originally, Amazon only sold what kind of product?", "Shoes", "Clothes", "Humens", "Books");
+		addQuestionToDB("Who was the first woman to win a Nobel Prize?", "Marie Antuanet", "Mariah curry", "Albert einstein", "Marie Curie");
+		addQuestionToDB("Who is often credited with creating the world’s first car?", "Ferarri", "Ford", "Porche", "Benz");
+		addQuestionToDB("What is the last name of the business tycoon behind the 'no. 5' perfume?", "Valentino", "Armani", "Ford", "Chanel");
+		addQuestionToDB("What is the only food that can never go bad?", "Rice", "Bananas", "Chocolate", "Honey");
 	}
 	return true;
 }
@@ -182,9 +189,9 @@ int SqliteDataBase::doesPasswordMatch(const std::string& username, const std::st
 	return 1;// else if found a match true will be returned.
 }
 
-int SqliteDataBase::addNewUser(const std::string& username, const std::string& password, const std::string& email)
+int SqliteDataBase::addNewUser(const std::string& username, const std::string& password, const std::string& email, const std::string& addres, const std::string& phone, const std::string& date)
 {
-	std::string query = "INSERT INTO USERS (username, password, email) values('"+username+"', '"+password+"', '"+email+"');";
+	std::string query = "INSERT INTO USERS (username, password, email, address, phone, data) values('"+username+"', '"+password+"', '"+email+"',  '" + addres+ "',  '" + phone + "',  '" + date + "');";
 	return runQuery(query);
 }
 

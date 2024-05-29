@@ -19,6 +19,9 @@ SignupRequest JsonRequestPacketDeserializer::deserializeSignupRequest(std::vecto
 	req.password = jsData["password"];//taking the password and username and email.
 	req.username = jsData["username"];
 	req.email = jsData["email"];
+	req.phone = jsData["phone"];
+	req.date = jsData["date"];
+	req.adrres = jsData["address"];
 	return req;
 }
 

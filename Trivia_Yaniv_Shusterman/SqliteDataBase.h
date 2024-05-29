@@ -34,7 +34,7 @@ public:
 	/// <param name="password:">user password</param>
 	/// <param name="email:">user email</param>
 	/// <returns>true if worked.</returns>
-	virtual int addNewUser(const std::string& username, const std::string& password, const std::string& email) override;
+	virtual int addNewUser(const std::string& username, const std::string& password, const std::string& email, const std::string& addres, const std::string& phone, const std::string& date) override;
 
 	/// <summary>
 	/// returns all questions randomized, by requested amount.
