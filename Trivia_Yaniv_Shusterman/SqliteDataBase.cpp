@@ -134,7 +134,7 @@ bool SqliteDataBase::open()
 		addQuestionToDB("Originally, Amazon only sold what kind of product?", "Shoes", "Clothes", "Humens", "Books");
 		addQuestionToDB("Who was the first woman to win a Nobel Prize?", "Marie Antuanet", "Mariah curry", "Albert einstein", "Marie Curie");
 		addQuestionToDB("Who is often credited with creating the world’s first car?", "Ferarri", "Ford", "Porche", "Benz");
-		addQuestionToDB("What is the last name of the business tycoon behind the 'no. 5' perfume?", "Valentino", "Armani", "Ford", "Chanel");
+		addQuestionToDB("What is the last name of the business tycoon behind the no. 5 perfume?", "Valentino", "Armani", "Ford", "Chanel");
 		addQuestionToDB("What is the only food that can never go bad?", "Rice", "Bananas", "Chocolate", "Honey");
 	}
 	return true;
