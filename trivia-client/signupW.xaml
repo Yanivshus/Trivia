@@ -12,10 +12,26 @@
         <!-- Your existing content goes here -->
         <StackPanel Margin="2,0,-2,0">
             <Grid Height="432" Width="700">
-                <Label Content="Username:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="10,22,0,0" FontFamily="Aharoni" Foreground="White" RenderTransformOrigin="0.226,0.68" Height="29" FontSize="16"/>
+
+
                 <Label Content="Password:" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" FontFamily="Aharoni" Width="92" RenderTransformOrigin="0.496,2.334" Foreground="White" FontSize="16"/>
+                <TextBox HorizontalAlignment="Left" Margin="150,59,0,0" TextWrapping="Wrap" Text="User123." x:Name="PasswordBox" VerticalAlignment="Top" Width="453" FontFamily="Aharoni" Height="35" FontSize="22"/>
+
                 <TextBox HorizontalAlignment="Left" Margin="147,16,0,0" TextWrapping="Wrap" Text="user" x:Name="UsernameBox" VerticalAlignment="Top" Width="453" FontFamily="Aharoni" Height="35" FontSize="22"/>
-                <TextBox HorizontalAlignment="Left" Margin="147,59,0,0" TextWrapping="Wrap" Text="user123" x:Name="PasswordBox" VerticalAlignment="Top" Width="453" FontFamily="Aharoni" Height="33" FontSize="22"/>
+                <Label Content="Username:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="10,19,0,0" FontFamily="Aharoni" Foreground="White" RenderTransformOrigin="0.226,0.68" Height="29" FontSize="16"/>
+
+                <TextBox HorizontalAlignment="Left" Margin="147,103,0,0" TextWrapping="Wrap" Text="user@gmail.com" VerticalAlignment="Top" Width="453" Height="35" Name="emailBox" FontFamily="Aharoni" FontSize="16"/>
+                <Label Content="Email:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="10,103,0,0" FontFamily="Aharoni" Foreground="White" RenderTransformOrigin="0.226,0.68" Height="29" FontSize="16"/>
+
+                <Label Content="Phone:" HorizontalAlignment="Left" Margin="10,147,0,0" VerticalAlignment="Top" FontFamily="Aharoni" Width="92" RenderTransformOrigin="0.496,2.334" Foreground="White" FontSize="16"/>
+                <TextBox HorizontalAlignment="Left" Margin="150,146,0,0" TextWrapping="Wrap" Text="051234578" x:Name="phoneBox" VerticalAlignment="Top" Width="453" FontFamily="Aharoni" Height="35" FontSize="22"/>
+
+                <Label Content="Adress:" HorizontalAlignment="Left" Margin="10,189,0,0" VerticalAlignment="Top" FontFamily="Aharoni" Width="92" RenderTransformOrigin="0.496,2.334" Foreground="White" FontSize="16"/>
+                <TextBox HorizontalAlignment="Left" Margin="150,190,0,0" TextWrapping="Wrap" Text="Rogozin, 1, Kiryat gat" x:Name="adressBox" VerticalAlignment="Top" Width="453" FontFamily="Aharoni" Height="35" FontSize="22"/>
+
+                <Label Content="Date:" HorizontalAlignment="Left" Margin="10,234,0,0" VerticalAlignment="Top" FontFamily="Aharoni" Width="92" RenderTransformOrigin="0.496,2.334" Foreground="White" FontSize="16"/>
+                <TextBox HorizontalAlignment="Left" Margin="150,235,0,0" TextWrapping="Wrap" Text="11.01.2000" x:Name="dateBox" VerticalAlignment="Top" Width="453" FontFamily="Aharoni" Height="35" FontSize="22"/>
+
                 <Button Content="Go Back" HorizontalAlignment="Left" Margin="123,352,0,0" VerticalAlignment="Top" Height="41" Width="113" Click="goBackClick" FontFamily="Aharoni" RenderTransformOrigin="1,0" FontSize="16">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
@@ -44,8 +60,7 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <TextBox HorizontalAlignment="Left" Margin="147,103,0,0" TextWrapping="Wrap" Text="user@gmail.com" VerticalAlignment="Top" Width="453" Height="28" Name="emailBox" FontFamily="Aharoni" FontSize="16"/>
-                <Label Content="Email:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="10,103,0,0" FontFamily="Aharoni" Foreground="White" RenderTransformOrigin="0.226,0.68" Height="29" FontSize="16"/>
+ 
             </Grid>
         </StackPanel>
 

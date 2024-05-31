@@ -46,9 +46,12 @@ namespace trivia_client
             string username = this.UsernameBox.Text;
             string password = this.PasswordBox.Text;
             string email = this.emailBox.Text;
+            string phone = this.phoneBox.Text;
+            string date = this.dateBox.Text;
+            string address = this.adressBox.Text;
 
             // create a signup object so i could serialize it.
-            signUpUser currTry = new signUpUser { username = username, password = password, email = email };
+            signUpUser currTry = new signUpUser { username = username, password = password, email = email , address = address, date = date, phone = phone };
             string jsonData = JsonConvert.SerializeObject(currTry);// parse to json
 
             // build the packet into list of bytes.
