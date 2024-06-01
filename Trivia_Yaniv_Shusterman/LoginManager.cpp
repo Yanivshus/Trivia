@@ -16,16 +16,16 @@ void LoginManager::signup(const std::string& username, const std::string& passwo
 		std::regex mailCheck("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
 		if (!std::regex_match(email, mailCheck))
 			throw std::exception("regex error.");
-
-		std::regex addCheck("^[a-zA-Z]+, \d+, [a-zA-Z]+$");
+		//std::string s = "n"
+		std::regex addCheck("^[a-zA-Z]+, \\d+, [a-zA-Z ]+$");
 		if (!std::regex_match(addres, addCheck))
 			throw std::exception("regex error.");
 
-		std::regex phoneCheck("^0\d{9}$");
+		std::regex phoneCheck("^0\\d{9}$");
 		if (!std::regex_match(phone, phoneCheck))
 			throw std::exception("regex error.");
 
-		std::regex dateCheck("^(0[1-9]|[12][0-9]|3[01])[./](0[1-9]|1[0-2])[./](\d{4})$");
+		std::regex dateCheck("^(0[1-9]|[12][0-9]|3[01])[./](0[1-9]|1[0-2])[./](\\d{4})$");
 		if (!std::regex_match(date, dateCheck))
 			throw std::exception("regex error.");
 
