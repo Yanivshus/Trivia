@@ -5,6 +5,7 @@
 #include <vector>
 #include <exception>
 #include <regex>
+#include <functional>
 
 class LoginManager {
 private:

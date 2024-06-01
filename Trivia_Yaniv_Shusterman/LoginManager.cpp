@@ -29,17 +29,19 @@ void LoginManager::signup(const std::string& username, const std::string& passwo
 		if (!std::regex_match(date, dateCheck))
 			throw std::exception("regex error.");
 
+		std::hash<std::string> hasher;
+
 		// if everything passed the regex we will add the user.
-		this->m_database->addNewUser(username, password, email, addres, phone, date);
+		this->m_database->addNewUser(username, std::to_string(hasher(password)), email, addres, phone, date);
 	}
 }
 
 void LoginManager::login(const std::string& username, const std::string& password, SOCKET sock)
 {
-
+	std::hash<std::string> hasher;
 	if (this->m_database->doesUserExist(username) == 1)// check if the user exists before we login.
 	{
-		if (this->m_database->doesPasswordMatch(username, password))//if exists we try to login with username and password.
+		if (this->m_database->doesPasswordMatch(username, std::to_string(hasher(password))))//if exists we try to login with username and password.
 		{
 			//check if the user already connected.
 			for (auto& user : this->m_loggedUsers)

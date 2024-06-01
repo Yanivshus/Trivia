@@ -24,7 +24,7 @@
                 <Label Content="Email:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="10,103,0,0" FontFamily="Aharoni" Foreground="White" RenderTransformOrigin="0.226,0.68" Height="29" FontSize="16"/>
 
                 <Label Content="Phone:" HorizontalAlignment="Left" Margin="10,147,0,0" VerticalAlignment="Top" FontFamily="Aharoni" Width="92" RenderTransformOrigin="0.496,2.334" Foreground="White" FontSize="16"/>
-                <TextBox HorizontalAlignment="Left" Margin="150,146,0,0" TextWrapping="Wrap" Text="051234578" x:Name="phoneBox" VerticalAlignment="Top" Width="453" FontFamily="Aharoni" Height="35" FontSize="22"/>
+                <TextBox HorizontalAlignment="Left" Margin="150,146,0,0" TextWrapping="Wrap" Text="0512345789" x:Name="phoneBox" VerticalAlignment="Top" Width="453" FontFamily="Aharoni" Height="35" FontSize="22"/>
 
                 <Label Content="Adress:" HorizontalAlignment="Left" Margin="10,189,0,0" VerticalAlignment="Top" FontFamily="Aharoni" Width="92" RenderTransformOrigin="0.496,2.334" Foreground="White" FontSize="16"/>
                 <TextBox HorizontalAlignment="Left" Margin="150,190,0,0" TextWrapping="Wrap" Text="Rogozin, 1, Kiryat gat" x:Name="adressBox" VerticalAlignment="Top" Width="453" FontFamily="Aharoni" Height="35" FontSize="22"/>
