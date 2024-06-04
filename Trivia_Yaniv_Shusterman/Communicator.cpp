@@ -1,7 +1,7 @@
 #include "Communicator.h"
 
 
-
+Communicator* Communicator::_communicator = nullptr;
 Communicator::Communicator(RequestHandlerFactory& r) : m_handlerFactory(r)
 {
 	// this server use TCP. that why SOCK_STREAM & IPPROTO_TCP
