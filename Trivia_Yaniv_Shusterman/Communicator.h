@@ -15,6 +15,7 @@
 #include <vector>
 #include <ctime>
 
+#include "cryptlib.h"
 #include "Helper.h"
 
 

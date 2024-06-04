@@ -3,12 +3,15 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "RSACryptoAlgorithm.h"
 
 #define BUFFER_SIZE 1024
 
 class Helper 
 {
 public:
+	static std::map<SOCKET, CryptoPP::PrivateKey> cryptKeys;
+
 	/// <summary>
 	/// send data bu the socket.
 	/// </summary>
