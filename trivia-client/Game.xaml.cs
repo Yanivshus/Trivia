@@ -204,7 +204,7 @@ namespace trivia_client
 
             byte[] response = PacketBuilder.getDataFromSocket(clientStream); // receive server massage.
 
-            if ((int)response[0] == Codes.LEAVE_GAME_RESPONSE)
+            if ((int)response[0] == Codes.LEAVE_ROOM_RESPONSE)
             {
                 timer.Stop();
                 // move to the menu screen.
