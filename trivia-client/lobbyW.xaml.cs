@@ -93,28 +93,6 @@ namespace trivia_client
             }
 
         }
-        private bool checkIfLeave(byte[] response)
-        {
-            for (int i = 0; i < response.Length; i++)
-            {
-                if ((int)response[i] == Codes.LEAVE_ROOM_RESPONSE)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        private bool checkIfStart(byte[] response)
-        {
-            for (int i = 0; i < response.Length; i++)
-            {
-                if ((int)response[i] == Codes.START_GAME_RESPONSE)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 
 
         /// <summary>
@@ -232,7 +210,7 @@ namespace trivia_client
                         // Update the UI every 3 seconds
                         await Dispatcher.InvokeAsync(() =>
                         {
-                            this.playersBox.Text = ((int)response[0]).ToString(); // set the players in the appropriate box.
+                            this.playersBox.Text = ""; // set the players in the appropriate box.
                         });
                     }
                     await Task.Delay(3000);
