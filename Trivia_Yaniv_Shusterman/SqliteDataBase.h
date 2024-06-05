@@ -106,10 +106,18 @@ public:
 	/// <param name="c_answer4:">correct answer</param>
 	/// <returns></returns>
 	virtual int addQuestionToDB(const std::string& question, const std::string& w_answer1, const std::string& w_answer2, const std::string& w_answer3, const std::string& c_answer4) override;
+
+	static SqliteDataBase* getInstance() {
+		if (_sqliteDb == nullptr) {
+			_sqliteDb = new SqliteDataBase;
+		}
+		return _sqliteDb;
+	}
 private:
 	// runs a query.
 	bool runQuery(const std::string& query);
 	std::map<std::string, std::string> userList;
 	std::list<Question> questions;
 	sqlite3* _db;
+	static SqliteDataBase* _sqliteDb;
 };

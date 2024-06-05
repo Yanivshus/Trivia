@@ -56,6 +56,7 @@ public:
 		}
 		return _communicator;
 	}
+
 	Communicator(RequestHandlerFactory& r);
 	~Communicator();
 	void startHandleRequests();

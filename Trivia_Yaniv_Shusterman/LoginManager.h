@@ -34,4 +34,10 @@ public:
 	void logout(const std::string& username);
 
 	void setDB(IDatabase* m_database);
+
+	////singleton by reference.
+	static LoginManager& getInstance() {
+		static LoginManager theLoginManager;
+		return theLoginManager;
+	}
 };

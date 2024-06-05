@@ -1,5 +1,7 @@
 #include "SqliteDataBase.h"
 
+SqliteDataBase* SqliteDataBase::_sqliteDb = nullptr;
+
 int callBackGetQuestions(void* data, int argc, char** argv, char** azColName) 
 {
 	//turing the data to static so if there will be a couple of runs of the callback the data will remain.
