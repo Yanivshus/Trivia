@@ -1,7 +1,7 @@
 #include "RequestHandlerFactory.h"
 
 
-RequestHandlerFactory::RequestHandlerFactory() : m_loginManager(LoginManager::getInstance())
+RequestHandlerFactory::RequestHandlerFactory() : m_loginManager(LoginManager::getInstance()), m_roomManager(RoomManger::getInstance()), m_StatisticsManager(StatisticsManager::getInstance()), m_gameManager(GameManager::getInstance())
 {
 
 }

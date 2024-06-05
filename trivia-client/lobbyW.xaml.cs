@@ -93,6 +93,28 @@ namespace trivia_client
             }
 
         }
+        private bool checkIfLeave(byte[] response)
+        {
+            for (int i = 0; i < response.Length; i++)
+            {
+                if ((int)response[i] == Codes.LEAVE_ROOM_RESPONSE)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        private bool checkIfStart(byte[] response)
+        {
+            for (int i = 0; i < response.Length; i++)
+            {
+                if ((int)response[i] == Codes.START_GAME_RESPONSE)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
 
         /// <summary>
@@ -115,8 +137,10 @@ namespace trivia_client
                     PacketBuilder.sendDataToSocket(clientStream, buffer.ToArray());
 
                     byte[] response = PacketBuilder.getDataFromSocket(clientStream);
+                    //bool gameStart = checkIfStart(response);
+                    //bool roomLeave = checkIfLeave(response);
 
-                    if ((int)response[0] == Codes.GET_PLAYERS_IN_ROOM_RESPONSE)
+                    if ((int)response[0] == Codes.GET_PLAYERS_IN_ROOM_RESPONSE )
                     {
                         byte[] bsonData = PacketBuilder.deserializeToData(response); // take only the bson part of the server response.
 
@@ -172,7 +196,7 @@ namespace trivia_client
                             });
                         }
                     }
-                    else if((int)response[0] == Codes.LEAVE_ROOM_RESPONSE) // in case of a leave caught it means that the admin closed the room.
+                    else if((int)response[0] == Codes.LEAVE_ROOM_RESPONSE ) // in case of a leave caught it means that the admin closed the room.
                     {
                         // The room got closed by admin.
                         await Dispatcher.InvokeAsync(() =>
@@ -181,7 +205,7 @@ namespace trivia_client
                             handleMemberLeave();
                         });
                     }
-                    else if ((int)response[0] == Codes.START_GAME_RESPONSE)// in case of a start game caught it means that the admin started the game.
+                    else if ((int)response[0] == Codes.START_GAME_RESPONSE )// in case of a start game caught it means that the admin started the game.
                     {
                         // The room got closed by admin.
                         await Dispatcher.InvokeAsync(() =>

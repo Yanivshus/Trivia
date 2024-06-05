@@ -153,7 +153,7 @@ namespace trivia_client
         /// </summary>
         public static byte[] getDataFromSocket(NetworkStream clientStream)
         {
-            byte[] response = new byte[1024];
+            byte[] response = new byte[4096];
             int bytesRead = clientStream.Read(response, 0, 1024);//get data from tcp stream.
             return response;
         }

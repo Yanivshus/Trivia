@@ -22,9 +22,9 @@ class RequestHandlerFactory {
 private:
 	IDatabase* m_database;
 	LoginManager& m_loginManager;
-	RoomManger m_roomManager;
-	StatisticsManager m_StatisticsManager;
-	GameManager m_gameManager;
+	RoomManger& m_roomManager;
+	StatisticsManager& m_StatisticsManager;
+	GameManager& m_gameManager;
 public:
 	RequestHandlerFactory();
 

@@ -25,4 +25,10 @@ public:
 	/// returns instance of game.
 	/// </summary>
 	Game& getGame(const int gameId);
+
+	////singleton by reference.
+	static GameManager& getInstance() {
+		static GameManager theGameManager;
+		return theGameManager;
+	}
 };

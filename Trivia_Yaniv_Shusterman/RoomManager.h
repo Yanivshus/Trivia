@@ -23,4 +23,10 @@ public:
 
 	// get a specific room
 	Room& getRoom(const int id);
+
+	////singleton by reference.
+	static RoomManger& getInstance() {
+		static RoomManger theRoomManager;
+		return theRoomManager;
+	}
 };
