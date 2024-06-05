@@ -155,7 +155,7 @@ std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const
 std::vector<unsigned char> JsonResponsePacketSerializer::serializeResponse(const LeaveRoomResponse& err)
 {
     json j = { {"status", err.status} };
-    Codes curr = LEAVE_GAME_RESPONSE;
+    Codes curr = LEAVE_ROOM_RESPONSE;
     return createPacket(curr, j);
 }
 
