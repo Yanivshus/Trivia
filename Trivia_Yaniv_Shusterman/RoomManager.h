@@ -7,6 +7,7 @@
 class RoomManger {
 private:
 	std::map<int, Room> m_rooms;
+	std::mutex roomsMtx;
 public:
 
 	// creates a room, adds it to the map.

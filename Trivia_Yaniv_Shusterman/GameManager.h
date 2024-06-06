@@ -2,12 +2,14 @@
 #include "IDatabase.h"
 #include "Question.h"
 #include <vector>
+#include <mutex>
 
 
 class GameManager {
 private:
 	IDatabase* m_database;
 	std::vector<Game> m_games;
+	std::mutex gamesMtx;
 public:
 	void setDB(IDatabase* m_database); 
 

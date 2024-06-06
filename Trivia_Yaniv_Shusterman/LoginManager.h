@@ -6,11 +6,13 @@
 #include <exception>
 #include <regex>
 #include <functional>
+#include <mutex>
 
 class LoginManager {
 private:
 	IDatabase* m_database;
 	std::vector<LoggedUser> m_loggedUsers;
+	std::mutex usersMtx;
 public:
 	/// <summary>
 	/// signup the user to the database.

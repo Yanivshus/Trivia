@@ -13,6 +13,7 @@ void RoomManger::createRoom(LoggedUser creator, RoomData data)
 		try {
 			Room newRoom(data);
 			newRoom.addUser(creator);
+			std::lock_guard<std::mutex> guard(this->roomsMtx);
 			this->m_rooms.insert(std::make_pair(data.id, std::move(newRoom)));
 		}
 		catch(std::exception& e){
@@ -27,6 +28,7 @@ void RoomManger::deleteRoom(const int id)
 	auto it = this->m_rooms.find(id);
 	if (it != this->m_rooms.end()) // check if there is already a room in the map so there wont be an error.
 	{
+		std::lock_guard<std::mutex> guard(this->roomsMtx);
 		this->m_rooms.erase(id);//delete map entry.
 	}
 	else {

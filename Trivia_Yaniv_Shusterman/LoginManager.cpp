@@ -50,7 +50,7 @@ void LoginManager::login(const std::string& username, const std::string& passwor
 					throw std::exception("User already connected.");
 				}
 			}
-
+			std::lock_guard<std::mutex> quard(this->usersMtx);
 			//add new logged user.
 			LoggedUser newLoggedUser(username, sock);
 			this->m_loggedUsers.push_back(newLoggedUser);
@@ -89,6 +89,7 @@ void LoginManager::logout(const std::string& username)
 		}
 		else
 		{
+			std::lock_guard<std::mutex> quard(this->usersMtx);
 			this->m_loggedUsers.erase(userToDelete);
 		}
 	}
