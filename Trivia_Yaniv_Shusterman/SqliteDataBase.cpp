@@ -154,6 +154,7 @@ bool SqliteDataBase::close()
 
 int SqliteDataBase::doesUserExist(const std::string& username)
 {
+	std::lock_guard<std::mutex> lock(dbMutex);
 	std::string query = "SELECT username,password FROM USERS WHERE username='"+username+"';";
 	this->userList.clear();
 
@@ -174,6 +175,7 @@ int SqliteDataBase::doesUserExist(const std::string& username)
 
 int SqliteDataBase::doesPasswordMatch(const std::string& username, const std::string& password)
 {
+	std::lock_guard<std::mutex> lock(dbMutex);
 	std::string query = "SELECT username,password FROM USERS WHERE username='"+username+"' AND password='"+password+"';";// query to select username and password from the db.
 	this->userList.clear();
 
@@ -193,12 +195,14 @@ int SqliteDataBase::doesPasswordMatch(const std::string& username, const std::st
 
 int SqliteDataBase::addNewUser(const std::string& username, const std::string& password, const std::string& email, const std::string& addres, const std::string& phone, const std::string& date)
 {
+	std::lock_guard<std::mutex> lock(dbMutex);
 	std::string query = "INSERT INTO USERS (username, password, email, address, phone, data) values('"+username+"', '"+password+"', '"+email+"',  '" + addres+ "',  '" + phone + "',  '" + date + "');";
 	return runQuery(query);
 }
 
 std::list<Question> SqliteDataBase::getQuestions(const int amount)
 {
+	std::lock_guard<std::mutex> lock(dbMutex);
 	std::string query = "SELECT question, w_answer1, w_answer2, w_answer3, c_answer4 FROM questions ORDER BY RANDOM() LIMIT "+std::to_string(amount)+";";
 	this->questions.clear();
 
@@ -214,6 +218,7 @@ std::list<Question> SqliteDataBase::getQuestions(const int amount)
 
 double SqliteDataBase::getPlayerAverageAnswerTime(const std::string& username)
 {
+	std::lock_guard<std::mutex> lock(dbMutex);
 	std::string query = "SELECT AVG(AVG_TIME) FROM statistics WHERE username='"+username+"';";
 	double res = 0.0;
 	char* errMsg = nullptr;
@@ -228,6 +233,7 @@ double SqliteDataBase::getPlayerAverageAnswerTime(const std::string& username)
 
 int SqliteDataBase::getNumOfCorrectAnswers(const std::string& username)
 {
+	std::lock_guard<std::mutex> lock(dbMutex);
 	std::string query = "SELECT SUM(CORRECT) FROM statistics WHERE username='" + username + "';";
 	int res = 0;
 
@@ -242,6 +248,7 @@ int SqliteDataBase::getNumOfCorrectAnswers(const std::string& username)
 
 int SqliteDataBase::getNumOfTotalAnswers(const std::string& username)
 {
+	std::lock_guard<std::mutex> lock(dbMutex);
 	std::string query = "SELECT SUM(CORRECT + WRONG) AS Total_Score FROM statistics WHERE username ='"+username+"'";
 	int res = 0;
 
@@ -256,6 +263,7 @@ int SqliteDataBase::getNumOfTotalAnswers(const std::string& username)
 
 int SqliteDataBase::getNumOfPlayerGames(const std::string& username)
 {
+	std::lock_guard<std::mutex> lock(dbMutex);
 	std::string query = "SELECT COUNT(GAME_ID) FROM statistics WHERE username='" + username + "'";
 	int res = 0;
 
@@ -270,6 +278,7 @@ int SqliteDataBase::getNumOfPlayerGames(const std::string& username)
 
 int SqliteDataBase::getPlayerScore(const std::string& username, int gameId)
 {
+	std::lock_guard<std::mutex> lock(dbMutex);
 	std::string query = "SELECT SCORE FROM statistics WHERE username='"+username+"' AND GAME_ID="+std::to_string(gameId) + ";";
 	int res = 0;
 
@@ -284,6 +293,7 @@ int SqliteDataBase::getPlayerScore(const std::string& username, int gameId)
 
 std::vector<std::string> SqliteDataBase::getHighScores()
 {
+	std::lock_guard<std::mutex> lock(dbMutex);
 	std::vector<std::string> scores;
 	std::string query = "SELECT username,SUM(SCORE) SCORESUM FROM statistics GROUP BY username ORDER BY SCORESUM DESC LIMIT 5";
 
@@ -301,7 +311,7 @@ std::vector<std::string> SqliteDataBase::getHighScores()
 
 int SqliteDataBase::submitGameStatistics(GameData data, int gameId, const std::string& uNmae)
 {
-	
+	std::lock_guard<std::mutex> lock(dbMutex);
 	// turn all stats to strings.
 	std::string avg = std::to_string(data.averageAnswerTime);
 	std::string correct = std::to_string(data.correctAnswerCount);
@@ -322,6 +332,7 @@ int SqliteDataBase::submitGameStatistics(GameData data, int gameId, const std::s
 
 int SqliteDataBase::addGameToGames(const unsigned int gameId)
 {
+	std::lock_guard<std::mutex> lock(dbMutex);
 	std::string query = "INSERT INTO game (ID) VALUES(" + std::to_string(gameId) + ")";
 	if (runQuery(query) == 0)
 	{
@@ -332,6 +343,7 @@ int SqliteDataBase::addGameToGames(const unsigned int gameId)
 
 int SqliteDataBase::addQuestionToDB(const std::string& question, const std::string& w_answer1, const std::string& w_answer2, const std::string& w_answer3, const std::string& c_answer4)
 {
+	std::lock_guard<std::mutex> lock(dbMutex);
 	std::string query = "INSERT INTO questions  (question, w_answer1, w_answer2, w_answer3, c_answer4) VALUES ('"+question+"','"+w_answer1+"','"+w_answer2+"','"+w_answer3+"','"+c_answer4+"')";
 	if (runQuery(query) == 0) {
 		return 0;

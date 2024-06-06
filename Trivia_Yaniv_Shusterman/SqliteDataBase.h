@@ -4,6 +4,8 @@
 #include <io.h>
 #include <string>
 #include <map>
+#include <mutex>
+
 
 #define DB_NAME "triviaDB.db"
 
@@ -119,5 +121,6 @@ private:
 	std::map<std::string, std::string> userList;
 	std::list<Question> questions;
 	sqlite3* _db;
+	std::mutex dbMutex;
 	static SqliteDataBase* _sqliteDb;
 };
