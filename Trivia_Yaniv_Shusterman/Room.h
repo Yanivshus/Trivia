@@ -2,6 +2,7 @@
 #include "LoggedUser.h"
 #include "StructHelper.h"
 #include <vector>
+#include <mutex>
 
 class Room {
 private:

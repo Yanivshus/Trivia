@@ -5,7 +5,7 @@ RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo info)
 {
     // get all current active users.   
     std::vector<LoggedUser> users = this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).getAllUsers();
-
+    std::lock_guard<std::mutex> lock(this->genMtx);
     this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).deleteUser(users[0]); // delete the admin from the room
 
     auto user = users.begin(); 

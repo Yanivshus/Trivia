@@ -4,7 +4,7 @@ RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo info)
 {
     //create a leave room packet and send to the current user.
     LeaveRoomResponse res = { LEAVE_ROOM_RESPONSE };
-
+    std::lock_guard<std::mutex> lock(this->genMtx);
     //remove user from the room
     this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).deleteUser(this->m_user);
 

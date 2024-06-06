@@ -13,6 +13,7 @@ private:
 	Room m_room;
 	const LoggedUser m_user;
 	RequestHandlerFactory& m_handlerFactory;
+	std::mutex genMtx;
 
 	/// <summary>
 	/// removes user from room and returns the menu handler.

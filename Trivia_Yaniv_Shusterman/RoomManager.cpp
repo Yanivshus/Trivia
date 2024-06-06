@@ -12,8 +12,8 @@ void RoomManger::createRoom(LoggedUser creator, RoomData data)
 
 		try {
 			Room newRoom(data);
-			newRoom.addUser(creator);
 			std::lock_guard<std::mutex> guard(this->roomsMtx);
+			newRoom.addUser(creator);
 			this->m_rooms.insert(std::make_pair(data.id, std::move(newRoom)));
 		}
 		catch(std::exception& e){
