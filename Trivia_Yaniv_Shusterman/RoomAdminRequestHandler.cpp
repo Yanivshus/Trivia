@@ -14,7 +14,7 @@ RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo info)
     // run on all of the users and remove them.
     for (; user != users.end(); user++)
     {
-        this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).deleteUser(*user); // delete room meber.
+        this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).deleteUser(*user); // delete room member.
 
         this->m_clients[user->getSock()] = (IRequestHandler*)this->m_handlerFactory.createMenuRequestHandler(*user); // update the user handler
 
