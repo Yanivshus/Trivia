@@ -11,9 +11,33 @@
         <Grid>
 
         </Grid>
-        <Button Content="Leave Room" HorizontalAlignment="Left" Margin="152,348,0,0" VerticalAlignment="Top" Height="37" Width="114" FontFamily="Aharoni" FontSize="18" Click="leaveRoom" Name="leaveRoomBtn" Visibility="Visible"/>
-        <Button Content="Close Room" HorizontalAlignment="Left" Margin="152,348,0,0" VerticalAlignment="Top" Height="37" Width="114" FontFamily="Aharoni" FontSize="18" Click="closeRoom" Name="closeRoomBtn" Visibility="Hidden"/>
-        <Button Content="Start Game" HorizontalAlignment="Left" Margin="528,348,0,0" VerticalAlignment="Top" Height="37" Width="112" FontFamily="Aharoni" FontSize="18" Click="StartGameButton" Name="startGame" Visibility="Hidden" />
+        <Button Content="Leave Room" HorizontalAlignment="Left" Margin="152,348,0,0" VerticalAlignment="Top" Height="37" Width="114" FontFamily="Aharoni" FontSize="18" Click="leaveRoom" Name="leaveRoomBtn" Visibility="Visible">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Content="Close Room" HorizontalAlignment="Left" Margin="152,348,0,0" VerticalAlignment="Top" Height="37" Width="114" FontFamily="Aharoni" FontSize="18" Click="closeRoom" Name="closeRoomBtn" Visibility="Hidden">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Content="Start Game" HorizontalAlignment="Left" Margin="528,348,0,0" VerticalAlignment="Top" Height="37" Width="112" FontFamily="Aharoni" FontSize="18" Click="StartGameButton" Name="startGame" Visibility="Hidden" >
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
 
         <TextBlock HorizontalAlignment="Center" Margin="0,88,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="239" Width="520" Background="White" TextAlignment="Center" FontFamily="Aharoni" FontSize="18" Name="playersBox"/>
         <TextBlock HorizontalAlignment="Center" Margin="0,38,0,0" TextWrapping="Wrap" Text="PLayers im room:" VerticalAlignment="Top" Height="45" Width="358" Foreground="White" TextAlignment="Center" FontFamily="Aharoni" FontSize="30"/>

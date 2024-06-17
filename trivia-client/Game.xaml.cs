@@ -109,6 +109,22 @@ namespace trivia_client
             ansButtons[3].Background = Brushes.Red;
         }
 
+        private void disableAll()
+        {
+            ansButtons[0].IsEnabled = false;
+            ansButtons[1].IsEnabled = false;
+            ansButtons[2].IsEnabled = false;
+            ansButtons[3].IsEnabled = false;
+        }
+
+        private void enableAll()
+        {
+            ansButtons[0].IsEnabled = true;
+            ansButtons[1].IsEnabled = true;
+            ansButtons[2].IsEnabled = true;
+            ansButtons[3].IsEnabled = true;
+        }
+
 
         private void setAllToWhite()
         {
@@ -129,7 +145,8 @@ namespace trivia_client
                 timer.Stop();
                 submitAnswer(0); // submit wrong answer.
                 setAllToRed(); // set all the buttons to be red beacuse when user doesnt enter answer he is wrong.
-                
+                disableAll();
+
                 // Create a timer to wait for 1 second asynchronously
                 var iT = new System.Timers.Timer(2000);
                 var tcs = new TaskCompletionSource<bool>();
@@ -139,6 +156,7 @@ namespace trivia_client
                 await tcs.Task;
 
 
+                enableAll();
                 setAllToWhite();
                 // move to the next question.
                 Question q = getQuestion();
@@ -186,7 +204,7 @@ namespace trivia_client
 
             byte[] response = PacketBuilder.getDataFromSocket(clientStream); // receive server massage.
 
-            if ((int)response[0] == Codes.LEAVE_GAME_RESPONSE)
+            if ((int)response[0] == Codes.LEAVE_ROOM_RESPONSE)
             {
                 timer.Stop();
                 // move to the menu screen.
@@ -210,7 +228,16 @@ namespace trivia_client
             int answerId = int.Parse(selectedBtn.Tag.ToString());
             string ans = selectedBtn.Content.ToString();
 
-          
+            Button correctAnsBtn = new Button();
+            // find the btn with the correct answer.
+            for (int i = 0; i < this.ansButtons.Length; i++)
+            {
+                if (ansButtons[i].Tag.ToString() == "3")
+                {
+                    correctAnsBtn = (Button)ansButtons[i];
+                }
+            }
+            
             timer.Stop();
 
             if(submitAnswer(answerId) == answerId)
@@ -220,8 +247,11 @@ namespace trivia_client
             else
             {
                 selectedBtn.Background = Brushes.Red;
+                correctAnsBtn.Background = Brushes.Green;
             }
-           
+
+            disableAll();
+
             // Create a timer to wait for 2 second asynchronously
             var iT = new System.Timers.Timer(2000);
             var tcs = new TaskCompletionSource<bool>();
@@ -235,6 +265,7 @@ namespace trivia_client
             if (q.question != "over")
             {
                 this.qBox.Text = q.question;
+                enableAll();
                 setAllToWhite(); // set all the answers to neatral
                 setAnswersToButtons(q.answers);
                 RestartTimer();

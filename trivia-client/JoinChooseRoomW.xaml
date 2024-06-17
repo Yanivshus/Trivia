@@ -6,19 +6,60 @@
         xmlns:local="clr-namespace:trivia_client"
         mc:Ignorable="d"
         Title="JoinChooseRoomW" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="CustomButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="White"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4"
+                            Padding="8"
+                            Width="110"
+                            Height="40"
+                            Margin="0,10,0,0">
+
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <!-- Apply font properties to the ContentPresenter -->
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontFamily" Value="Aharoni"/>
+                                        <Setter Property="FontSize" Value="18"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </Style>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+    </Window.Resources>
+
+   
+
     <Grid>
         <Image Source="/trviaBack.jpg" Stretch="Fill"/>
         <Grid>
             <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" Text="Avliable rooms: " VerticalAlignment="Top" Foreground="White" Height="47" Width="280" TextAlignment="Center" FontSize="28" FontFamily="Aharoni"/>
             <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="24" Width="97" Foreground="White" Name="loggedUserBox" TextAlignment="Center" FontFamily="Aharoni"/>
-            <TextBlock HorizontalAlignment="Center" Margin="0,57,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="286" Width="506" Background="White" TextAlignment="Center" FontSize="18" Name="roomsBox" FontFamily="Aharoni"/>
 
-            <Button Content="Go Back" HorizontalAlignment="Left" Margin="177,372,0,0" VerticalAlignment="Top" Height="30" Width="81" FontFamily="Aharoni" Click="goBackBtn"/>
-            <Button Content="Join room" HorizontalAlignment="Left" Margin="552,372,0,0" VerticalAlignment="Top" Height="30" Width="111" FontFamily="Aharoni" Click="joinRoomBtn"/>
+            <StackPanel HorizontalAlignment="Center" Margin="0,57,0,0" VerticalAlignment="Top" Height="286" Width="506" Background="White" x:Name="roomContainer">
+            </StackPanel>
 
-            <TextBox HorizontalAlignment="Center" Margin="0,372,0,0" TextWrapping="Wrap" Text="123456" VerticalAlignment="Top" Width="173" Height="30" FontFamily="Aharoni" FontSize="18" Name="idBox"/>
+            <Button Content="Go Back" HorizontalAlignment="Left" Margin="177,372,0,0" VerticalAlignment="Top" Height="30" Width="81" FontFamily="Aharoni" Click="goBackBtn" >
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
             
-            <TextBlock HorizontalAlignment="Left" Margin="558,407,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="17" Width="95" Foreground="White" FontSize="16" TextAlignment="Center" Name="errBox"/>
+            <TextBlock HorizontalAlignment="Left" Margin="381,372,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="30" Width="195" Foreground="Red" FontSize="16" TextAlignment="Center" Name="errBox"/>
         </Grid>
 
     </Grid>

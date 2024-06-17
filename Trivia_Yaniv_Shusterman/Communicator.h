@@ -28,6 +28,7 @@ private:
 	SOCKET m_serverSocket;
 	std::map<SOCKET, IRequestHandler*> m_clients;
 	RequestHandlerFactory& m_handlerFactory;
+	static Communicator* _communicator;
 
 	/// <summary>
 	/// bind to a socket and listen to new clients.
@@ -49,6 +50,13 @@ private:
 	/// <returns>length of data.</returns>
 	int getSizeOfData(std::vector<unsigned char> buffer);
 public:
+	static Communicator* getInstance(RequestHandlerFactory& r) {
+		if (_communicator == nullptr) {
+			_communicator = new Communicator(r);
+		}
+		return _communicator;
+	}
+
 	Communicator(RequestHandlerFactory& r);
 	~Communicator();
 	void startHandleRequests();

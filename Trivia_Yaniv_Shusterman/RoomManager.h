@@ -7,6 +7,7 @@
 class RoomManger {
 private:
 	std::map<int, Room> m_rooms;
+	std::mutex roomsMtx;
 public:
 
 	// creates a room, adds it to the map.
@@ -23,4 +24,10 @@ public:
 
 	// get a specific room
 	Room& getRoom(const int id);
+
+	////singleton by reference.
+	static RoomManger& getInstance() {
+		static RoomManger theRoomManager;
+		return theRoomManager;
+	}
 };

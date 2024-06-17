@@ -4,6 +4,8 @@
 #include <io.h>
 #include <string>
 #include <map>
+#include <mutex>
+
 
 #define DB_NAME "triviaDB.db"
 
@@ -34,7 +36,7 @@ public:
 	/// <param name="password:">user password</param>
 	/// <param name="email:">user email</param>
 	/// <returns>true if worked.</returns>
-	virtual int addNewUser(const std::string& username, const std::string& password, const std::string& email) override;
+	virtual int addNewUser(const std::string& username, const std::string& password, const std::string& email, const std::string& addres, const std::string& phone, const std::string& date) override;
 
 	/// <summary>
 	/// returns all questions randomized, by requested amount.
@@ -95,10 +97,30 @@ public:
 	/// </summary>
 	/// <param name="gameId:">gamed id to add.</param>
 	virtual int addGameToGames(const unsigned int gameId) override;
+
+	/// <summary>
+	/// add question to database.
+	/// </summary>
+	/// <param name="question:">the question</param>
+	/// <param name="w_answer1:">first wrong answer</param>
+	/// <param name="w_answer2:">second wrong answer</param>
+	/// <param name="w_answer3:">third wrong answer</param>
+	/// <param name="c_answer4:">correct answer</param>
+	/// <returns></returns>
+	virtual int addQuestionToDB(const std::string& question, const std::string& w_answer1, const std::string& w_answer2, const std::string& w_answer3, const std::string& c_answer4) override;
+
+	static SqliteDataBase* getInstance() {
+		if (_sqliteDb == nullptr) {
+			_sqliteDb = new SqliteDataBase;
+		}
+		return _sqliteDb;
+	}
 private:
 	// runs a query.
 	bool runQuery(const std::string& query);
 	std::map<std::string, std::string> userList;
 	std::list<Question> questions;
 	sqlite3* _db;
+	std::mutex dbMutex;
+	static SqliteDataBase* _sqliteDb;
 };

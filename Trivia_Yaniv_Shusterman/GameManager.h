@@ -2,12 +2,14 @@
 #include "IDatabase.h"
 #include "Question.h"
 #include <vector>
+#include <mutex>
 
 
 class GameManager {
 private:
 	IDatabase* m_database;
 	std::vector<Game> m_games;
+	std::mutex gamesMtx;
 public:
 	void setDB(IDatabase* m_database); 
 
@@ -25,4 +27,10 @@ public:
 	/// returns instance of game.
 	/// </summary>
 	Game& getGame(const int gameId);
+
+	////singleton by reference.
+	static GameManager& getInstance() {
+		static GameManager theGameManager;
+		return theGameManager;
+	}
 };

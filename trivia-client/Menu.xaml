@@ -9,11 +9,61 @@
     <Grid>
         <Image Source="/trviaBack.jpg" Stretch="Fill"/>
         <StackPanel>
-            <TextBlock TextWrapping="Wrap" Text="" Height="29" Width="345" x:Name="UserBox" FontSize="16" Foreground="White" TextAlignment="Center"/>
-            <Button Content="Create Room" Width="200" Margin="20" x:Name="CreateRoomBtn" FontSize="16" Height="60" Click="CreateRoomBtn_Click" FontFamily="Aharoni"/>
-            <Button Content="Join Room" Width="200" Margin="20" x:Name="JoinRoomBtn" FontSize="16" Height="60" Click="JoinRoomBtn_Click" FontFamily="Aharoni"/>
-            <Button Content="Statistics" Width="200" Margin="20" x:Name="StatBtn" FontSize="16" Height="60" Click="StatBtn_Click" FontFamily="Aharoni"/>
-            <Button Content="Logout" Width="200" Margin="20" x:Name="LogoutBtn" FontSize="16" Height="60" Click="LogoutBtn_Click" FontFamily="Aharoni"/>
+            <TextBlock TextWrapping="Wrap" Text="" Margin="20" Height="29" Width="345" x:Name="UserBox" FontSize="16" Foreground="White" TextAlignment="Center"/>
+            <Button Content="Create Room" Width="200" x:Name="CreateRoomBtn" FontSize="16" Height="50" Click="CreateRoomBtn_Click" FontFamily="Aharoni" >
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Content="Join Room" Width="200" Margin="10" x:Name="JoinRoomBtn" FontSize="16" Height="50" Click="JoinRoomBtn_Click" FontFamily="Aharoni">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Content="Statistics" Width="200" Margin="5" x:Name="StatBtn" FontSize="16" Height="50" Click="StatBtn_Click" FontFamily="Aharoni" >
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Content="Add question" Width="200"  FontSize="16" Height="50" Click="addQuestion" FontFamily="Aharoni" Margin="5" >
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Content="Logout" Width="194" Margin="5" x:Name="LogoutBtn" FontSize="16" Height="50" Click="LogoutBtn_Click" FontFamily="Aharoni" >
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Content="Quit" Height="20" Width="50" Margin="10" Click="quitGame" FontFamily="Aharoni" RenderTransformOrigin="0.52,0.035">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
         </StackPanel>
 
     </Grid>

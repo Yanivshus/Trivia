@@ -48,7 +48,7 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo info, SOCKET sock, 
             std::cout << "Email: " << req.email << std::endl;
 
             LoginManager& log_manager = this->m_handlerFactory.getLoginManager();//getting the login manager
-            log_manager.signup(req.username, req.password, req.email);// trying to sign up the user.
+            log_manager.signup(req.username, req.password, req.email, req.adrres, req.phone, req.date);// trying to sign up the user.
 
             //creating new respone, the next handler will be still nullptr, because after signing up you still need to log in.
             SignupResponse res = { SIGNUP_RESPONSE };

@@ -120,6 +120,10 @@ typedef struct {
 	unsigned int status;
 } DeleteGameResponse;
 
+typedef struct {
+	unsigned int status;
+} AddQuestionResponse;
+
 
 
 
@@ -133,6 +137,9 @@ typedef struct {
 	std::string username;
 	std::string password;
 	std::string email;
+	std::string adrres;
+	std::string phone;
+	std::string date;
 } SignupRequest;
 
 typedef struct {
@@ -168,5 +175,13 @@ typedef struct {
 typedef struct {
 	unsigned int answerId;
 } SubmitAnswerRequest;
+
+typedef struct {
+	std::string question;
+	std::string w_answer1;
+	std::string w_answer2;
+	std::string w_answer3;
+	std::string c_answer4;
+} QuestionAddition;
 
 

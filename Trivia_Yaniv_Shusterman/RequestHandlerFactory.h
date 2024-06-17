@@ -21,11 +21,13 @@ class GameRequestHandler;
 class RequestHandlerFactory {
 private:
 	IDatabase* m_database;
-	LoginManager m_loginManager;
-	RoomManger m_roomManager;
-	StatisticsManager m_StatisticsManager;
-	GameManager m_gameManager;
+	LoginManager& m_loginManager;
+	RoomManger& m_roomManager;
+	StatisticsManager& m_StatisticsManager;
+	GameManager& m_gameManager;
 public:
+	RequestHandlerFactory();
+
 	// returns login request handler.
 	LoginRequestHandler* createLoginRequestHandler();
 
@@ -54,6 +56,11 @@ public:
 	GameRequestHandler* CreateGameRequestHandler(LoggedUser user, Game& game);
 
 	IDatabase* getDB() const;
+
+	static RequestHandlerFactory& getInstance() {
+		static RequestHandlerFactory theFactory;
+		return theFactory;
+	}
 
 	// sets the db to the factory.
 	void setDB(IDatabase* m_database);

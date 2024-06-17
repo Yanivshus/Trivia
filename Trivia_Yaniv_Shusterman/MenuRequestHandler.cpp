@@ -15,7 +15,8 @@ bool MenuRequestHandler::isRequestRelevant(RequestInfo info)
         info.id == HIGH_SCORE_REQUEST ||
         info.id == LOGOUT_REQUSET ||
         info.id == GET_PERSONAL_STATS_REQUEST ||
-        info.id == DELETE_GAME_REQUEST) 
+        info.id == DELETE_GAME_REQUEST ||
+        info.id == ADD_QUESTION_REQUEST) 
     {
         return true;
     }
@@ -51,6 +52,9 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo info, SOCKET sock, s
         }
         if (info.id == DELETE_GAME_REQUEST) {
             return this->deleteGame(info);
+        }
+        if (info.id == ADD_QUESTION_REQUEST) {
+            return this->addQuestion(info);
         }
     }
     catch (const std::exception& e) // if eny thrown exceptions caught , return a error response.
@@ -230,6 +234,16 @@ RequestResult MenuRequestHandler::deleteGame(RequestInfo info)
         throw e;
     }
 }
+
+RequestResult MenuRequestHandler::addQuestion(RequestInfo info)
+{
+    QuestionAddition addReq = JsonRequestPacketDeserializer::deserializeAddQuestion(info.buffer);
+    this->m_handlerFactory.getDB()->addQuestionToDB(addReq.question, addReq.w_answer1, addReq.w_answer2, addReq.w_answer3, addReq.c_answer4); // add the question.
+
+    AddQuestionResponse res = { ADD_QUESTION_RESPONSE };
+    return { JsonResponsePacketSerializer::serializeResponse(res), nullptr };
+}
+
 
 int MenuRequestHandler::CreateRoomId()
 {

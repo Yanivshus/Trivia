@@ -40,6 +40,7 @@ public:
 	static std::vector<unsigned char> serializeResponse(const GetQuestionResponse& err);
 	static std::vector<unsigned char> serializeResponse(const LeaveGameResponse& err);
 	static std::vector<unsigned char> serializeResponse(const DeleteGameResponse& err);
+	static std::vector<unsigned char> serializeResponse(const AddQuestionResponse& err);
 
 
 private:

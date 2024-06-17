@@ -57,6 +57,18 @@ namespace trivia_client
 
         private void LogoutBtn_Click(object sender, RoutedEventArgs e)
         {
+            int response = logout();
+            if (response == Codes.LOGIN_RESPONSE)
+            {
+                // if the logout was succeful we will return to the main menu which is login.
+                loginW.Show();
+                this.Close();
+            }
+        }
+        
+        // logs out a user from the server.
+        private int logout()
+        {
             List<byte> buffer = new List<byte>();
             buffer.Add((byte)Codes.LOGOUT_REQUSET);
             buffer.AddRange(PacketBuilder.CreateDataLengthAsBytes(0)); // the data will be with size 0 , only the code matter.
@@ -65,12 +77,22 @@ namespace trivia_client
 
             byte[] response = PacketBuilder.getDataFromSocket(clientStream);// get the response.
 
-            if ((int)response[0] == Codes.LOGIN_RESPONSE)
-            {
-                // if the logout was succeful we will return to the main menu which is login.
-                loginW.Show();
-                this.Close();
-            }
+            return (int)response[0];
+        }
+
+        private void quitGame(object sender, RoutedEventArgs e)
+        {
+            logout();
+            loginW.Close();
+            this.Close();
+        }
+
+        private void addQuestion(object sender, RoutedEventArgs e)
+        {
+            addQuestionW qWin = new addQuestionW(tcpClient, clientStream, currentLoggedUser, this);
+            this.Hide();
+            qWin.Show();
+
         }
     }
 }

@@ -84,17 +84,16 @@ namespace trivia_client
                         if (roomResponseObj.Rooms.Length > 0)
                         {
                             await Dispatcher.InvokeAsync(() =>
-                            { 
-                                // set the text box to show the rooms.
-                                this.roomsBox.Text = roomResponseObj.Rooms;
+                            {
+                                roomContainer.Children.Clear();
+                                createRoomButtons(roomResponseObj.Rooms);
                             });
                         }
                         else
                         {
                             await Dispatcher.InvokeAsync(() =>
                             {
-                                // set the text box to show the rooms.
-                                this.roomsBox.Text = "No rooms avaliable :(1";
+                                this.roomContainer.Children.Clear(); // remove all buttons of rooms beause there are no avliable rooms.
                             });
                         }
 
@@ -103,8 +102,7 @@ namespace trivia_client
                     {
                         await Dispatcher.InvokeAsync(() =>
                         {
-                            // set the text box to show the rooms.
-                            this.roomsBox.Text = "No rooms avaliable :(2";
+                            this.roomContainer.Children.Clear(); // remove all buttons of rooms beause there was an error.
                         });
                     }
                     await Task.Delay(3000);
@@ -120,6 +118,25 @@ namespace trivia_client
         private void StopBackgroundTask()
         {
             cancellationTokenSource.Cancel();
+        }
+
+        // this function takes the rooms string received from server and parse it to buttons.
+        private void createRoomButtons(string roomsSting)
+        {
+            string[] roomsAndId = roomsSting.Split(", ");
+            foreach (string roomId in roomsAndId)
+            {
+                string[] roomDetails = roomId.Split("=");
+
+                Button button = new Button();
+                button.Content = roomDetails[0];
+                button.Tag = int.Parse(roomDetails[1]);
+                button.Style = (Style)FindResource("CustomButtonStyle"); // set the looks of the button.
+
+                button.Click += joinRoomBtn; // set the click which will enter the room.
+                roomContainer.Children.Add(button);
+            }
+
         }
 
         /// <summary>
@@ -139,11 +156,6 @@ namespace trivia_client
             this.Close();
         }
 
-        private void handleJoinRoom()
-        {
-
-        }
-
         private void joinRoomBtn(object sender, RoutedEventArgs e)
         {
             StopBackgroundTask();
@@ -155,7 +167,7 @@ namespace trivia_client
                 PacketBuilder.getDataFromSocket(clientStream);// get reponse from server.
             }
 
-            int id = int.Parse(this.idBox.Text);
+            int id = int.Parse(((Button)sender).Tag.ToString()); // takes the id from the button pressed.
 
             roomJsonObj roomToJoin = new roomJsonObj { roomId = id }; // create room object
             string jsonData = JsonConvert.SerializeObject(roomToJoin); // serialize to json.

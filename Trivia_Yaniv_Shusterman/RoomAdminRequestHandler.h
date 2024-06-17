@@ -19,6 +19,7 @@ private:
 	const LoggedUser m_user;
 	RequestHandlerFactory& m_handlerFactory;
 	std::map<SOCKET, IRequestHandler*>& m_clients;
+	std::mutex genMtx;
 
 	/// <summary>
 	/// this function implements all the close room by admin logic.
