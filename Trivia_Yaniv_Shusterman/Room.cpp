@@ -11,6 +11,7 @@ void Room::addUser(LoggedUser user)
 	{
 		throw std::exception("The room is full.");
 	}
+	
 	this->m_users.push_back(user);
 }
 
@@ -25,6 +26,7 @@ void Room::deleteUser(LoggedUser user)
 	}
 	// Delete the user if found
 	if (it != this->m_users.end()) {
+		
 		this->m_users.erase(it);
 	}
 	else {

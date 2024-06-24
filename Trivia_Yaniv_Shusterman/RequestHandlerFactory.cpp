@@ -1,6 +1,11 @@
 #include "RequestHandlerFactory.h"
 
 
+RequestHandlerFactory::RequestHandlerFactory() : m_loginManager(LoginManager::getInstance()), m_roomManager(RoomManger::getInstance()), m_StatisticsManager(StatisticsManager::getInstance()), m_gameManager(GameManager::getInstance())
+{
+
+}
+
 LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 {
 	return new LoginRequestHandler(*this);

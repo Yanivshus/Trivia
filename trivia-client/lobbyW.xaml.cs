@@ -113,10 +113,25 @@ namespace trivia_client
 
                     // send data to client.
                     PacketBuilder.sendDataToSocket(clientStream, buffer.ToArray());
+                    bool gameStart = false;
+                    bool roomLeave = false;
+                    byte[] response = new byte[1024];
 
-                    byte[] response = PacketBuilder.getDataFromSocket(clientStream);
+                    while (clientStream.DataAvailable)
+                    {
+                        response = PacketBuilder.getDataFromSocket(clientStream);
+                        if ((int)response[0] == Codes.LEAVE_ROOM_RESPONSE)
+                        {
+                            roomLeave = true;
+                        }
+                        else if ((int)response[0] == Codes.START_GAME_RESPONSE)
+                        {
+                            gameStart = true;
+                        }
+                    }
 
-                    if ((int)response[0] == Codes.GET_PLAYERS_IN_ROOM_RESPONSE)
+
+                    if ((int)response[0] == Codes.GET_PLAYERS_IN_ROOM_RESPONSE && !roomLeave && !gameStart )
                     {
                         byte[] bsonData = PacketBuilder.deserializeToData(response); // take only the bson part of the server response.
 
@@ -172,7 +187,7 @@ namespace trivia_client
                             });
                         }
                     }
-                    else if((int)response[0] == Codes.LEAVE_ROOM_RESPONSE) // in case of a leave caught it means that the admin closed the room.
+                    else if(roomLeave ) // in case of a leave caught it means that the admin closed the room.
                     {
                         // The room got closed by admin.
                         await Dispatcher.InvokeAsync(() =>
@@ -181,7 +196,7 @@ namespace trivia_client
                             handleMemberLeave();
                         });
                     }
-                    else if ((int)response[0] == Codes.START_GAME_RESPONSE)// in case of a start game caught it means that the admin started the game.
+                    else if (gameStart )// in case of a start game caught it means that the admin started the game.
                     {
                         // The room got closed by admin.
                         await Dispatcher.InvokeAsync(() =>
@@ -195,7 +210,7 @@ namespace trivia_client
                         // Update the UI every 3 seconds
                         await Dispatcher.InvokeAsync(() =>
                         {
-                            this.playersBox.Text = ((int)response[0]).ToString(); // set the players in the appropriate box.
+                            this.playersBox.Text = ""; // set the players in the appropriate box.
                         });
                     }
                     await Task.Delay(3000);

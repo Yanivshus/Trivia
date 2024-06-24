@@ -2,6 +2,7 @@
 
 void Helper::sendData(SOCKET soc, std::vector<unsigned char> Msg)
 {
+	Msg.resize(1024, 0);
 	const char* data = reinterpret_cast<const char*>(Msg.data());
 
 	if (send(soc, data, Msg.size(), 0) == INVALID_SOCKET)

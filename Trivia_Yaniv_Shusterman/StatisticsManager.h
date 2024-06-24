@@ -16,4 +16,10 @@ public:
 
 	// sets db for stat manager.
 	void setDB(IDatabase* m_database);
+
+	////singleton by reference.
+	static StatisticsManager& getInstance() {
+		static StatisticsManager theStatManager;
+		return theStatManager;
+	}
 };

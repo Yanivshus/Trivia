@@ -2,6 +2,7 @@
 
 int main() {
 	WSAInitializer wsaInit;
-	Server server;
-	server.run();
+	Server* server = Server::getInstance();
+	server->run();
+	delete server;
 }

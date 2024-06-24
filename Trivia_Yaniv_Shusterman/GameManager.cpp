@@ -20,7 +20,7 @@ Game& GameManager::createGame(const Room& room)
 	{
 		player.second.averageAnswerTime = (double)time(0);
 	}
-
+	std::lock_guard<std::mutex> quard(this->gamesMtx);
 	this->m_games.push_back(*game); // add to active games.
 	this->m_database->addGameToGames(room.getRoomData().id);// add the id of the game to the db for later use.
 	return *game;
@@ -35,6 +35,7 @@ void GameManager::deleteGame(const unsigned int gameId)
 		// if game found it will be deleted.
 		if (i->getGameId() == gameId)
 		{
+			std::lock_guard<std::mutex> quard(this->gamesMtx);
 			i = this->m_games.erase(i);
 			return;
 		}

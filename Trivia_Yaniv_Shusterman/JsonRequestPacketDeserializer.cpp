@@ -19,6 +19,9 @@ SignupRequest JsonRequestPacketDeserializer::deserializeSignupRequest(std::vecto
 	req.password = jsData["password"];//taking the password and username and email.
 	req.username = jsData["username"];
 	req.email = jsData["email"];
+	req.phone = jsData["phone"];
+	req.date = jsData["date"];
+	req.adrres = jsData["address"];
 	return req;
 }
 
@@ -62,5 +65,17 @@ DeleteGameRequest JsonRequestPacketDeserializer::deserializeDeleteGameRequest(st
 	json jsData = json::from_bson(buffer);// parsing into json object
 	DeleteGameRequest req;
 	req.roomId = jsData["roomId"];
+	return req;
+}
+
+QuestionAddition JsonRequestPacketDeserializer::deserializeAddQuestion(std::vector<unsigned char> buffer)
+{
+	json jsData = json::from_bson(buffer);
+	QuestionAddition req;
+	req.question = jsData["question"];
+	req.w_answer1 = jsData["w_answer1"];
+	req.w_answer2 = jsData["w_answer2"];
+	req.w_answer3 = jsData["w_answer3"];
+	req.c_answer4 = jsData["c_answer4"];
 	return req;
 }
