@@ -1,0 +1,17 @@
+﻿<Window x:Class="trivia_client.resWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:trivia_client"
+        mc:Ignorable="d"
+        Title="resWin" Height="450" Width="800">
+    <Grid>
+        <Image Source="/trviaBack.jpg" Stretch="Fill"/>
+        <Button Content="Leave" HorizontalAlignment="Left" Margin="325,355,0,0" VerticalAlignment="Top" Height="56" Width="143" Background="White" FontFamily="Aharoni" FontSize="25" IsEnabled="False" Click="leaveBtn" Name="leaveResBtn"/>
+        <TextBlock HorizontalAlignment="Left" Margin="129,83,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="245" Width="546" Background="White" FontFamily="Aharoni" FontSize="25" TextAlignment="Center" Name="resBox"/>
+        <Label Content="Results: " HorizontalAlignment="Left" Margin="325,25,0,0" VerticalAlignment="Top" Height="44" Width="143" FontSize="25" Foreground="White" FontFamily="Aharoni" />
+        <TextBlock HorizontalAlignment="Left" Margin="29,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="44" Width="132" Foreground="White" FontFamily="Aharoni" FontSize="18" Name="uBox"/>
+    </Grid>
+
+</Window>

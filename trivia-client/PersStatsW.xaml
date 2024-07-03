@@ -1,0 +1,26 @@
+﻿<Window x:Class="trivia_client.PersStatsW"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:trivia_client"
+        mc:Ignorable="d"
+        Title="PersStatsW" Height="450" Width="800">
+    <Grid>
+        <Image Source="/trviaBack.jpg" Stretch="Fill"/>
+        <Grid>
+            <TextBlock HorizontalAlignment="Center" Margin="0,101,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="252" Width="562" Background="White" FontFamily="Aharoni" FontSize="30" TextAlignment="Center" Name="statBox"/>
+            <Button Content="Go Back" HorizontalAlignment="Center" Margin="0,384,0,0" VerticalAlignment="Top" Height="30" Width="101" FontFamily="Aharoni" FontSize="20" Click="GoBackBtn">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <TextBlock HorizontalAlignment="Center" Margin="0,30,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="43" Width="242"  Background="White" FontFamily="Aharoni" FontSize="30" TextAlignment="Center" Name="usernameBox"/>
+
+        </Grid>
+    </Grid>
+</Window>

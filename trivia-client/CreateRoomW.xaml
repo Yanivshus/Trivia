@@ -1,0 +1,48 @@
+﻿<Window x:Class="trivia_client.CreateRoomW"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:trivia_client"
+        mc:Ignorable="d"
+        Title="CreateRoomW" Height="450" Width="800">
+    <Grid>
+        <Image Source="/trviaBack.jpg" Stretch="Fill"/>
+        <Grid>
+            <TextBox HorizontalAlignment="Left" Margin="230,50,0,0" TextWrapping="Wrap" Text="room" VerticalAlignment="Top" Width="430" Height="37" FontSize="18" Name="roomNameBox" FontFamily="Aharoni"/>
+            <TextBlock HorizontalAlignment="Left" Margin="130,50,0,0" TextWrapping="Wrap" Text="Room name:" VerticalAlignment="Top" Foreground="White" Height="37" Width="101" FontSize="18" FontFamily="Aharoni"/>
+
+            <TextBox HorizontalAlignment="Left" Margin="230,100,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="430" Height="37" FontSize="20" Name="maxUsersBox" FontFamily="Aharoni"/>
+            <TextBlock HorizontalAlignment="Left" Margin="130,100,0,0" TextWrapping="Wrap" Text="Max users:" VerticalAlignment="Top" Height="37" Width="101" FontSize="18" Foreground="White" FontFamily="Aharoni"/>
+
+            <TextBox HorizontalAlignment="Left" Margin="230,150,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="430" Height="37" FontSize="20" Name="qCountBox" FontFamily="Aharoni"/>
+            <TextBlock HorizontalAlignment="Left" Margin="130,150,0,0" TextWrapping="Wrap" Text="Q qount:" VerticalAlignment="Top" Height="37" Width="101" FontSize="18" Foreground="White" FontFamily="Aharoni"/>
+
+            <TextBox HorizontalAlignment="Left" Margin="230,200,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="430" Height="37" FontSize="20" Name="ansTimeBox" FontFamily="Aharoni"/>
+            <TextBlock HorizontalAlignment="Left" Margin="130,200,0,0" TextWrapping="Wrap" Text="Ans time:" VerticalAlignment="Top" Height="37" Width="101" FontSize="18" Foreground="White" FontFamily="Aharoni"/>
+
+            <Button Content="Create Room" HorizontalAlignment="Left" Margin="487,301,0,0" VerticalAlignment="Top" Height="50" Width="148" Click="CreateRoomBtn" FontFamily="Aharoni" RenderTransformOrigin="0.506,-0.037">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Content="Go Back" HorizontalAlignment="Left" Margin="202,301,0,0" VerticalAlignment="Top" Height="50" Width="126" Click="GoBackButton" FontFamily="Aharoni">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <TextBlock HorizontalAlignment="Center" Margin="0,381,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="33" Width="132" TextAlignment="Center" FontSize="16" Foreground="White" Name="errorBox"/>
+
+        </Grid>
+
+    </Grid>
+</Window>

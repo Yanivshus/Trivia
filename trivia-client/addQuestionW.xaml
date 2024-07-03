@@ -1,0 +1,46 @@
+﻿<Window x:Class="trivia_client.addQuestionW"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:trivia_client"
+        mc:Ignorable="d"
+        Title="addQuestionW" Height="450" Width="800">
+    <Grid>
+        <Image Source="/trviaBack.jpg" Stretch="Fill"/>
+        <TextBox HorizontalAlignment="Left" Margin="150,60,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="590" Height="40" FontSize="20" Name="qBox"/>
+        <TextBlock HorizontalAlignment="Left" Margin="13,60,0,0" TextWrapping="Wrap" Text="Enter question:" VerticalAlignment="Top" Foreground="White" FontSize="20"/>
+
+        <TextBox HorizontalAlignment="Left" Margin="150,120,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="590" Height="40" FontSize="20" Name="wAns1"/>
+        <TextBlock HorizontalAlignment="Left" Margin="13,120,0,0" TextWrapping="Wrap" Text="Wrong answer:" VerticalAlignment="Top" Foreground="White" FontSize="20"/>
+
+        <TextBox HorizontalAlignment="Left" Margin="150,180,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="590" Height="40" FontSize="20" Name="wAns2"/>
+        <TextBlock HorizontalAlignment="Left" Margin="13,180,0,0" TextWrapping="Wrap" Text="Wrong answer:" VerticalAlignment="Top" Foreground="White" FontSize="20"/>
+
+        <TextBox HorizontalAlignment="Left" Margin="150,240,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="590" Height="40" FontSize="20" Name="wAns3"/>
+        <TextBlock HorizontalAlignment="Left" Margin="13,240,0,0" TextWrapping="Wrap" Text="Wrong answer:" VerticalAlignment="Top" Foreground="White" FontSize="20"/>
+
+        <TextBox HorizontalAlignment="Left" Margin="150,300,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="590" Height="40" FontSize="20" Name="cAns"/>
+        <TextBlock HorizontalAlignment="Left" Margin="13,300,0,0" TextWrapping="Wrap" Text="Correct answer:" VerticalAlignment="Top" Foreground="White" FontSize="20"/>
+
+        <Button Content="Add" HorizontalAlignment="Center" Margin="0,360,0,0" VerticalAlignment="Top" Height="53" Width="130" FontSize="20" Click="addQ" FontFamily="Aharoni" >
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Button Content="Go back" HorizontalAlignment="Left" Margin="13,368,0,0" VerticalAlignment="Top" Height="45" Width="105" FontSize="20" Click="goBack" FontFamily="Aharoni"  >
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+    </Grid>
+</Window>
